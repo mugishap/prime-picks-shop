@@ -30,3 +30,26 @@ const UpdatePasswordSchema = Joi.object({
 const DeleteUserSchema = Joi.object({
     password: Joi.string().required().max(16).min(4),
 })
+
+//Product validation
+
+const CreateProductSchema = Joi.object({
+    name: Joi.string().required().max(20).min(2),
+    price: Joi.number().required(),
+    currency: Joi.string().optional().valid("USD","RWF"),
+    quantity: Joi.number().optional(),
+    description: Joi.string().required().max(400).min(4),
+    imageString: Joi.string().required(),
+})
+
+const UpdateProductSchema = Joi.object({
+    name: Joi.string().required().max(20).min(2),
+    price: Joi.number().required(),
+    currency: Joi.string().optional().valid("RWF","USD"),
+    quantity: Joi.number().optional(),
+    description: Joi.string().required().max(400).min(4),
+    imageString: Joi.string(),
+
+})
+
+export { CreateUserSchema, UpdateUserSchema, LoginUserSchema, UpdatePasswordSchema, DeleteUserSchema, CreateProductSchema }

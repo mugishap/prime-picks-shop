@@ -11,7 +11,7 @@ cloudinary.v2.config({
 export const uploadFile = async (fileString) => {
     try {
         const response = await cloudinary.v2.uploader.upload(fileString, {
-            upload_preset: "your_preset"
+            upload_preset: "prime_picks"
         })
         const avatar = response.secure_url
         return avatar

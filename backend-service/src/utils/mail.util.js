@@ -23,7 +23,7 @@ transporter.verify(function (error, success) {
     }
 });
 
-const sendOrderReceivedEmail = async (email, names, product) => {
+const sendOrderReceivedEmail = async ({ email, names, product }) => {
     try {
         const info = transporter.sendMail({
             from: process.env.MAIL_USER,
@@ -56,8 +56,70 @@ const sendOrderReceivedEmail = async (email, names, product) => {
         return { message: "Unable to send email", status: false };
     }
 };
-export const sendOrderApprovedEmail = () => { }
+export const sendOrderGrantedEmail = ({ order }) => {
+    try {
+        const info = transporter.sendMail({
+            from: process.env.MAIL_USER,
+            to: email,
+            subject: "Hurray! you requested product is on its way!!!",
+            html:
+                `
+            <!DOCTYPE html>
+                <html>
+                <body>
+                    <h2>Dear ${order.user.fullname}, </h2>
+                    <h2> You request to purchase the product "${product.name}" has been granted!!!</h2>
+                    <span>It is on its way to your location. Call 0782307144 for any inquries.</span>
+                    <p>Best regards,<br>Prime Picks</p>
+                </body>
+            </html>
+            `
 
-export const sendOrderDeclinedEmail = () => { }
+        });
 
-export { sendOrderReceivedEmail, sendOrderApprovedEmail, sendOrderDeclinedEmail };
+        return {
+            message: "Email sent successfully",
+            emailId: info.messageId,
+            status: true
+        };
+    } catch (error) {
+        console.log(error);
+        return { message: "Unable to send email", status: false };
+    }
+}
+
+export const sendOrderDeclinedEmail = ({ order }) => {
+    try {
+        const info = transporter.sendMail({
+            from: process.env.MAIL_USER,
+            to: email,
+            subject: "Oops! you product order has been denied!!!",
+            html:
+                `
+            <!DOCTYPE html>
+                <html>
+                <body>
+                    <h2>Dear ${order.user.fullname}, </h2>
+                    <h2> You request to purchase the product "${product.name}" has been denied!!! We are really sorry for this.</h2>
+                    <span>Check some other products of you choice here</span>
+                    <a href="${process.env.CLIENT_URL}/products" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
+                    <span>Call 0782307144 for any inquries.</span>
+                    <p>Best regards,<br>Prime Picks</p>
+                </body>
+            </html>
+            `
+
+        });
+
+        return {
+            message: "Email sent successfully",
+            emailId: info.messageId,
+            status: true
+        };
+    } catch (error) {
+        console.log(error);
+        return { message: "Unable to send email", status: false };
+    }
+}
+
+export { sendOrderReceivedEmail, sendOrderGrantedEmail, sendOrderDeclinedEmail };

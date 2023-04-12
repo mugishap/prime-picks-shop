@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { registerSchema } from "swaggiffy";
 
 const ProductSchema = new Schema({
     name: {
@@ -13,7 +14,8 @@ const ProductSchema = new Schema({
     },
     currency: {
         type: String,
-        enum:["RWF","USD"]
+        enum: ["RWF", "USD"],
+        default: "RWF"
     },
     quantity: {
         type: String,
@@ -42,3 +44,5 @@ const ProductSchema = new Schema({
 
 const Product = mongoose.model('product', ProductSchema)
 export default Product
+
+registerSchema('Product', ProductSchema, { orm: 'mongoose' }); 

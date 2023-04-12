@@ -1,9 +1,11 @@
-import express from 'express'
-import { isLoggedIn } from '../middlewares/auth.middleware.js'
+import {Router} from 'express'
 import authController from '../controllers/auth.controller.js'
+import { registerDefinition } from 'swaggiffy';
 
-const authRouter = express.Router()
+const authRouter = Router()
 
 authRouter.post('/login', authController.login)
+
+registerDefinition(authRouter, { tags: 'Auth', mappedSchema: 'Auth', basePath: '/api/v1/auth' });
 
 export default authRouter

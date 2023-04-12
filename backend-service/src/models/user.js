@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { registerSchema } from "swaggiffy";
 
 const UserSchema = new Schema({
     fullname: {
@@ -56,3 +57,5 @@ const UserSchema = new Schema({
 
 const User = mongoose.model('user', UserSchema)
 export default User
+
+registerSchema('User', UserSchema, { orm: 'mongoose' }); 

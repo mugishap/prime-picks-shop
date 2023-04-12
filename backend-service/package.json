@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon --ignore '*swagger.json' app.js"
   },
   "keywords": [
     "ecommerce"
@@ -23,6 +23,7 @@
     "joi": "^17.9.1",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.10.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "swaggiffy": "^1.0.5"
   }
 }

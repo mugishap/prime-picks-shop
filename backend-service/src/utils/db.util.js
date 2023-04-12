@@ -10,7 +10,7 @@ export const connectDB = async () => {
 
     mongoose.set('strictQuery', true)
     await mongoose.connect(DATABASE_URL, {
-        dbName: "nodejs_template",
+        dbName: "prime_picks",
         useNewUrlParser: true,
         useUnifiedTopology: true,
     }, (err) => {

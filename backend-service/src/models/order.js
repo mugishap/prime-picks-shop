@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { registerSchema } from "swaggiffy";
 
 const OrderSchema = new Schema({
     user: {
@@ -16,6 +17,10 @@ const OrderSchema = new Schema({
         enum: ["GRANTED", "DENIED", "PENDING"],
         default: "PENDING"
     },
+    quantity: {
+        type: Number,
+        required: true
+    },
     createdAt: {
         type: String,
         default: Date.now()
@@ -29,3 +34,5 @@ const OrderSchema = new Schema({
 
 const Order = mongoose.model('order', OrderSchema)
 export default Order
+
+registerSchema('Order', OrderSchema, { orm: 'mongoose' }); 
