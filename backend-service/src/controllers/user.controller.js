@@ -7,8 +7,7 @@ import jwt from "jsonwebtoken"
 import { uploadFile } from "../utils/files.util.js"
 
 config()
-const HASH_SALT = process.env.HASH_SALT
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
+const { JWT_SECRET_KEY } = process.env
 
 const registerUser = async (req, res) => {
     try {

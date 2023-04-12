@@ -2,16 +2,17 @@ import { config } from 'dotenv';
 import nodemailer from 'nodemailer'
 
 config();
+const { MAIL_SERVICE, MAIL_HOST, MAIL_USER, MAIL_PASSWORD, CLIENT_URL, } = process.env
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: MAIL_SERVICE,
     pool: true,
-    host: process.env.MAIL_HOST,
+    host: MAIL_HOST,
     port: 465,
     secure: false,
     auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASSWORD
+        user: MAIL_USER,
+        pass: MAIL_PASSWORD
     }
 });
 
@@ -26,7 +27,7 @@ transporter.verify(function (error, success) {
 const sendOrderReceivedEmail = async ({ email, names, product }) => {
     try {
         const info = transporter.sendMail({
-            from: process.env.MAIL_USER,
+            from: MAIL_USER,
             to: email,
             subject: "Prime Picks Order Details",
             html:
@@ -38,7 +39,7 @@ const sendOrderReceivedEmail = async ({ email, names, product }) => {
                     <h2> You request to purchase the product "${product.name}" is currently pending.</h2>
                     <span>Your order is being reviewed you will receive granted/denied email soon from the admin. Good Day!!!</span>
                     <span>Review the product using the link below</span>
-                    <a href="${process.env.CLIENT_URL}/product/${product._id}" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
+                    <a href="${CLIENT_URL}/product/${product._id}" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
                     <p>Best regards,<br>Prime Picks</p>
                 </body>
             </html>
@@ -56,10 +57,10 @@ const sendOrderReceivedEmail = async ({ email, names, product }) => {
         return { message: "Unable to send email", status: false };
     }
 };
-export const sendOrderGrantedEmail = ({ order }) => {
+const sendOrderGrantedEmail = ({ order }) => {
     try {
         const info = transporter.sendMail({
-            from: process.env.MAIL_USER,
+            from: MAIL_USER,
             to: email,
             subject: "Hurray! you requested product is on its way!!!",
             html:
@@ -88,10 +89,10 @@ export const sendOrderGrantedEmail = ({ order }) => {
     }
 }
 
-export const sendOrderDeclinedEmail = ({ order }) => {
+const sendOrderDeclinedEmail = ({ order }) => {
     try {
         const info = transporter.sendMail({
-            from: process.env.MAIL_USER,
+            from: MAIL_USER,
             to: email,
             subject: "Oops! you product order has been denied!!!",
             html:
@@ -102,7 +103,7 @@ export const sendOrderDeclinedEmail = ({ order }) => {
                     <h2>Dear ${order.user.fullname}, </h2>
                     <h2> You request to purchase the product "${product.name}" has been denied!!! We are really sorry for this.</h2>
                     <span>Check some other products of you choice here</span>
-                    <a href="${process.env.CLIENT_URL}/products" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
+                    <a href="${CLIENT_URL}/products" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
                     <span>Call 0782307144 for any inquries.</span>
                     <p>Best regards,<br>Prime Picks</p>
                 </body>

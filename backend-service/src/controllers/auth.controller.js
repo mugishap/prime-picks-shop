@@ -6,8 +6,7 @@ import jwt from 'jsonwebtoken'
 import { ApiResponse } from "../responses/api.response.js"
 
 config()
-const HASH_SALT = process.env.HASH_SALT
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
+const { JWT_SECRET_KEY, JWT_EXPIRES_IN } = process.env
 
 const login = async (req, res) => {
     try {
@@ -18,7 +17,7 @@ const login = async (req, res) => {
         if (!user) return res.status(404).json(new ApiResponse(false, "Incorrect credentials", null))
         const isPasswordCorrect = await bcrypt.compare(password, user.password)
         if (!isPasswordCorrect) return res.status(404).json(new ApiResponse(false, "Incorrect credentials", null))
-        const token = await jwt.sign({ id: user._id, role: user.role }, JWT_SECRET_KEY, { expiresIn: "31d" })
+        const token = await jwt.sign({ id: user._id, role: user.role }, JWT_SECRET_KEY, { expiresIn: JWT_EXPIRES_IN })
         return res.status(200).json(new ApiResponse(true, "Login successful", { user, token }))
     } catch (error) {
         console.log(error)

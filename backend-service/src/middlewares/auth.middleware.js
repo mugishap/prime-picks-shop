@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { config } from 'dotenv'
 
 config()
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
+const {JWT_SECRET_KEY} = process.env
 
 const isLoggedIn = async (req, res, next) => {
     try {
@@ -35,7 +35,7 @@ const isAdmin = async (req, res, next) => {
     }
 }
 
-export {
+export  {
     isAdmin,
     isLoggedIn
 }

@@ -1,6 +1,6 @@
-import Product from '../models/Product.js'
+import Product from '../models/product.js'
 import User from '../models/user.js'
-import { ApiResponse } from '../responses/api.response'
+import { ApiResponse } from '../responses/api.response.js'
 import Order from './../models/order.js'
 import { sendOrderDeclinedEmail, sendOrderGrantedEmail, sendOrderReceivedEmail } from './../utils/mail.util.js'
 
@@ -89,8 +89,9 @@ const deleteOrder = async (req, res) => {
 const grantOrder = async (req, res) => {
     try {
         const { orderId } = req.params
-        const order = await Order.findById(id).populate(["product", "user"])
+        const order = await Order.findById(orderId).populate(["product", "user"])
         if (!order) return res.status(404).json(new ApiResponse(false, "Order not found", null))
+        if (order.status === "GRANTED" || order.status === "DENIED") return res.status(400).json(new ApiResponse(false, "Only pending orders can be granted!!", null))
         order.status = "GRANTED"
         order.save()
         await sendOrderGrantedEmail(order)
@@ -105,8 +106,9 @@ const grantOrder = async (req, res) => {
 const denyOrder = async (req, res) => {
     try {
         const { orderId } = req.params
-        const order = await Order.findById(id).populate(["product", "user"])
+        const order = await Order.findById(orderId).populate(["product", "user"])
         if (!order) return res.status(404).json(new ApiResponse(false, "Order not found", null))
+        if (order.status === "GRANTED" || order.status === "DENIED") return res.status(400).json(new ApiResponse(false, "Only pending orders can be denied!!", null))
         order.status = "DENIED"
         order.save()
         await sendOrderDeclinedEmail(order)
@@ -126,3 +128,5 @@ const orderController = {
     denyOrder,
     grantOrder
 }
+
+export default orderController

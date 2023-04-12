@@ -1,16 +1,14 @@
-import bcrypt from "bcryptjs"
 import { config } from "dotenv"
 import mongoose from "mongoose"
-import User from "../models/user.js"
 
 config()
 
-const DATABASE_URL = process.env.DATABASE_URL
+const {DATABASE_URL,DATABASE_NAME} = process.env
 export const connectDB = async () => {
 
     mongoose.set('strictQuery', true)
     await mongoose.connect(DATABASE_URL, {
-        dbName: "prime_picks",
+        dbName: DATABASE_NAME,
         useNewUrlParser: true,
         useUnifiedTopology: true,
     }, (err) => {
