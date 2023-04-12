@@ -1,0 +1,14 @@
+{
+  "name": "backend-service",
+  "version": "1.0.0",
+  "description": "Backend service for an ecommerce site",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecommerce"
+  ],
+  "author": "mugishap",
+  "license": "MIT"
+}
