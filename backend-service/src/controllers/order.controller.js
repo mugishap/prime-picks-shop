@@ -8,7 +8,7 @@ const createOrder = async (req, res) => {
     try {
         const { productId, quantity } = req.body
         const { id } = req.user
-
+        const user = await User.findById(id)
         const product = await Product.findById(productId)
         if (!product) return res.status(404).json(new ApiResponse(false, "Product not found", null))
         if (product.quantity < quantity) return res.status(400).json(new ApiResponse(false, "Insufficient quantity", null))
@@ -22,7 +22,6 @@ const createOrder = async (req, res) => {
         })
         await entity.save()
 
-        const user = await User.findById(id)
         const order = await Order.findById(entity._id).populate(["product", "user"])
         await sendOrderReceivedEmail(user.email, user.fullname, product)
         return res.status(200).json(new ApiResponse(true, "Product requested successfully", { order, product }))

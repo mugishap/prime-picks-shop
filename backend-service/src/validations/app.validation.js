@@ -52,4 +52,4 @@ const UpdateProductSchema = Joi.object({
 
 })
 
-export { CreateUserSchema, UpdateUserSchema, LoginUserSchema, UpdatePasswordSchema, DeleteUserSchema, CreateProductSchema }
+export { CreateUserSchema, UpdateUserSchema, LoginUserSchema, UpdatePasswordSchema, DeleteUserSchema, CreateProductSchema,UpdateProductSchema }

@@ -28,7 +28,8 @@ app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/user", userRouter)
 app.use("/api/v1/order", orderRouter)
 app.use("/api/v1/product", productRouter)
-app.use("*", (req, res) => {
+app.use("*", (req, res, next) => {
+    if (req.baseUrl.includes("/api/v1/docs")) return next()
     res.status(404).json(new ApiResponse(false, "Route not found", null));
 });
 

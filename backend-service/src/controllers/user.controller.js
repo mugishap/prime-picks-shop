@@ -5,13 +5,14 @@ import { config } from "dotenv"
 import User from "../models/user.js"
 import jwt from "jsonwebtoken"
 import { uploadFile } from "../utils/files.util.js"
+import { UpdatePasswordSchema } from "../validations/app.validation.js"
 
 config()
 const { JWT_SECRET_KEY } = process.env
 
 const registerUser = async (req, res) => {
     try {
-        const { error } = CreateUserSchema.validate(req.body)
+        const { error } = CreateUserSchema.validate(req.body, { allowUnknown: true })
         if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
         const { fullname, email, mobile, password } = req.body
         const hashedPassword = await bcrypt.hash(password, 8)
@@ -28,6 +29,20 @@ const registerUser = async (req, res) => {
         console.log(error.message)
         const regex = /index:\s+(\w+)_\d+\s+/;
         if (error.message.includes(" duplicate key error collection")) return res.status(500).json(new ApiResponse(false, `${(error.message.match(regex)[1])} already exists`, error))
+        return res.status(500).json(new ApiResponse(false, "Internal Server Error", error))
+    }
+}
+
+const addUserLocation = async (req, res) => {
+    try {
+        const { location } = req.body
+        const { id } = req.user
+        const user = await User.findById(id)
+        user.location = location
+        await user.save()
+        return res.status(200).json(new ApiResponse(true, "Location added successfully", { user }))
+    } catch (error) {
+        console.log(error.message)
         return res.status(500).json(new ApiResponse(false, "Internal Server Error", error))
     }
 }
@@ -55,7 +70,7 @@ const getUserById = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { error } = UpdateUserSchema.validate(req.body)
+        const { error } = UpdateUserSchema.validate(req.body, { allowUnknown: true })
         if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
         const user = await User.findById(req.user.id)
         if (!user) return res.status(404).json(new ApiResponse(false, "User not found", null))
@@ -66,7 +81,8 @@ const updateUser = async (req, res) => {
         }
         user.fullname = fullname
         user.email = email
-        user.coverImage = coverImage
+        user.mobile = mobile
+        user.location = location
         user.updatedAt = Date.now()
         await user.save()
         return res.status(200).json(new ApiResponse(true, "User updated successfully", { user }))
@@ -145,6 +161,25 @@ const updateAvatar = async (req, res) => {
     }
 }
 
+const updatePassword = async (req, res) => {
+    try {
+        const { error } = UpdatePasswordSchema.validate(req.body, { allowUnknown: true })
+        if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
+        const { oldPassword, newPassword } = req.body
+        const { id } = req.user
+        const user = await User.findById(id)
+        const match = await bcrypt.compare(oldPassword, user.password)
+        if (!match) return res.status(400).json(new ApiResponse(false, "Incorrect password", null))
+        const hash = await bcrypt.hashSync(newPassword, 8)
+        user.password = hash
+        await user.save()
+        return res.status(200).json(new ApiResponse(true, "Password updated successfully", null))
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(new ApiResponse(false, "Internal Server Error", null))
+    }
+}
+
 const userController = {
     registerUser,
     getAllUsers,
@@ -154,7 +189,9 @@ const userController = {
     deleteUserByAdmin,
     deleteUser,
     searchUser,
-    updateAvatar
+    updateAvatar,
+    updatePassword,
+    addUserLocation
 }
 
 export default userController

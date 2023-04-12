@@ -19,7 +19,8 @@ const UserSchema = new Schema({
         type: String,
         required: false,
         minlength: 10,
-        maxlength: 15
+        maxlength: 15,
+        unique: true
     },
     gender: {
         type: String,

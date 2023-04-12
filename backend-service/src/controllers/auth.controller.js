@@ -10,7 +10,7 @@ const { JWT_SECRET_KEY, JWT_EXPIRES_IN } = process.env
 
 const login = async (req, res) => {
     try {
-        const { error } = LoginUserSchema.validate(req.body)
+        const { error } = LoginUserSchema.validate(req.body,{ allowUnknown: true })
         if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
         const { email, password } = req.body
         const user = await User.findOne({ email })

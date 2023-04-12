@@ -6,7 +6,8 @@ const ProductSchema = new Schema({
         type: String,
         required: true,
         minlength: 4,
-        maxlength: 50
+        maxlength: 50,
+        unique: true
     },
     price: {
         type: Number,

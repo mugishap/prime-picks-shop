@@ -2,6 +2,6 @@
    "projectName": "backend-service",
    "openApiVersion": "2.0",
    "outFile": "./src/swagger/swagger.json",
-   "apiRoute": "/docs",
+   "apiRoute": "/api/v1/docs",
    "format": "json"
 }
