@@ -19,7 +19,7 @@ const ProductSchema = new Schema({
         default: "RWF"
     },
     quantity: {
-        type: String,
+        type: Number,
         required: true,
     },
     description: {
