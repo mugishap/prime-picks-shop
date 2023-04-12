@@ -19,7 +19,7 @@ const CommonComponent: React.FC<Props> = ({ children }) => {
                 )
             }
             <Navbar />
-            <div>
+            <div className='w-full'>
                 {children}
             </div>
             <Footer />

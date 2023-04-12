@@ -18,7 +18,7 @@ const App: React.FC = () => {
   return (
     <Suspense
       fallback={
-        <div className='w-screen bg-black h-screen flex justify-center items-center'>
+        <div className='w-full bg-black h-screen flex justify-center items-center'>
           <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-nf-red'></div>
         </div>
       }

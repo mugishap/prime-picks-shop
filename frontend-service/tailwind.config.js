@@ -40,19 +40,13 @@ export default {
       'display': ['Oswald',],
       'body': ['"Open Sans"',],
       'lato': ['"Lato"',],
+      'oregano': ['"Oregano"',],
     },
     colors: {
       ...colors,
       "delete-red": "#d72222",
-      'ek-blue': {
-        DEFAULT: '#3F7CAC',
-        '50': '#3F7CAC',
-        '75': '#4CA7CE',
-        '100': '#376D97',
-        '200': '#28506E',
-        '300': '#193245',
-        '400': '#0A141C',
-      },
+      "greenish":"#115061",
+      "whitish":"#e3edf6"
     }
   },
   plugins: [],

@@ -50,3 +50,12 @@ export interface Logindata {
     email: string,
     password: string,
 }
+
+export interface ISlide{
+    image:string,
+    headline:string,
+    offer:string,
+    starting:string,
+    color:string,
+    background:"greenish"|"whitish"
+}

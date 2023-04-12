@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
     "Sitemap"
   ];
   return (
-    <Slide direction="up" cascade triggerOnce>
+    <Slide direction="up" cascade triggerOnce style={{width:"100%"}}>
       <div className="relative flex justify-start md:justify-center md:items-end bg-slate-200 mt-10 w-full">
         <div className="flex py-20 px-4 md:px-6 xl:px-20 flex-col justify-start items-start md:justify-center md:items-center relative z-10">
           <div className="flex  flex-col items-start justify-start xl:justify-center xl:space-x-8 xl:flex-row">

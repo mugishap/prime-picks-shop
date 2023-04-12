@@ -1,10 +1,11 @@
 import React from 'react'
 import CommonComponent from '../../components/Common/CommonComponent'
+import HomeComponent from '../../components/Home/HomeComponent'
 
 const Home = () => {
   return (
     <CommonComponent>
-      <div>Home</div>
+      <HomeComponent />
     </CommonComponent>
   )
 }
