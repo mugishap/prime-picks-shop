@@ -27,12 +27,39 @@ const registerUser = async (req, res) => {
         const token = await jwt.sign({ id: user._id, role: user.role }, JWT_SECRET_KEY, { expiresIn: "31d" })
         return res.status(201).json(new ApiResponse(true, "User created successfully", { user, token }))
     } catch (error) {
+        console.log(error.code)
         console.log(error.message)
         const regex = /index:\s+(\w+)_\d+\s+/;
-        if (error.message.includes(" duplicate key error collection")) return res.status(500).json(new ApiResponse(false, `${(error.message.match(regex)[1])} already exists`, error))
+        if (error.code === 11000) return res.status(400).json(new ApiResponse(false, `${(error.message.match(regex)[1])} already exists`, error))
         return res.status(500).json(new ApiResponse(false, "Internal Server Error", error))
     }
 }
+
+const registerAdmin = async (req, res) => {
+    try {
+        const { error } = CreateUserSchema.validate(req.body, { allowUnknown: true })
+        if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
+        const { fullname,location, email, mobile, password } = req.body
+        const hashedPassword = await bcrypt.hash(password, 8)
+        const user = new User({
+            fullname,
+            email,
+            mobile,
+            role,
+            location,
+            password: hashedPassword
+        })
+        await user.save()
+        return res.status(201).json(new ApiResponse(true, "Admin created successfully", { user }))
+    } catch (error) {
+        console.log(error.code)
+        console.log(error.message)
+        const regex = /index:\s+(\w+)_\d+\s+/;
+        if (error.code === 11000) return res.status(400).json(new ApiResponse(false, `${(error.message.match(regex)[1])} already exists`, error))
+        return res.status(500).json(new ApiResponse(false, "Internal Server Error", error))
+    }
+}
+
 
 const getAllUsers = async (req, res) => {
     try {
@@ -178,6 +205,7 @@ const userController = {
     searchUser,
     updateAvatar,
     updatePassword,
+    registerAdmin
 }
 
 export default userController

@@ -7,9 +7,9 @@ const productRouter = Router();
 
 productRouter.post("/create", [isLoggedIn, isAdmin], productController.createProduct)
 productRouter.put("/update/:id", [isLoggedIn, isAdmin], productController.updateProduct)
-productRouter.get("/", productController.getProducts)
+productRouter.get("/all", productController.getProducts)
 productRouter.get("/:query", productController.searchProducts)
-productRouter.get("/delete/:id", productController.deleteProduct)
+productRouter.delete("/delete/:id",[isLoggedIn,isAdmin], productController.deleteProduct)
 productRouter.get("/:id", productController.getProductById)
 
 registerDefinition(productRouter, { tags: 'Product', mappedSchema: 'Product', basePath: '/api/v1/products' });

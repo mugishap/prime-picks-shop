@@ -60,7 +60,7 @@ const getProductById = async (req, res) => {
 
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.find()
+        const products = await Product.find({})
         return res.status(200).json(new ApiResponse(true, "Products fetched successfully", { products }))
     } catch (error) {
         console.log(error)
