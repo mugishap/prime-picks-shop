@@ -8,7 +8,7 @@ import Dashboard from './pages/Admin/Dashboard/Dashboard'
 import Orders from './pages/Admin/Orders/Orders'
 import AdminProducts from './pages/Admin/Products/AdminProducts'
 import Products from './pages/Products/Products'
-import Notfound from './pages/404/NotFound'
+import NotFound from './pages/404/NotFound'
 const About = lazy(() => import('./pages/About/About'))
 const Home = lazy(() => import('./pages/Home/Home'))
 
@@ -27,6 +27,8 @@ const Pages = () => {
     const [search, setSearch] = useState<boolean>(false)
     const [auth, setAuth] = useState<{ display: boolean, active: "login" | "signup" | "none" }>({ display: false, active: "none" })
     const [showSidebar, setShowSidebar] = useState(false)
+    const [viewNavbar, setViewNavbar] = useState(false)
+
     return (
         <CommonContext.Provider
             value={{
@@ -46,6 +48,8 @@ const Pages = () => {
                 isAdmin,
                 showSidebar,
                 setShowSidebar,
+                viewNavbar,
+                setViewNavbar,
                 dispatch
             }}
         >
@@ -57,7 +61,7 @@ const Pages = () => {
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/products" element={<Products />} />
                         <Route path="/product" element={<Product />} />
-                        <Route path="*" element={<Notfound />} />
+                        <Route path="*" element={<NotFound />} />
                         {
                             isLoggedIn && user.role === "admin" &&
                             <>

@@ -10,8 +10,8 @@ interface Props {
 const SlideComponent: React.FC<Props> = ({ slide }) => {
 
     return (
-        <div className={`w-full bg-${slide.background} bg- text-${slide.background === "greenish" ? "white" : "black"} h-[60vh] flex items-center justify-center`}>
-            <div className="flex flex-col my-2 w-4/12 justify-center">
+        <div className={`w-full bg-${slide.background} bg- text-${slide.background === "greenish" ? "white" : "black"} h-[80vh] py-10 lg:py-0 lg:h-[60vh] flex items-center justify-center`}>
+            <div className="flex flex-col my-2 w-full px-8 md:px-0 md:w-6/12 mxl:w-4/12 justify-center">
                 <div className='flex'>
                     <span>Starting at</span> &nbsp;<span className='font-bold'>{slide.starting}</span>
                 </div>
@@ -33,8 +33,8 @@ const SlideComponent: React.FC<Props> = ({ slide }) => {
                     </button>
                 </Link>
             </div>
-            <div className="flex items-center w-4/12 justify-end">
-                <img className=' object-cover' src={slide.image} alt={slide.headline} />
+            <div className="hidden md:flex items-center w-4/12 justify-end">
+                <img className='w-full object-cover' src={slide.image} alt={slide.headline} />
             </div>
         </div>
     )

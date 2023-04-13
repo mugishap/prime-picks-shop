@@ -176,7 +176,7 @@ const ContactComponent = () => {
                   </div>
                   <button
                     type="submit"
-                    className="focus:outline-none bg-redish transition duration-150 ease-in-out hover:bg-red-600 rounded text-white px-8 py-3 text-sm leading-6"
+                    className="focus:outline-none bg-pink-600 transition duration-150 ease-in-out hover:bg-red-600 rounded text-white px-8 py-3 text-sm leading-6"
                   >
                     Submit
                   </button>

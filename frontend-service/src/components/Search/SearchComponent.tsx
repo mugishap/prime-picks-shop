@@ -10,9 +10,9 @@ const SearchComponent = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     return (
-        <div className='z-[2] w-full h-full absolute top-0 left-0 bg-black/20 backdrop-blur-md'>
+        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-md'>
             <div className='absolute z-[3] w-full h-full' onClick={() => setSearch(false)}></div>
-            <div className='z-[4] bg-white w-4/12 absolute right-0 top-0 p-4 h-full flex flex-col justify-between'>
+            <div className='z-[4] bg-white w-10/12 sm:w-8/12 md:w-6/12 :w-4/12 absolute right-0 top-0 p-4 h-full flex flex-col justify-between'>
                 <div className="flex flex-col justify-start items-start h-[98%]">
                     <BiX onClick={() => setSearch(false)} className='' size={25} />
                     <div className='bg-slate-300 my-4 m-auto w-10/12 p-2 rounded-3xl flex items-center justify-between px-2'>

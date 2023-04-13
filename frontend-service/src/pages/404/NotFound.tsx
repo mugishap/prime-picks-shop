@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import CommonComponent from '../../components/Common/CommonComponent'
 
-const Notfound: React.FC<{}> = () => {
+const NotFound: React.FC<{}> = () => {
     useEffect(() => {
         document.title = "404 | Prime Picks"
     }, [])
@@ -12,7 +12,7 @@ const Notfound: React.FC<{}> = () => {
             <div className="w-full">
                 <main className="w-full flex items-center justify-center flex-col pt-12 pb-16">
                     <section className="relative flex flex-col">
-                        <div className="text-[#263048] text-[200px] font-bold z-50 px-6">
+                        <div className="text-[#263048] text-[200px] font-bold z-[1] px-6">
                             404
                         </div>
                         <div className="absolute bg-pink-600 bottom-12 h-[30%] w-full"></div>
@@ -32,4 +32,4 @@ const Notfound: React.FC<{}> = () => {
     )
 }
 
-export default Notfound
+export default NotFound

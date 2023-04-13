@@ -1,38 +1,10 @@
 import React from 'react'
-import { AirPods, HeadPhones, Phone, Pipes, SmartWatch } from '../../assets'
+import { topProducts } from '../../constants'
 
-const TopProducts = () => {
-
-  const topProducts = [
-    {
-      name: "Headphones",
-      quantity: 20,
-      image: HeadPhones
-    },
-    {
-      name: "Mobile Phone",
-      quantity: 25,
-      image: Phone
-    },
-    {
-      name: "CPU Heat Pipes",
-      quantity: 57,
-      image: Pipes
-    },
-    {
-      name: "Smart Watch",
-      quantity: 44,
-      image: SmartWatch
-    },
-    {
-      name: "With Bluetooth",
-      quantity: 81,
-      image: AirPods
-    },
-  ]
+const TopProducts: React.FC = () => {
 
   return (
-    <div className='w-full flex items-center justify-around my-10 px-8'>
+    <div className='w-full grid grid-cols-1 mmsm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  mxl:grid-cols-5 my-10 px-8'>
       {
         topProducts.map((product, index: number) => (
           <div className='flex-col flex items-center justify-center mx-2' key={index}>
