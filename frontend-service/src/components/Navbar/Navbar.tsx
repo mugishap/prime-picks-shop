@@ -6,7 +6,7 @@ import { INavbarLink } from '../../types'
 import { BiCart, BiHome, BiPhoneCall, BiSearch, BiX } from 'react-icons/bi'
 
 const Navbar = () => {
-    const { isLoggedIn, search, setSearch } = useContext(CommonContext)
+    const { isLoggedIn, search, setSearch, setAuth, isAdmin } = useContext(CommonContext)
     const navbarlinks: INavbarLink[] = [
         {
             name: "Home",
@@ -55,19 +55,20 @@ const Navbar = () => {
                     })
                 }
             </div>
-            {
-                !isLoggedIn && <div className=' flex items-center'>
-                    <Link to={"/auth/login"}>
-                        <button className='mx-3 bg-pink-600 text-white px-3 py-1 cursor-pointer rounded'>Login</button>
-                    </Link>
-                    <Link to={"/auth/register"}>
-                        <button className='mx-3 bg-pink-600 text-white px-3 py-1 cursor-pointer rounded'>Signup</button>
-                    </Link>
+            {!isLoggedIn && (
+                <div className=' flex items-center'>
+                    <button onClick={() => setAuth({ active: "login", display: true })} className='mx-3 bg-pink-600 text-white px-3 py-1 cursor-pointer rounded'>Login</button>
+                    <button onClick={() => setAuth({ active: "signup", display: true })} className='mx-3 bg-pink-600 text-white px-3 py-1 cursor-pointer rounded'>Signup</button>
                     <div>
                         <BiSearch size={25} className='mx-4' onClick={() => setSearch(!search)} />
                     </div>
                 </div>
-
+            )}
+            {
+                (isLoggedIn && isAdmin) &&
+                <Link to={"/admin"}>
+                    <button className='mx-3 bg-pink-600 text-white px-3 py-1 cursor-pointer rounded'>Admin</button>
+                </Link>
             }
         </div>
     )

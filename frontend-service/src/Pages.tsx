@@ -13,11 +13,13 @@ const Pages = () => {
     const productSlice = useSelector((state: any) => state.productSlice);
     const orderSlice = useSelector((state: any) => state.orderSlice);
     const isLoggedIn = userSlice.isLoggedIn
+    const isAdmin = userSlice.isAdmin
     const [users, setUsers] = useState(userSlice.users)
     const [user, setUser] = useState(userSlice.user)
     const [products, setProducts] = useState(productSlice.products)
     const [orders, setOrders] = useState(orderSlice.orders)
     const [search, setSearch] = useState<boolean>(false)
+    const [auth, setAuth] = useState<{ display: boolean, active: "login" | "signup" | "none" }>({ display: false, active: "none" })
     return (
         <CommonContext.Provider
             value={{
@@ -32,6 +34,9 @@ const Pages = () => {
                 setProducts,
                 orders,
                 setOrders,
+                auth,
+                setAuth,
+                isAdmin,
                 dispatch
             }}
         >

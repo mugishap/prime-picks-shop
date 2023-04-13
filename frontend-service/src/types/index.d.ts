@@ -39,23 +39,26 @@ export interface IOrder extends TimestampAudit {
     quantity: number,
 }
 
-export interface SignupData {
+export interface ISignupData {
     fullname: string,
     email: string,
     mobile: string,
+    location:string
     password: string,
+    showPassword: boolean
 }
 
-export interface Logindata {
+export interface ILoginData {
     email: string,
     password: string,
+    showPassword: boolean
 }
 
-export interface ISlide{
-    image:string,
-    headline:string,
-    offer:string,
-    starting:string,
-    color:string,
-    background:"greenish"|"whitish"
+export interface ISlide {
+    image: string,
+    headline: string,
+    offer: string,
+    starting: string,
+    color: string,
+    background: "greenish" | "whitish"
 }
