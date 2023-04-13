@@ -14,12 +14,13 @@ const registerUser = async (req, res) => {
     try {
         const { error } = CreateUserSchema.validate(req.body, { allowUnknown: true })
         if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
-        const { fullname, email, mobile, password } = req.body
+        const { fullname,location, email, mobile, password } = req.body
         const hashedPassword = await bcrypt.hash(password, 8)
         const user = new User({
             fullname,
             email,
             mobile,
+            location,
             password: hashedPassword
         })
         await user.save()
@@ -29,20 +30,6 @@ const registerUser = async (req, res) => {
         console.log(error.message)
         const regex = /index:\s+(\w+)_\d+\s+/;
         if (error.message.includes(" duplicate key error collection")) return res.status(500).json(new ApiResponse(false, `${(error.message.match(regex)[1])} already exists`, error))
-        return res.status(500).json(new ApiResponse(false, "Internal Server Error", error))
-    }
-}
-
-const addUserLocation = async (req, res) => {
-    try {
-        const { location } = req.body
-        const { id } = req.user
-        const user = await User.findById(id)
-        user.location = location
-        await user.save()
-        return res.status(200).json(new ApiResponse(true, "Location added successfully", { user }))
-    } catch (error) {
-        console.log(error.message)
         return res.status(500).json(new ApiResponse(false, "Internal Server Error", error))
     }
 }
@@ -191,7 +178,6 @@ const userController = {
     searchUser,
     updateAvatar,
     updatePassword,
-    addUserLocation
 }
 
 export default userController

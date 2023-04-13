@@ -6,7 +6,6 @@ import { registerDefinition } from 'swaggiffy'
 const userRouter = Router()
 
 userRouter.post('/register', userController.registerUser)
-userRouter.post('/add-location', isLoggedIn, userController.addUserLocation)
 userRouter.put('/update', isLoggedIn, userController.updateUser)
 userRouter.put('/update-status', isLoggedIn, userController.updateProfileStatus)
 userRouter.get('/all', [isLoggedIn, isAdmin], userController.getAllUsers)
