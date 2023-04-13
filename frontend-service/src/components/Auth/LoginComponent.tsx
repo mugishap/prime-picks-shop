@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import api from "../../api";
-import { login } from "../../redux/slices/userSlice";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { ILoginData } from "../../types";
+import { CommonContext } from "../../context";
 
 interface Props {
   setAuth: Function
 }
 
 const LoginComponent: React.FC<Props> = ({ setAuth }) => {
-  const dispatch = useDispatch();
+  const { dispatch } = useContext(CommonContext);
   const [loginData, setLoginData] = useState<ILoginData>({
     email: "",
     password: "",
     showPassword: false,
   })
+
   const [loading, setLoading] = useState<boolean>(false);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();

@@ -12,27 +12,27 @@ export const navbarlinks: INavbarLink[] = [
         href: "/",
         icon: BiHome,
         protected: false,
-        label:"home"
+        label: "home"
     },
     {
         name: "Products",
         href: "/products",
         icon: BiHome,
         protected: false,
-        label:"products"
+        label: "products"
     },
     {
         name: "Contact Us",
         href: "/contact",
         icon: BiPhoneCall,
         protected: false,
-        label:"contact"
+        label: "contact"
     }, {
         name: "About Us",
         href: "/about",
         icon: BiPhoneCall,
         protected: false,
-        label:"about"
+        label: "about"
     },
 ]
 
@@ -125,6 +125,13 @@ export const sidebarLinks: ISidebarLink[] = [
         label: "users_management"
     },
     {
+        href: "/admin/new",
+        icon: BiUser,
+        name: "Admin Management",
+        protected: true,
+        label: "admin_management"
+    },
+    {
         href: "/admin/orders",
         icon: FiTruck,
         name: "Orders Management",
@@ -146,6 +153,5 @@ export const sidebarLinks: ISidebarLink[] = [
         name: "Add New Product",
         protected: true,
         label: "new_product"
-
     },
 ]

@@ -2,6 +2,9 @@ import React, { lazy, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { CommonContext } from './context'
+import NewAdmin from './pages/Admin/New/NewAdmin'
+import Account from './pages/Account/Account'
+import { IProduct } from './types'
 const Contact = lazy(() => import('./pages/Contact/Contact'))
 const Product = lazy(() => import('./pages/Products/Product'))
 const Dashboard = lazy(() => import('./pages/Admin/Dashboard/Dashboard'))
@@ -31,8 +34,16 @@ const Pages: React.FC<{}> = () => {
     const [viewNavbar, setViewNavbar] = useState(false)
     const [activeSidebarLink, setActiveSidebarLink] = useState<string>()
     const [activeNavbarLink, setActiveNavbarLink] = useState<string>()
-
-
+    const [activeTab, setActiveTab] = useState<string>("user")
+    const [updateUser, setUpdateUser] = useState(false)
+    const [updatePassword, setUpdatePassword] = useState(false)
+    const [updateProduct, setUpdateProduct] = useState<{
+        display: boolean,
+        product: IProduct
+    }>({
+        display: false,
+        product: null as unknown as IProduct
+    })
     return (
         <CommonContext.Provider
             value={{
@@ -56,6 +67,14 @@ const Pages: React.FC<{}> = () => {
                 setActiveSidebarLink,
                 activeNavbarLink,
                 setActiveNavbarLink,
+                updateProduct,
+                setUpdateProduct,
+                activeTab,
+                setActiveTab,
+                updateUser,
+                setUpdateUser,
+                updatePassword,
+                setUpdatePassword,
                 dispatch
             }}
         >
@@ -76,13 +95,16 @@ const Pages: React.FC<{}> = () => {
                         <Route path="/admin/products" element={<AdminProducts />} />
                         <Route path="/admin/products/new" element={<AddNewProduct />} />
                         <Route path="/admin/users" element={<AdminUsers />} />
+                        <Route path="/admin/new" element={<NewAdmin />} />
+
                         {/* </>
                         } */}
                         <Route
                             path='/account'
-                            element={
-                                userSlice.isLoggedIn ? <div>Account page</div> : <Navigate to={"/"} />
-                            }
+                            // element={
+                            //     userSlice.isLoggedIn ? <div>Account page</div> : <Navigate to={"/"} />
+                            // }
+                            element={<Account />}
                         />
                     </Routes>
                 </BrowserRouter>

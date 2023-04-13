@@ -31,9 +31,9 @@ const Product: React.FC<Props> = ({ product }) => {
                 />
             </div>
             <div className='flex min-h-[47%] justify-between w-full flex-col items-center'>
-                <div className='px-6 py-4'>
+                <div className='px-6 w-full py-4'>
                     <div className='font-bold text-xl mb-2'>{product.name}</div>
-                    <p className='text-gray-700 text-base w-full'>{product.description.slice(0, 220)}{product.description.length > 220 && "..."}</p>
+                    <p className='text-gray-700 text-base w-full'>{product.description.length > 220 ? `${product.description.slice(0, 220)}...` : product.description}</p>
                 </div>
                 <div className='flex justify-between w-full items-end mt-1 px-6'>
                     <button className='p-2 ml-0 leading-tight text-black bg-white font-bold duration-75 flex gap-1'>

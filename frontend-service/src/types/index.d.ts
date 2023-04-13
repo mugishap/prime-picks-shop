@@ -48,7 +48,8 @@ export interface ISignupData {
     mobile: string,
     location: string
     password: string,
-    showPassword: boolean
+    showPassword: boolean,
+    role?: "ADMIN" | "NORMAL"
 }
 
 export interface ILoginData {
@@ -64,4 +65,13 @@ export interface ISlide {
     starting: string,
     color: string,
     background: "greenish" | "whitish"
+}
+
+export interface IProductData {
+    name: string,
+    description: string,
+    price: number,
+    currency: "RWF" | "USD",
+    quantity: number,
+    imageStr: string,
 }
