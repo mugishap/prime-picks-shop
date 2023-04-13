@@ -2,6 +2,8 @@ import React, { lazy, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { CommonContext } from './context'
+import Contact from './pages/Contact/Contact'
+const About = lazy(() => import('./pages/About/About'))
 const Home = lazy(() => import('./pages/Home/Home'))
 
 const Pages = () => {
@@ -37,6 +39,8 @@ const Pages = () => {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/contact" element={<Contact />} />
 
                         <Route path="/auth/register" element={<h1>Register</h1>} />
                         <Route path="/auth/add-location" element={<h1>add location</h1>} />

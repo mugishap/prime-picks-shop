@@ -43,10 +43,9 @@ const HomeComponent = () => {
             <Swiper
                 className='w-full'
                 autoplay={{
-                    delay: 4000
+                    delay: 2000
                 }}
-                navigation
-                modules={[Navigation, Pagination, Autoplay]}
+                modules={[Pagination, Autoplay]}
                 pagination
             >
                 {

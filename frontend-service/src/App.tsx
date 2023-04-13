@@ -10,6 +10,7 @@ import "swiper/css/scrollbar";
 import 'swiper/css/autoplay';
 import { Autoplay } from 'swiper';
 import SwiperCore from 'swiper'
+import { Logo } from './assets'
 
 const App: React.FC = () => {
 
@@ -18,8 +19,14 @@ const App: React.FC = () => {
   return (
     <Suspense
       fallback={
-        <div className='w-full bg-black h-screen flex justify-center items-center'>
-          <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-nf-red'></div>
+        <div className='w-full bg-slate-200 h-screen flex justify-center items-center'>
+          <div className='relative z-[2] h-44 w-44'>
+            <div className='z-[3] animate-spin absolute w-full h-full rounded-full border-b-2 border-pink-600 p-10'>
+            </div>
+            <div className='z-[4] absolute w-full'>
+              <img className='w-36' src={Logo} alt="Logo" />
+            </div>
+          </div>
         </div>
       }
     >

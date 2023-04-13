@@ -1,5 +1,7 @@
 import React from 'react'
 import { ISlide } from '../../../types'
+import { FiArrowRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 interface Props {
     slide: ISlide
@@ -9,7 +11,7 @@ const SlideComponent: React.FC<Props> = ({ slide }) => {
     console.log(`bg-${slide.background}`);
 
     return (
-        <div className={`w-full bg-${slide.background} text-${slide.background === "greenish" ? "white" : "black"} h-[60vh] flex items-center justify-center`}>
+        <div className={`w-full bg-${slide.background} bg- text-${slide.background === "greenish" ? "white" : "black"} h-[60vh] flex items-center justify-center`}>
             <div className="flex flex-col my-2 w-4/12 justify-center">
                 <div className='flex'>
                     <span>Starting at</span> &nbsp;<span className='font-bold'>{slide.starting}</span>
@@ -25,6 +27,12 @@ const SlideComponent: React.FC<Props> = ({ slide }) => {
                     </section> &nbsp;
                     <span className='text-[28px] font-oregano'>off this week</span>
                 </div>
+                <Link to={"/products"}>
+                    <button className='flex bg-white px-4 mt-8 py-2 cursor-pointer w-fit rounded text-black items-center'>
+                        <span className='mr-3'>Shop Now</span>
+                        <FiArrowRight />
+                    </button>
+                </Link>
             </div>
             <div className="flex items-center w-4/12 justify-end">
                 <img className=' object-cover' src={slide.image} alt={slide.headline} />
