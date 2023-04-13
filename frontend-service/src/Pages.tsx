@@ -25,6 +25,7 @@ const Pages = () => {
     const [orders, setOrders] = useState(orderSlice.orders)
     const [search, setSearch] = useState<boolean>(false)
     const [auth, setAuth] = useState<{ display: boolean, active: "login" | "signup" | "none" }>({ display: false, active: "none" })
+    const [showSidebar, setShowSidebar] = useState(false)
     return (
         <CommonContext.Provider
             value={{
@@ -42,6 +43,8 @@ const Pages = () => {
                 auth,
                 setAuth,
                 isAdmin,
+                showSidebar,
+                setShowSidebar,
                 dispatch
             }}
         >
