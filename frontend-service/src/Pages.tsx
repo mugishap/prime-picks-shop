@@ -2,9 +2,9 @@ import React, { lazy, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { CommonContext } from './context'
-import NewAdmin from './pages/Admin/New/NewAdmin'
-import Account from './pages/Account/Account'
 import { IProduct } from './types'
+const NewAdmin = lazy(() => import('./pages/Admin/New/NewAdmin'))
+const Account = lazy(() => import('./pages/Account/Account'))
 const Contact = lazy(() => import('./pages/Contact/Contact'))
 const Product = lazy(() => import('./pages/Products/Product'))
 const Dashboard = lazy(() => import('./pages/Admin/Dashboard/Dashboard'))
@@ -24,7 +24,6 @@ const Pages: React.FC<{}> = () => {
     const productSlice = useSelector((state: any) => state.productSlice);
     const orderSlice = useSelector((state: any) => state.orderSlice);
     const isLoggedIn = userSlice.isLoggedIn
-    const isAdmin = userSlice.isAdmin
     const [users, setUsers] = useState(userSlice.users)
     const [user, setUser] = useState(userSlice.user)
     const [products, setProducts] = useState(productSlice.products)
@@ -60,7 +59,6 @@ const Pages: React.FC<{}> = () => {
                 setOrders,
                 auth,
                 setAuth,
-                isAdmin,
                 viewNavbar,
                 setViewNavbar,
                 activeSidebarLink,
@@ -87,24 +85,23 @@ const Pages: React.FC<{}> = () => {
                         <Route path="/products" element={<Products />} />
                         <Route path="/product" element={<Product />} />
                         <Route path="*" element={<NotFound />} />
-                        {/* {
+                        {
                             isLoggedIn && user.role === "admin" &&
-                            <> */}
-                        <Route path="/admin" element={<Dashboard />} />
-                        <Route path="/admin/orders" element={<Orders />} />
-                        <Route path="/admin/products" element={<AdminProducts />} />
-                        <Route path="/admin/products/new" element={<AddNewProduct />} />
-                        <Route path="/admin/users" element={<AdminUsers />} />
-                        <Route path="/admin/new" element={<NewAdmin />} />
+                            <>
+                                <Route path="/admin" element={<Dashboard />} />
+                                <Route path="/admin/orders" element={<Orders />} />
+                                <Route path="/admin/products" element={<AdminProducts />} />
+                                <Route path="/admin/products/new" element={<AddNewProduct />} />
+                                <Route path="/admin/users" element={<AdminUsers />} />
+                                <Route path="/admin/new" element={<NewAdmin />} />
 
-                        {/* </>
-                        } */}
+                            </>
+                        }
                         <Route
                             path='/account'
-                            // element={
-                            //     userSlice.isLoggedIn ? <div>Account page</div> : <Navigate to={"/"} />
-                            // }
-                            element={<Account />}
+                            element={
+                                userSlice.isLoggedIn ? <Account /> : <Navigate to={"/"} />
+                            }
                         />
                     </Routes>
                 </BrowserRouter>

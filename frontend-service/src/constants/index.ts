@@ -6,7 +6,7 @@ import { ISlide } from '../types'
 import { FiDollarSign, FiHeadphones, FiTruck } from 'react-icons/fi'
 import { TbDiscount2 } from 'react-icons/tb'
 
-export const navbarlinks: INavbarLink[] = [
+export const  navbarlinks: INavbarLink[] = [
     {
         name: "Home",
         href: "/",

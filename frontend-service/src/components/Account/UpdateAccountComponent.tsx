@@ -1,15 +1,7 @@
 import React, { useContext, useState } from 'react'
-import { IUser } from '../../types'
+import { IUser, IUserData } from '../../types'
 import { toast } from 'react-toastify'
 import { CommonContext } from '../../context'
-
-interface IUserData extends IUser {
-    fullname: string,
-    email: string,
-    mobile: string,
-    location: string,
-    avatarString: string,
-}
 
 const UpdateAccountComponent: React.FC<{}> = ({ }) => {
     const { dispatch, setUpdateUser, user } = useContext(CommonContext)

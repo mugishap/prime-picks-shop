@@ -39,7 +39,7 @@ const Product: React.FC<Props> = ({ product }) => {
                     <button className='p-2 ml-0 leading-tight text-black bg-white font-bold duration-75 flex gap-1'>
                         {new Intl.NumberFormat("es-us").format(Number(product.price))}
                         <span className='font-bold'>
-                            {product.currency.toUpperCase()}
+                            {product.currency?.toUpperCase()}
                         </span>
                     </button>
                     <button title='Add to Cart' className='p-3 bg-transparent text-black rounded-full border border-pink-600 hover:bg-pink-600 hover:text-white duration-75'>

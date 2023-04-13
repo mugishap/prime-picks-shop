@@ -6,7 +6,6 @@ const initialState: {
     users: IUser[]
     token: string;
     isLoggedIn: boolean;
-    isAdmin: boolean;
 } = {
     user: {
         _id: "",
@@ -22,7 +21,6 @@ const initialState: {
     users: [],
     token: "",
     isLoggedIn: false,
-    isAdmin: false
 };
 
 const userSlice: Slice = createSlice({
@@ -34,9 +32,7 @@ const userSlice: Slice = createSlice({
             state.user = { ...payload.user };
             state.token = payload.token
         },
-        setAdmin: (state) => {
-            state.isAdmin = true
-        },
+
         logout: (state) => {
             state.isLoggedIn = false;
             state.user = {
@@ -52,11 +48,14 @@ const userSlice: Slice = createSlice({
             };
             state.token = ""
             state.users = []
-            state.isAdmin = false
             window.location.replace("/auth/login");
         },
         updateUser: (state, { payload }) => {
-            state = payload;
+            state.user = payload;
+            state.users = state.users.map((user:IUser) => user._id === payload._id ? payload : user)
+        },
+        removeUser: (state, { payload }) => {
+            state.users = state.users.filter((user:IUser) => user._id !== payload)
         },
         setUsers: (state, { payload }) => {
             state.users = payload
@@ -64,6 +63,6 @@ const userSlice: Slice = createSlice({
     }
 });
 
-export const { login, logout, updateUser, setUsers } = userSlice.actions;
+export const { login, logout, updateUser,removeUser, setUsers } = userSlice.actions;
 
 export default userSlice.reducer;

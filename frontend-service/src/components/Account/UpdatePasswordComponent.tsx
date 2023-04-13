@@ -1,13 +1,7 @@
 import React, { useContext, useState } from 'react'
-import { IUser } from '../../types'
+import { INewPasswordData, IUser } from '../../types'
 import { toast } from 'react-toastify'
 import { CommonContext } from '../../context'
-
-interface INewPasswordData {
-    oldPassword: string,
-    newPassword: string,
-    showPassword: boolean
-}
 
 const UpdatePasswordComponent: React.FC<{}> = ({ }) => {
     const { setUpdatePassword } = useContext(CommonContext)

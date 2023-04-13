@@ -3,11 +3,11 @@ import { Logo } from '../../assets'
 import { Link } from 'react-router-dom'
 import { CommonContext } from '../../context'
 import { INavbarLink } from '../../types'
-import { BiCart, BiHome, BiMenu, BiPhoneCall, BiSearch } from 'react-icons/bi'
+import { BiMenu, BiSearch } from 'react-icons/bi'
 import { navbarlinks } from '../../constants'
 
 const Navbar: React.FC<{}> = ({ }) => {
-    const { isLoggedIn, search, setSearch, setAuth, isAdmin, setViewNavbar, setActiveNavbarLink, activeNavbarLink, } = useContext(CommonContext)
+    const { isLoggedIn, search, setSearch, setAuth, user, setViewNavbar, setActiveNavbarLink, activeNavbarLink, } = useContext(CommonContext)
 
     return (
         <div className='w-full bg-slate-200 h-16 flex items-center justify-around'>
@@ -39,7 +39,7 @@ const Navbar: React.FC<{}> = ({ }) => {
                 </div>
             )}
             {
-                (isLoggedIn && isAdmin) &&
+                (isLoggedIn && user.role === "ADMIN") &&
                 <Link to={"/admin"}>
                     <button className='mx-3 bg-pink-600 text-white px-3 py-1 cursor-pointer rounded'>Admin</button>
                 </Link>
