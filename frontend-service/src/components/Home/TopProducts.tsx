@@ -32,7 +32,7 @@ const TopProducts = () => {
   ]
 
   return (
-    <div className='w-full flex items-center justify-around my-10 px-[10vw]'>
+    <div className='w-full flex items-center justify-around my-10 px-8'>
       {
         topProducts.map((product, index: number) => (
           <div className='flex-col flex items-center justify-center mx-2' key={index}>

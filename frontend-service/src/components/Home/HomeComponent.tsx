@@ -8,6 +8,7 @@ import { Autoplay, Navigation, Pagination } from 'swiper'
 import TopProducts from './TopProducts'
 import Features from './Features'
 import TrendingProducts from './TrendingProducts'
+import Subscription from '../Common/Subscription'
 
 const HomeComponent = () => {
 
@@ -50,15 +51,18 @@ const HomeComponent = () => {
             >
                 {
                     slides.map((slide, index) => (
-                        <SwiperSlide>
-                            <SlideComponent key={index} slide={slide} />
+                        <SwiperSlide key={index}>
+                            <SlideComponent slide={slide} />
                         </SwiperSlide>
                     ))
                 }
             </Swiper>
-            <TopProducts />
-            <Features />
-            <TrendingProducts />
+            <div className='flex flex-col px-[10vw]'>
+                <TopProducts />
+                <Features />
+                <TrendingProducts />
+            </div>
+            <Subscription />
         </div>
     )
 }

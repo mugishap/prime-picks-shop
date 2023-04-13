@@ -8,7 +8,6 @@ interface Props {
 }
 
 const SlideComponent: React.FC<Props> = ({ slide }) => {
-    console.log(`bg-${slide.background}`);
 
     return (
         <div className={`w-full bg-${slide.background} bg- text-${slide.background === "greenish" ? "white" : "black"} h-[60vh] flex items-center justify-center`}>

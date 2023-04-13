@@ -27,7 +27,7 @@ const Features: React.FC<{}> = () => {
     ]
 
     return (
-        <div className='w-full flex items-center justify-around my-10 px-[10vw]'>
+        <div className='w-full flex items-center justify-around my-10'>
             {
                 features.map((feature, index: number) => (
                     <div className='flex  w-[24%] rounded items-center justify-center mx-2 bg-slate-200 p-6' key={index}>
