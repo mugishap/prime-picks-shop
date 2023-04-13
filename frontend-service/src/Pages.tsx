@@ -8,6 +8,7 @@ import Dashboard from './pages/Admin/Dashboard/Dashboard'
 import Orders from './pages/Admin/Orders/Orders'
 import AdminProducts from './pages/Admin/Products/AdminProducts'
 import Products from './pages/Products/Products'
+import Notfound from './pages/404/NotFound'
 const About = lazy(() => import('./pages/About/About'))
 const Home = lazy(() => import('./pages/Home/Home'))
 
@@ -56,6 +57,7 @@ const Pages = () => {
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/products" element={<Products />} />
                         <Route path="/product" element={<Product />} />
+                        <Route path="*" element={<Notfound />} />
                         {
                             isLoggedIn && user.role === "admin" &&
                             <>
