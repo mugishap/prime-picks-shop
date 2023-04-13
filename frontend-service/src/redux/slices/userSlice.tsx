@@ -58,7 +58,7 @@ const userSlice: Slice = createSlice({
             state.users = state.users.filter((user:IUser) => user._id !== payload)
         },
         setUsers: (state, { payload }) => {
-            state.users = payload
+            state.users = [...payload]
         }
     }
 });

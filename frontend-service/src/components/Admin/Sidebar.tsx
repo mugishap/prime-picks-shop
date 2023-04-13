@@ -9,7 +9,7 @@ import { MdManageAccounts } from "react-icons/md"
 const Sidebar: React.FC<{}> = () => {
   const { activeSidebarLink, setActiveSidebarLink } = useContext(CommonContext)
   return (
-    <div className='min-h-screen pt-16 lg:pt-24 bg-slate-200 w-2/12 sm:w-3/12'>
+    <div className='min-h-[calc(100vh-10vh)] pt-16 lg:pt-24 bg-slate-200 w-2/12 sm:w-3/12'>
       <MdManageAccounts className="sm:hidden flex m-auto" size={35} />
       <span className='font-bold text-2xl px-4 my-10 hidden sm:flex'>
         <span className='2xl:flex hidden'>Prime Picks </span> &nbsp;

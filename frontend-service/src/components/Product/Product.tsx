@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { IProduct } from '../../types'
 import { BiCart } from 'react-icons/bi'
+import { CommonContext } from '../../context'
+import { setActiveProduct } from '../../redux/slices/productSlice'
 
 interface Props {
     product: IProduct
@@ -9,11 +11,15 @@ interface Props {
 
 const Product: React.FC<Props> = ({ product }) => {
     const navigate = useNavigate()
+    const { dispatch } = useContext(CommonContext)
     return (
         <div
             title='Click to view'
             className='w-96 h-[513px] rounded relative overflow-hidden shadow-lg cursor-pointer'
-            onClick={() => navigate(`/product/${product._id}`)}
+            onClick={() => {
+                dispatch(setActiveProduct({ ...product }))
+                navigate(`/product`)
+            }}
         >
             {
                 product.quantity === 0 ?

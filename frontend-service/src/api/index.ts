@@ -7,7 +7,7 @@ const BACKEND_URL: string = "http://localhost:5000/api/v1";
 const api = axios.create({
   baseURL: BACKEND_URL,
   headers: {
-    "Authorization": getCookie("token")
+    "Authorization": "Bearer " + getCookie("token")
   }
 });
 

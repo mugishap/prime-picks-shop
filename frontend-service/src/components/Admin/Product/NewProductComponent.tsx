@@ -1,7 +1,9 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useContext, useState } from 'react'
 import { IProductData } from '../../../types';
 import Dropzone from 'react-dropzone';
-import { BiCart, BiUpload } from 'react-icons/bi';
+import { BiCart, BiLoaderAlt, BiUpload } from 'react-icons/bi';
+import { CommonContext } from '../../../context';
+import { useCreateProduct } from '../../../hooks';
 
 const NewProductComponent: React.FC<{}> = () => {
 
@@ -10,17 +12,18 @@ const NewProductComponent: React.FC<{}> = () => {
         quantity: 1,
         price: 1,
         description: "",
-        imageStr: "",
+        imageString: "",
         currency: "RWF",
     })
-    const [loading, setLoading] = useState(false)
+    const { loading, setLoading, dispatch } = useContext(CommonContext)
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         try {
+            setLoading(true)
             e.preventDefault()
+            useCreateProduct({ productData, setLoading, dispatch })
         } catch (error) {
             console.log(error);
-
         }
     }
 
@@ -30,7 +33,7 @@ const NewProductComponent: React.FC<{}> = () => {
         const reader = new FileReader();
 
         reader.addEventListener("loadend", () => {
-            setProductData({ ...productData, imageStr: reader.result as string });
+            setProductData({ ...productData, imageString: reader.result as string });
         });
         reader.readAsDataURL(file);
     }
@@ -39,7 +42,7 @@ const NewProductComponent: React.FC<{}> = () => {
         if (acceptedFiles.length > 0) {
             const reader = new FileReader();
             reader.addEventListener("loadend", () => {
-                setProductData({ ...productData, imageStr: reader.result as string });
+                setProductData({ ...productData, imageString: reader.result as string });
             });
             reader.readAsDataURL(acceptedFiles[0]);
         }
@@ -104,6 +107,8 @@ const NewProductComponent: React.FC<{}> = () => {
                                 Currency
                             </label>
                             <select
+                                value={productData.currency}
+                                onChange={(e) => setProductData({ ...productData, currency: e.target.value as "RWF" | "USD" })}
                                 className="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                             >
                                 {
@@ -120,7 +125,8 @@ const NewProductComponent: React.FC<{}> = () => {
                             </label>
                             <textarea
                                 rows={8}
-                                onChange={(e)=>setProductData({...productData,description:e.target.value})}
+                                value={productData.description}
+                                onChange={(e) => setProductData({ ...productData, description: e.target.value })}
                                 className="resize-none bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                             />
                         </div>
@@ -128,16 +134,16 @@ const NewProductComponent: React.FC<{}> = () => {
                             role="button"
                             aria-label="create product"
                             title="Create Product"
-                            className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm w-fit font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-800 hover:animate-ring py-4 mt-4 px-8 disabled:bg-slate-600"
+                            className="focus:ring-2 w-56 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-800 hover:animate-ring py-4 mt-4 px-8 disabled:bg-slate-600"
                             type="submit"
                             disabled={loading}
                         >
-                            CREATE PRODUCT
+                            {loading ? <BiLoaderAlt className='animate-spin text-white' size={25} /> : "CREATE PRODUCT"}
                         </button>
                     </form>
                     <div className='w-full plg:w-1/2 plg:mx-2 rounded min-h-full'>
                         {
-                            productData.imageStr ? (
+                            productData.imageString ? (
                                 <div className='w-full h-full flex flex-col items-center justify-center'>
                                     <span className='my-6 font-bold text-xl'>Product Preview</span>
                                     <div
@@ -155,7 +161,7 @@ const NewProductComponent: React.FC<{}> = () => {
                                         <div className='w-full h-64 relative'>
                                             <img
                                                 className='w-full absolute object-cover h-full hover:scale-105'
-                                                src={productData.imageStr}
+                                                src={productData.imageString}
                                                 alt={productData.name}
                                             />
                                         </div>

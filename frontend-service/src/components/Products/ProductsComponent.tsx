@@ -1,5 +1,5 @@
 import React from 'react'
-import TrendingProducts from '../Home/TrendingProducts'
+import TrendingProducts from './TrendingProducts'
 import HotDeals from './HotDeals'
 import NewArrivals from './NewArrivals'
 

@@ -78,7 +78,7 @@ export interface IProductData extends IProduct {
     price?: number,
     currency?: "RWF" | "USD",
     quantity?: number,
-    imageStr?: string,
+    imageString?: string,
 }
 
 export interface IUserData extends IUser {
@@ -87,6 +87,8 @@ export interface IUserData extends IUser {
     mobile?: string,
     location?: string,
     avatarString?: string,
+    password?:string,
+    showPassword?:boolean
 }
 
 export interface INewPasswordData {

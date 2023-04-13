@@ -2,13 +2,15 @@ import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { ISignupData } from "../../types";
 import { CommonContext } from "../../context";
+import { useSignup } from "../../hooks";
+import { BiLoaderAlt } from "react-icons/bi";
 
 interface Props {
     setAuth: Function
 }
 
 const SignupComponent: React.FC<Props> = ({ setAuth }) => {
-    const { dispatch } = useContext(CommonContext);
+    const { dispatch, loading, setLoading } = useContext(CommonContext);
     const [signupData, setSignupData] = useState<ISignupData>({
         fullname: "",
         email: "",
@@ -17,11 +19,12 @@ const SignupComponent: React.FC<Props> = ({ setAuth }) => {
         password: "",
         showPassword: false
     })
-    const [loading, setLoading] = useState<boolean>(false);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
-            if (!signupData.email || !signupData.password || !signupData.fullname || !signupData.location || !signupData.mobile ) return toast.error("Please fill all the fields");
+            setLoading(true)
+            if (!signupData.email || !signupData.password || !signupData.fullname || !signupData.location || !signupData.mobile) return toast.error("Please fill all the fields");
+            useSignup({ signupData, setLoading, dispatch,setAuth })
         } catch (error) {
             console.log(error);
         }
@@ -156,11 +159,11 @@ const SignupComponent: React.FC<Props> = ({ setAuth }) => {
                     <button
                         role="button"
                         aria-label="create my account"
-                        className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
+                        className="focus:ring-2 flex items-center justify-center focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
                         type="submit"
                         disabled={loading}
                     >
-                        REGISTER
+                        {loading ? <BiLoaderAlt className="animate-spin" size={25} /> : "REGISTER"}
                     </button>
                 </div>
             </form >

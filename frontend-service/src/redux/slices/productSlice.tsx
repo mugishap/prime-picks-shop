@@ -4,11 +4,21 @@ import { IProduct } from "../../types";
 const initialState: {
     products: IProduct[],
     cart: IProduct[],
-    searchResults: IProduct[]
+    searchResults: IProduct[],
+    activeProduct: IProduct
 } = {
     products: [],
     cart: [],
-    searchResults: []
+    searchResults: [],
+    activeProduct: {
+        _id: "",
+        name: "",
+        description: "",
+        price: 0,
+        image: "",
+        quantity: 0,
+        createdAt: "",
+    }
 };
 
 const userSlice: Slice = createSlice({
@@ -24,15 +34,21 @@ const userSlice: Slice = createSlice({
         updateProduct: (state, { payload }) => {
             state.products = state.products.map((product: IProduct) => product._id === payload._id ? payload : product)
         },
+        addProduct: (state, { payload }) => {
+            state.products.push(payload)
+        },
         addItemToCart: (state, { payload }) => {
             state.cart.push(payload)
         },
         removeProduct: (state, { payload }) => {
             state.products = state.products.filter((product: IProduct) => product._id !== payload)
+        },
+        setActiveProduct: (state, { payload }) => {
+            state.activeProduct = { ...payload }
         }
     }
 });
 
-export const { addItemTocart, load, setSearchResults, updateProduct, removeProduct } = userSlice.actions;
+export const { addItemTocart, addProduct, setActiveProduct, load, setSearchResults, updateProduct, removeProduct } = userSlice.actions;
 
 export default userSlice.reducer;

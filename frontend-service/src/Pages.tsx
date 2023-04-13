@@ -1,8 +1,10 @@
-import React, { lazy, useState } from 'react'
+import React, { lazy, useEffect, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { CommonContext } from './context'
-import { IProduct } from './types'
+import { IOrder, IProduct, IUser } from './types'
+import { useDeleteOrder, useDeleteProduct, useDeleteUserByAdmin, useGetAllOrders, useGetProducts, useGetUsers } from './hooks'
+import { Dispatch } from '@reduxjs/toolkit'
 const NewAdmin = lazy(() => import('./pages/Admin/New/NewAdmin'))
 const Account = lazy(() => import('./pages/Account/Account'))
 const Contact = lazy(() => import('./pages/Contact/Contact'))
@@ -19,23 +21,26 @@ const Home = lazy(() => import('./pages/Home/Home'))
 
 const Pages: React.FC<{}> = () => {
 
-    const dispatch = useDispatch()
+    const dispatch: Dispatch = useDispatch()
     const userSlice = useSelector((state: any) => state.userSlice);
     const productSlice = useSelector((state: any) => state.productSlice);
     const orderSlice = useSelector((state: any) => state.orderSlice);
-    const isLoggedIn = userSlice.isLoggedIn
-    const [users, setUsers] = useState(userSlice.users)
-    const [user, setUser] = useState(userSlice.user)
-    const [products, setProducts] = useState(productSlice.products)
-    const [orders, setOrders] = useState(orderSlice.orders)
+    const user: IUser = userSlice.user
+    const activeProduct: IProduct = productSlice.activeProduct
+    const products: IProduct[] = productSlice.products
+    const searchResults: IProduct[] = productSlice.searchResults
+    const isLoggedIn: boolean = userSlice.isLoggedIn
+    const users: IUser[] = userSlice.users
+    const orders: IOrder[] = orderSlice.orders
     const [search, setSearch] = useState<boolean>(false)
     const [auth, setAuth] = useState<{ display: boolean, active: "login" | "signup" | "none" }>({ display: false, active: "none" })
-    const [viewNavbar, setViewNavbar] = useState(false)
+    const [viewNavbar, setViewNavbar] = useState<boolean>(false)
     const [activeSidebarLink, setActiveSidebarLink] = useState<string>()
     const [activeNavbarLink, setActiveNavbarLink] = useState<string>()
     const [activeTab, setActiveTab] = useState<string>("user")
-    const [updateUser, setUpdateUser] = useState(false)
-    const [updatePassword, setUpdatePassword] = useState(false)
+    const [updateUser, setUpdateUser] = useState<boolean>(false)
+    const [updatePassword, setUpdatePassword] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
     const [updateProduct, setUpdateProduct] = useState<{
         display: boolean,
         product: IProduct
@@ -43,20 +48,35 @@ const Pages: React.FC<{}> = () => {
         display: false,
         product: null as unknown as IProduct
     })
+    useEffect(() => {
+        useGetProducts({ dispatch, setLoading })
+        console.log(productSlice.products);
+    }, [])
+    const refresh = async ({ data }: { data: "products" | "orders" | "users" }) => {
+        data === "products" && useGetProducts({ dispatch, setLoading })
+        data === "orders" && useGetAllOrders({ dispatch, setLoading })
+        data === "users" && useGetUsers({ dispatch, setLoading })
+    }
+    const deleteData = async ({ data, id }: { id: string, data: "products" | "orders" | "users" }) => {
+        data === "products" && useDeleteProduct({ dispatch, setLoading, id })
+        data === "orders" && useDeleteOrder({ dispatch, setLoading, id })
+        data === "users" && useDeleteUserByAdmin({ dispatch, setLoading, id })
+    }
     return (
         <CommonContext.Provider
             value={{
                 user,
-                setUser,
                 search,
                 setSearch,
+                loading,
+                setLoading,
+                activeProduct,
                 isLoggedIn,
                 users,
-                setUsers,
+                deleteData,
                 products,
-                setProducts,
                 orders,
-                setOrders,
+                searchResults,
                 auth,
                 setAuth,
                 viewNavbar,
@@ -73,6 +93,7 @@ const Pages: React.FC<{}> = () => {
                 setUpdateUser,
                 updatePassword,
                 setUpdatePassword,
+                refresh,
                 dispatch
             }}
         >
@@ -86,7 +107,7 @@ const Pages: React.FC<{}> = () => {
                         <Route path="/product" element={<Product />} />
                         <Route path="*" element={<NotFound />} />
                         {
-                            isLoggedIn && user.role === "admin" &&
+                            isLoggedIn && user.role === "ADMIN" &&
                             <>
                                 <Route path="/admin" element={<Dashboard />} />
                                 <Route path="/admin/orders" element={<Orders />} />

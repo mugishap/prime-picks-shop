@@ -1,13 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CommonContext } from '../../context'
 import { BiLoaderAlt, BiSearch, BiX } from 'react-icons/bi'
+import { useSearchProduct } from '../../hooks'
 
-const SearchComponent:React.FC<{}> = () => {
+const SearchComponent: React.FC<{}> = () => {
 
-    const { search, setSearch } = useContext(CommonContext)
+    const { search, setSearch, dispatch, searchResults } = useContext(CommonContext)
     const [query, setQuery] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
-
+    useEffect(() => {
+        if (!query) return
+        setLoading(true)
+        useSearchProduct({ setLoading, query, dispatch })
+    }, [query])
     return (
         <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-md'>
             <div className='absolute z-[3] w-full h-full' onClick={() => setSearch(false)}></div>
@@ -16,7 +21,7 @@ const SearchComponent:React.FC<{}> = () => {
                     <BiX onClick={() => setSearch(false)} className='' size={25} />
                     <div className='bg-slate-300 my-4 m-auto w-10/12 p-2 rounded-3xl flex items-center justify-between px-2'>
                         <BiSearch size={20} className='text-slate-700' />
-                        <input type="text" className='placeholder:text-slate-400 text-slate-700 outline-none border-none w-11/12 bg-inherit' placeholder='Search here...' />
+                        <input value={query} onChange={(e) => setQuery(e.target.value)} type="text" className='placeholder:text-slate-400 text-slate-700 outline-none border-none w-11/12 bg-inherit' placeholder='Search here...' />
                         {loading && <BiLoaderAlt size={20} className='animate-spin ' />}
                     </div>
                     <div className='w-full overflow-y-scroll h-[90%]'>

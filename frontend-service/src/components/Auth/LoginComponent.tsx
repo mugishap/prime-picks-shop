@@ -2,25 +2,27 @@ import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { ILoginData } from "../../types";
 import { CommonContext } from "../../context";
+import { useLogin } from "../../hooks";
+import { BiLoaderAlt } from "react-icons/bi";
 
 interface Props {
   setAuth: Function
 }
 
 const LoginComponent: React.FC<Props> = ({ setAuth }) => {
-  const { dispatch } = useContext(CommonContext);
+  const { dispatch, loading, setLoading } = useContext(CommonContext);
   const [loginData, setLoginData] = useState<ILoginData>({
     email: "",
     password: "",
     showPassword: false,
   })
 
-  const [loading, setLoading] = useState<boolean>(false);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
+      setLoading(true)
       if (!loginData.email || !loginData.password) return toast.error("Please fill all the fields");
+      useLogin({ loginData, setLoading, dispatch, setAuth })
     } catch (error) {
       console.log(error);
     }
@@ -103,11 +105,11 @@ const LoginComponent: React.FC<Props> = ({ setAuth }) => {
           <button
             role="button"
             aria-label="create my account"
-            className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
+            className="focus:ring-2 flex items-center justify-center focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
             type="submit"
             disabled={loading}
           >
-            LOGIN
+            {loading ? <BiLoaderAlt className="animate-spin" size={25} /> : "LOGIN"}
           </button>
         </div>
       </form >

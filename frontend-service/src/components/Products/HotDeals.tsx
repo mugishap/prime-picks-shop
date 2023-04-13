@@ -1,90 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { IProduct } from '../../types'
-import { useNavigate } from 'react-router-dom'
 import Product from '../Product/Product'
+import { CommonContext } from '../../context'
 
 const HotDeals: React.FC<{}> = () => {
 
-    const products: IProduct[] = [
-        {
-            _id: '1',
-            name: "Sone name",
-            currency: "RWF",
-            description: "This is the description of our productThis is the description of our productThis is the description of our productThis is the description of our productThis is the description of our productThis is the description of our product",
-            image: "https://picsum.photos/234",
-            price: 234,
-            quantity: 0,
-            updatedAt: "234234234",
-            createdAt: "4324242342"
-        },
-        {
-            _id: '1',
-            name: "Sone name",
-            currency: "RWF",
-            description: "This is the description of our product",
-            image: "https://picsum.photos/234",
-            price: 234,
-            quantity: 2,
-            updatedAt: "234234234",
-            createdAt: "4324242342"
-        },
-        {
-            _id: '1',
-            name: "Sone name",
-            currency: "RWF",
-            description: "This is the description of our product",
-            image: "https://picsum.photos/234",
-            price: 234,
-            quantity: 2,
-            updatedAt: "234234234",
-            createdAt: "4324242342"
-        },
-        {
-            _id: '1',
-            name: "Sone name",
-            currency: "RWF",
-            description: "This is the description of our product",
-            image: "https://picsum.photos/234",
-            price: 234,
-            quantity: 2,
-            updatedAt: "234234234",
-            createdAt: "4324242342"
-        },
-        {
-            _id: '1',
-            name: "Sone name",
-            currency: "RWF",
-            description: "This is the description of our product",
-            image: "https://picsum.photos/234",
-            price: 234,
-            quantity: 2,
-            updatedAt: "234234234",
-            createdAt: "4324242342"
-        },
-        {
-            _id: '1',
-            name: "Sone name",
-            currency: "RWF",
-            description: "This is the description of our product",
-            image: "https://picsum.photos/234",
-            price: 234,
-            quantity: 2,
-            updatedAt: "234234234",
-            createdAt: "4324242342"
-        },
-        {
-            _id: '1',
-            name: "Sone name",
-            currency: "RWF",
-            description: "This is the description of our product",
-            image: "https://picsum.photos/234",
-            price: 234,
-            quantity: 2,
-            updatedAt: "234234234",
-            createdAt: "4324242342"
-        }
-
-    ]
+    const { products, loading } = useContext(CommonContext)
     return (
         <div className='my-4 w-full flex flex-col'>
             <div className='flex w-full'>
@@ -96,11 +17,13 @@ const HotDeals: React.FC<{}> = () => {
             </div>
             <section className='h- py-8 w-full'>
                 <div className='w-full xl:w-[90%] m-auto py-4 flex flex-wrap gap-6 items-center justify-center  transition-all duration-300'>
-                    {
-                        products.splice(0, 5).map((product, index) => (
+                    {!loading &&
+                        products.slice(0, 5).map((product: IProduct, index: number) => (
                             <Product key={index} product={product} />
                         ))
                     }
+                    {loading && <span>Loading...</span>}
+                    {!products.length && !loading && <span>Nothing to see here...</span>}
                 </div>
             </section>
         </div>

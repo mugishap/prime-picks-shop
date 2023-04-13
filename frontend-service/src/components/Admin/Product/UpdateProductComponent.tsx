@@ -3,21 +3,22 @@ import { CommonContext } from '../../../context'
 import { IProduct } from '../../../types'
 import Dropzone from 'react-dropzone'
 import { BiCart, BiUpload } from 'react-icons/bi'
+import { useUpdateProduct } from '../../../hooks'
 
 interface Data extends IProduct {
-    imageStr?: string
+    imageString?: string
 }
 
 const UpdateProductComponent: React.FC<{}> = () => {
 
-    const { updateProduct, setUpdateProduct } = useContext(CommonContext)
-    const [productData, setProductData] = useState<Data>({ ...updateProduct, imageStr: updateProduct.image })
-
-    const [loading, setLoading] = useState(false)
+    const { updateProduct, setUpdateProduct, loading, setLoading, dispatch } = useContext(CommonContext)
+    const [productData, setProductData] = useState<Data>({ ...updateProduct.product, imageString: updateProduct.product.image })
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault()
+            setLoading(true)
+            useUpdateProduct({ productData, setLoading, dispatch, setUpdateProduct })
         } catch (error) {
             console.log(error);
 
@@ -30,7 +31,7 @@ const UpdateProductComponent: React.FC<{}> = () => {
         const reader = new FileReader();
 
         reader.addEventListener("loadend", () => {
-            setProductData({ ...productData, imageStr: reader.result as string });
+            setProductData({ ...productData, imageString: reader.result as string });
         });
         reader.readAsDataURL(file);
     }
@@ -39,7 +40,7 @@ const UpdateProductComponent: React.FC<{}> = () => {
         if (acceptedFiles.length > 0) {
             const reader = new FileReader();
             reader.addEventListener("loadend", () => {
-                setProductData({ ...productData, imageStr: reader.result as string });
+                setProductData({ ...productData, imageString: reader.result as string });
             });
             reader.readAsDataURL(acceptedFiles[0]);
         }
@@ -47,10 +48,10 @@ const UpdateProductComponent: React.FC<{}> = () => {
 
 
     return (
-        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-md items-center justify-center'>
+        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-md flex items-center justify-center'>
             <div className='absolute z-[3] w-full h-full' onClick={() => setUpdateProduct({ display: false, product: null })}></div>
-            <div className='z-[4] bg-white absolute p-4 h-full flex flex-col justify-between'>
-                <div className='w-full shadow-xl border-2 rounded-lg md:rounded p-2 md:p-8 mt-6 min-h-[85%]'>
+            <div className='z-[4] bg-white rounded w-8/12 p-4 h-[90%] flex flex-col justify-between'>
+                <div className='w-full shadow-xl border-2 rounded-lg md:rounded p-2 md:p-8 mt-6'>
                     <div className='w-full flex-col-reverse plg:px-0 px-4 plg:flex-row flex h-full overflow-y-scroll'>
                         <form onSubmit={handleSubmit} className='w-full plg:w-1/2 flex flex-col plg:mx-2'>
                             <div className='w-full my-2'>
@@ -106,6 +107,8 @@ const UpdateProductComponent: React.FC<{}> = () => {
                                     Currency
                                 </label>
                                 <select
+                                    value={productData.currency}
+                                    onChange={(e) => setProductData({ ...productData, currency: e.target.value as "RWF" | "USD" })}
                                     className="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                                 >
                                     {
@@ -122,6 +125,7 @@ const UpdateProductComponent: React.FC<{}> = () => {
                                 </label>
                                 <textarea
                                     rows={8}
+                                    value={productData.description}
                                     onChange={(e) => setProductData({ ...productData, description: e.target.value })}
                                     className="resize-none bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                                 />
@@ -129,17 +133,17 @@ const UpdateProductComponent: React.FC<{}> = () => {
                             <button
                                 role="button"
                                 aria-label="create product"
-                                title="Create Product"
+                                title="Update Product"
                                 className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm w-fit font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-800 hover:animate-ring py-4 mt-4 px-8 disabled:bg-slate-600"
                                 type="submit"
                                 disabled={loading}
                             >
-                                CREATE PRODUCT
+                                UPDATE PRODUCT
                             </button>
                         </form>
                         <div className='w-full plg:w-1/2 plg:mx-2 rounded min-h-full'>
                             {
-                                productData.imageStr ? (
+                                productData.imageString ? (
                                     <div className='w-full h-full flex flex-col items-center justify-center'>
                                         <span className='my-6 font-bold text-xl'>Product Preview</span>
                                         <div
@@ -157,7 +161,7 @@ const UpdateProductComponent: React.FC<{}> = () => {
                                             <div className='w-full h-64 relative'>
                                                 <img
                                                     className='w-full absolute object-cover h-full hover:scale-105'
-                                                    src={productData.imageStr}
+                                                    src={productData.imageString}
                                                     alt={productData.name}
                                                 />
                                             </div>

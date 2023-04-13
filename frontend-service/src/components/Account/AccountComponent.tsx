@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import { IUser } from "../../types";
 import { CommonContext } from "../../context";
+import { logout } from "../../redux/slices/userSlice";
 
 const AccountComponent: React.FC = () => {
-    const { user, activeTab, setUpdateUser, setUpdatePassword } = useContext(CommonContext);
+    const { user, activeTab, dispatch, setUpdateUser, setUpdatePassword } = useContext(CommonContext);
     useEffect(() => {
         document.title = `${user.fullname} | Prime Picks`;
-        user ? null : window.location.replace("/");
     }, []);
     return (
         <div className="w-full flex flex-col">
@@ -47,7 +44,10 @@ const AccountComponent: React.FC = () => {
                     &&
                     (<div className="flex w-full lg:w-6/12 pl-8 flex-col items-center justify-center">
                         <span className="font-bold text-lg my-2">Are you sure you want to log out?</span>
-                        <button className="py-2 px-4 rounded bg-pink-600 text-white">LOGOUT</button>
+                        <button className="py-2 px-4 rounded bg-pink-600 text-white" onClick={() => {
+                            dispatch(logout({}))
+                            window.location.replace("/")
+                        }}>LOGOUT</button>
                     </div>)
                 }
                 {
