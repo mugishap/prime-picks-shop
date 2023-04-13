@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Slide } from "react-awesome-reveal";
 
-const ContactComponent = () => {
+const ContactComponent:React.FC<{}> = () => {
   const [fullname, setFullname] = useState<string>("");
   const [telephone, setTelephone] = useState<string>("");
   const [email, setEmail] = useState<string>("");

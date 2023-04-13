@@ -1,20 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Slice, createSlice } from "@reduxjs/toolkit";
+import { IUser } from "../../types";
 
 const initialState: {
-    user: any;
-    users: any[]
+    user: IUser;
+    users: IUser[]
     token: string;
     isLoggedIn: boolean;
     isAdmin: boolean;
 } = {
-    user: {},
+    user: {
+        _id: "",
+        fullname: "",
+        avatar: "",
+        createdAt: "",
+        email: "",
+        role: "NORMAL",
+        updatedAt: "",
+        location: "",
+        mobile: ""
+    },
     users: [],
     token: "",
     isLoggedIn: false,
     isAdmin: false
 };
 
-const userSlice: any = createSlice({
+const userSlice: Slice = createSlice({
     name: "user",
     initialState,
     reducers: {
@@ -28,7 +39,17 @@ const userSlice: any = createSlice({
         },
         logout: (state) => {
             state.isLoggedIn = false;
-            state.user = null;
+            state.user = {
+                _id: "",
+                fullname: "",
+                avatar: "",
+                createdAt: "",
+                email: "",
+                role: "NORMAL",
+                updatedAt: "",
+                location: "",
+                mobile: ""
+            };
             state.token = ""
             state.users = []
             state.isAdmin = false

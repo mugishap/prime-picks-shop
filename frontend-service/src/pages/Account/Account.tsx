@@ -1,8 +1,12 @@
 import React from 'react'
+import CommonComponent from '../../components/Common/CommonComponent'
+import ContactComponent from '../../components/Contact/ContactComponent'
 
-const Account = () => {
+const Account :React.FC<{}>= () => {
   return (
-    <div>Account</div>
+    <CommonComponent>
+      <ContactComponent />
+    </CommonComponent>
   )
 }
 

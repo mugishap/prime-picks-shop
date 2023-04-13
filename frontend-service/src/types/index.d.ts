@@ -10,8 +10,11 @@ export interface INavbarLink {
     icon: IconType,
     href: string,
     protected: boolean,
-
+    label: string
 }
+
+export interface ISidebarLink extends INavbarLink { }
+
 export interface IUser extends TimestampAudit {
     _id: string,
     fullname: string,
@@ -43,7 +46,7 @@ export interface ISignupData {
     fullname: string,
     email: string,
     mobile: string,
-    location:string
+    location: string
     password: string,
     showPassword: boolean
 }

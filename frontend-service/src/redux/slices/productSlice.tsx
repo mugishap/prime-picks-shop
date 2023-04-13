@@ -1,12 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Slice, createSlice } from "@reduxjs/toolkit";
+import { IProduct } from "../../types";
 
 const initialState: {
-    products: any[]
+    products: IProduct[],
+    cart:IProduct[]
 } = {
-    products: []
+    products: [],
+    cart:[]
 };
 
-const userSlice: any = createSlice({
+const userSlice: Slice = createSlice({
     name: "user",
     initialState,
     reducers: {

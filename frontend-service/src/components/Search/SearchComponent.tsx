@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { CommonContext } from '../../context'
-import { Slide } from 'react-awesome-reveal'
-import { BiLoader, BiLoaderAlt, BiLoaderCircle, BiSearch, BiX } from 'react-icons/bi'
+import { BiLoaderAlt, BiSearch, BiX } from 'react-icons/bi'
 
-const SearchComponent = () => {
+const SearchComponent:React.FC<{}> = () => {
 
     const { search, setSearch } = useContext(CommonContext)
     const [query, setQuery] = useState<string>('')

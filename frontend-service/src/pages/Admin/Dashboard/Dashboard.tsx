@@ -1,8 +1,12 @@
 import React from 'react'
+import CommonAdminComponent from '../../../components/Common/CommonAdminComponent'
+import DashboardComponent from '../../../components/Admin/Dashboard/DashboardComponent'
 
-const Dashboard = () => {
+const Dashboard: React.FC<{}> = () => {
   return (
-    <div>Dashboard</div>
+    <CommonAdminComponent>
+      <DashboardComponent />
+    </CommonAdminComponent>
   )
 }
 

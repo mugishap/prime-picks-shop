@@ -1,12 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Slice, createSlice } from "@reduxjs/toolkit";
+import { IOrder } from "../../types";
 
 const initialState: {
+    orders: IOrder[],
+    allOrders: IOrder[]
 } = {
     orders: [],
     allOrders: []
 };
 
-const orderSlice: any = createSlice({
+const orderSlice: Slice = createSlice({
     name: "order",
     initialState,
     reducers: {

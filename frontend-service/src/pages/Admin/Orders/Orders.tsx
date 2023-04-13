@@ -1,8 +1,12 @@
 import React from 'react'
+import CommonAdminComponent from '../../../components/Common/CommonAdminComponent'
+import OrderComponent from '../../../components/Admin/Order/OrderComponent'
 
-const Orders = () => {
+const Orders: React.FC<{}> = () => {
   return (
-    <div>Orders</div>
+    <CommonAdminComponent>
+      <OrderComponent />
+    </CommonAdminComponent>
   )
 }
 

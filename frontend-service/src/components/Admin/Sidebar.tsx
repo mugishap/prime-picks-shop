@@ -1,23 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BiX } from 'react-icons/bi'
+import { sidebarLinks } from '../../constants'
+import { ISidebarLink } from '../../types'
+import { Link } from 'react-router-dom'
+import { CommonContext } from '../../context'
 
-interface Props {
-  setShowSidebar: Function
-}
 
-const Sidebar: React.FC<Props> = ({ setShowSidebar }) => {
+const Sidebar: React.FC<{}> = () => {
+  const { activeSidebarLink, setActiveSidebarLink } = useContext(CommonContext)
   return (
-    <div className='z-[2] w-full h-full absolute top-0 left-0 bg-black/20 backdrop-blur-md'>
-      <div className='absolute z-[3] w-full h-full' onClick={() => setShowSidebar(false)}></div>
-      <div className='z-[4] bg-white w-4/12 absolute right-0 top-0 p-4 h-full flex flex-col justify-between'>
-        <div className="flex flex-col justify-start items-start h-[98%]">
-          <BiX onClick={() => setShowSidebar(false)} className='' size={25} />
-          {
-
-          }
-        </div>
-        <span className='text-center'>Copyright &copy; {(new Date().getFullYear())}. Prime Picks</span>
+    <div className='min-h-screen pt-24 bg-slate-200 w-3/12'>
+      <span className='font-bold text-2xl px-4 my-10'>Prime Picks Management</span>
+      <div className='flex flex-col mt-8'>
+        {
+          sidebarLinks.map((link: ISidebarLink, index: number) => {
+            return (
+              <Link to={link.href} key={index} className='w-full'>
+                <div onClick={() => setActiveSidebarLink(link.label)} className={`px-4 hover:bg-slate-300 ${link.label === activeSidebarLink && "bg-slate-300"} duration-100 w-full m-auto  my-2 py-3 `}>{link.name}</div>
+              </Link>
+            )
+          })
+        }
       </div>
+
     </div>
   )
 }

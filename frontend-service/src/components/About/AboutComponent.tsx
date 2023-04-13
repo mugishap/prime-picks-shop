@@ -1,6 +1,7 @@
 import React from "react";
 import { Slide } from "react-awesome-reveal";
 import { IPad } from "../../assets";
+
 const AboutComponent: React.FC = () => {
   return (
     <Slide cascade direction="up" triggerOnce>

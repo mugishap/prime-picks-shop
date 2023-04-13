@@ -3,7 +3,7 @@ import TrendingProducts from '../Home/TrendingProducts'
 import HotDeals from './HotDeals'
 import NewArrivals from './NewArrivals'
 
-const ProductsComponent = () => {
+const ProductsComponent:React.FC<{}> = () => {
     return (
         <div>
             <HotDeals />
