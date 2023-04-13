@@ -7,10 +7,11 @@ const orderRouter = Router()
 
 orderRouter.post("/create", [isLoggedIn], orderController.createOrder)
 orderRouter.put("/update/:id", [isLoggedIn], orderController.updateOrder)
-orderRouter.get("/get", [isLoggedIn, isAdmin], orderController.getOrders)
+orderRouter.get("/all", [isLoggedIn, isAdmin], orderController.getOrders)
 orderRouter.patch("/grant/:orderId", [isLoggedIn, isAdmin], orderController.grantOrder)
 orderRouter.patch("/deny/:orderId", [isLoggedIn, isAdmin], orderController.denyOrder)
-orderRouter.get("/:productId", [isLoggedIn, isAdmin], orderController.getOrdersByProduct)
+orderRouter.get("/product/:productId", [isLoggedIn, isAdmin], orderController.getOrdersByProduct)
+orderRouter.get("/mine", [isLoggedIn], orderController.getOrdersByUser)
 
 registerDefinition(orderRouter, { tags: 'Order', mappedSchema: 'Order', basePath: '/api/v1/order' })
 

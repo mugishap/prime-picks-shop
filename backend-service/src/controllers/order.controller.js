@@ -94,7 +94,7 @@ const grantOrder = async (req, res) => {
         order.status = "GRANTED"
         order.save()
         await sendOrderGrantedEmail(order)
-        return res.status(200).json(new ApiResponse(true, "Order granted successfully", null))
+        return res.status(200).json(new ApiResponse(true, "Order granted successfully", { order }))
     } catch (error) {
         console.log(error)
         return res.status(500).json(new ApiResponse(false, "Internal Server Error", null))
@@ -111,7 +111,18 @@ const denyOrder = async (req, res) => {
         order.status = "DENIED"
         order.save()
         await sendOrderDeclinedEmail(order)
-        return res.status(200).json(new ApiResponse(true, "Order granted successfully", null))
+        return res.status(200).json(new ApiResponse(true, "Order denied successfully", { order }))
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(new ApiResponse(false, "Internal Server Error", null))
+    }
+}
+
+export const getOrdersByUser = async (req, res) => {
+    try {
+        const { id } = req.user
+        const orders = await Order.find({ user: id })
+        return res.status(200).json(new ApiResponse(true, "Orders fetched successfuly", { orders }))
     } catch (error) {
         console.log(error)
         return res.status(500).json(new ApiResponse(false, "Internal Server Error", null))
@@ -125,7 +136,8 @@ const orderController = {
     getOrdersByProduct,
     deleteOrder,
     denyOrder,
-    grantOrder
+    grantOrder,
+    getOrdersByUser
 }
 
 export default orderController
