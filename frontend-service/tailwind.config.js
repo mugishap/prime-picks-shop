@@ -46,7 +46,7 @@ export default {
     colors: {
       ...colors,
       "delete-red": "#d72222",
-      "greenish":"#115061",
+      "blueish":"#115061",
       "whitish":"#e3edf6"
     }
   },

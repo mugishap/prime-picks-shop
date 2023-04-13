@@ -69,7 +69,7 @@ export interface ISlide {
     offer?: string,
     starting?: string,
     color?: string,
-    background?: "greenish" | "whitish"
+    background?: "blueish" | "whitish"
 }
 
 export interface IProductData extends IProduct {

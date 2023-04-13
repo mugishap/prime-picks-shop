@@ -73,7 +73,7 @@ export
             offer: "10%",
             starting: "$999.000",
             color: "#ffd43a",
-            background: "greenish"
+            background: "blueish"
         },
         {
             headline: "The best Smart Watch collection 2023",
@@ -89,7 +89,7 @@ export
             offer: "-35%",
             starting: "$274.000",
             color: "#ffd43a",
-            background: "greenish"
+            background: "blueish"
         },
     ]
 

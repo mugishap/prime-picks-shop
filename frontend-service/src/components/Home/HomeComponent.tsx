@@ -23,7 +23,7 @@ const HomeComponent: React.FC = () => {
             >
                 {
                     slides.map((slide: ISlide, index: number) => (
-                        <SwiperSlide key={index}>
+                        <SwiperSlide className={`bg-blueish`} key={index}>
                             <SlideComponent slide={slide} />
                         </SwiperSlide>
                     ))
