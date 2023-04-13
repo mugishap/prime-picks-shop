@@ -1,11 +1,9 @@
 import axios from "axios";
 import { getCookie } from "../utils/cookies";
-
-// const BACKEND_URL: string = "https://primepicks.onrender.com/api/v1";
-const BACKEND_URL: string = "http://localhost:5000/api/v1";
+import { apiUrl } from "./url";
 
 const api = axios.create({
-  baseURL: BACKEND_URL,
+  baseURL: apiUrl,
   headers: {
     "Authorization": "Bearer " + getCookie("token")
   }
