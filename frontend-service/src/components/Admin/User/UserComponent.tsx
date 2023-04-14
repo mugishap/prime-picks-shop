@@ -17,7 +17,7 @@ import { BiLoaderAlt } from 'react-icons/bi';
 
 const UserComponent = () => {
 
-  const { users, user, dispatch, deleteData, refresh, loading, setLoading } = useContext(CommonContext)
+  const { users, user, dispatch, deleteData, refresh, loading } = useContext(CommonContext)
   const me = user
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -35,11 +35,6 @@ const UserComponent = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  useEffect(() => {
-    setLoading(true)
-    useGetUsers({ dispatch, setLoading })
-  }, [])
-
   return (
     <div className='w-full px-8 overflow-y-scroll items-center flex flex-col pt-8'>
       <span className='font-bold my-8 text-xl'>

@@ -5,6 +5,7 @@ import { CommonContext } from './context'
 import { IOrder, IProduct, IUser } from './types'
 import { useDeleteOrder, useDeleteProduct, useDeleteUserByAdmin, useGetAllOrders, useGetProducts, useGetUsers } from './hooks'
 import { Dispatch } from '@reduxjs/toolkit'
+const AllProducts = lazy(() => import('./pages/Products/AllProducts'))
 const NewAdmin = lazy(() => import('./pages/Admin/New/NewAdmin'))
 const Account = lazy(() => import('./pages/Account/Account'))
 const Contact = lazy(() => import('./pages/Contact/Contact'))
@@ -29,10 +30,13 @@ const Pages: React.FC<{}> = () => {
     const activeProduct: IProduct = productSlice.activeProduct
     const products: IProduct[] = productSlice.products
     const searchResults: IProduct[] = productSlice.searchResults
+    const cart: IProduct[] = productSlice.cart
     const isLoggedIn: boolean = userSlice.isLoggedIn
     const users: IUser[] = userSlice.users
     const orders: IOrder[] = orderSlice.allOrders
+    const myOrders: IOrder[] = orderSlice.myOrders
     const [search, setSearch] = useState<boolean>(false)
+    const [viewCart, setViewCart] = useState<boolean>(false)
     const [auth, setAuth] = useState<{ display: boolean, active: "login" | "signup" | "none" }>({ display: false, active: "none" })
     const [viewNavbar, setViewNavbar] = useState<boolean>(false)
     const [activeTab, setActiveTab] = useState<string>("user")
@@ -56,10 +60,10 @@ const Pages: React.FC<{}> = () => {
         data === "orders" && useGetAllOrders({ dispatch, setLoading: setRefreshLoader })
         data === "users" && useGetUsers({ dispatch, setLoading: setRefreshLoader })
     }
-    const deleteData = async ({ data, id }: { id: string, data: "products" | "orders" | "users" }) => {
-        data === "products" && useDeleteProduct({ dispatch, setLoading, id })
-        data === "orders" && useDeleteOrder({ dispatch, setLoading, id })
-        data === "users" && useDeleteUserByAdmin({ dispatch, setLoading, id })
+    const deleteData = async ({ data, id, setDeleteLoader }: { setDeleteLoader: Function, id: string, data: "products" | "orders" | "users" }) => {
+        data === "products" && useDeleteProduct({ dispatch, setLoading: setDeleteLoader, id })
+        data === "orders" && useDeleteOrder({ dispatch, setLoading: setDeleteLoader, id })
+        data === "users" && useDeleteUserByAdmin({ dispatch, setLoading: setDeleteLoader, id })
     }
     return (
         <CommonContext.Provider
@@ -67,11 +71,15 @@ const Pages: React.FC<{}> = () => {
                 user,
                 search,
                 setSearch,
+                viewCart,
+                setViewCart,
+                cart,
                 loading,
                 setLoading,
                 activeProduct,
                 isLoggedIn,
                 users,
+                myOrders,
                 deleteData,
                 products,
                 orders,
@@ -99,6 +107,7 @@ const Pages: React.FC<{}> = () => {
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/products" element={<Products />} />
+                        <Route path="/products/all" element={<AllProducts />} />
                         <Route path="/product" element={<Product />} />
                         <Route path="*" element={<NotFound />} />
                         {

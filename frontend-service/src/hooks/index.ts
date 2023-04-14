@@ -1,10 +1,11 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import api from "../api";
-import { ILoginData, INewPasswordData, IOrderData, IProductData, ISignupData, IUserData } from "../types";
+import { ILoginData, INewPasswordData, IOrder, IOrderData, IProductData, ISignupData, IUserData } from "../types";
 import { toast } from "react-toastify";
 import { login, logout, removeUser, setUsers, updateUser } from "../redux/slices/userSlice";
 import { addProduct, load, removeProduct, setSearchResults, updateProduct } from "../redux/slices/productSlice";
 import { addOrder, loadMyOrders, loadOrders, loadProductOrders, removeOrder, updateOrder } from "../redux/slices/orderSlice";
+import { shuffle } from "../utils/arrays";
 
 //User related operations
 
@@ -89,7 +90,7 @@ export const useGetUsers = async ({ dispatch, setLoading }: { dispatch: Dispatch
         const request = await api().get("/user/all");
         const response = request.data
         console.log(response.data.users);
-        dispatch(setUsers([...response.data.users]))
+        dispatch(setUsers(shuffle([...response.data.users])))
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -212,7 +213,7 @@ export const useDeleteProduct = async ({ id, dispatch, setLoading }: { id: strin
     try {
         const request = await api().delete("/product/delete/" + id);
         const response = request.data
-        toast.success(response.data.message)
+        toast.success(response.message)
         dispatch(removeProduct(id))
     } catch (error: any) {
         console.log(error);
@@ -228,7 +229,7 @@ export const useGetProducts = async ({ dispatch, setLoading }: { dispatch: Dispa
         const request = await api().get("/product/all");
         const response = request.data
         console.log(response.data.products);
-        dispatch(load([...response.data.products]))
+        dispatch(load(shuffle([...response.data.products])))
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -242,7 +243,7 @@ export const useSearchProduct = async ({ query, dispatch, setLoading }: { query:
     try {
         const request = await api().get("/product/search/" + query);
         const response = request.data
-        dispatch(setSearchResults([...response.data.products]))
+        dispatch(setSearchResults(shuffle([...response.data.products])))
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -252,7 +253,7 @@ export const useSearchProduct = async ({ query, dispatch, setLoading }: { query:
     }
 }
 
-export const useCreateOrder = async ({ dispatch, setLoading, orderData }: { orderData: IOrderData, dispatch: Dispatch, setLoading: Function }) => {
+export const useCreateOrder = async ({ dispatch, setLoading, orderData }: { order: IOrder, orderData: IOrderData, dispatch: Dispatch, setLoading: Function }) => {
     try {
         const request = await api().post("/order/create", { ...orderData, productId: orderData.product });
         const response = request.data
@@ -357,6 +358,20 @@ export const useGrant = async ({ id, dispatch, setLoading }: { id: string, dispa
         const request = await api().put("/order/grant/" + id);
         const response = request.data
         dispatch(updateOrder({ id, order: response.data.order }))
+    } catch (error: any) {
+        console.log(error);
+        if (error.response.data.message) return toast.error(error.response.data.message)
+        toast.error(error.message)
+    } finally {
+        setLoading(false)
+    }
+}
+
+export const useUpdateAvatar = async ({ avatarString, dispatch, setLoading }: { dispatch: Dispatch, avatarString: string, setLoading: Function }) => {
+    try {
+        const request = await api().patch("/user/update-avatar", { avatarString });
+        const response = request.data
+        dispatch(updateUser({ ...response.data.user }))
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)

@@ -49,7 +49,7 @@ const UpdateProductComponent: React.FC<{}> = () => {
 
 
     return (
-        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-md flex items-center justify-center'>
+        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-lg flex items-center justify-center'>
             <div className='absolute z-[3] w-full h-full' onClick={() => setUpdateProduct({ display: false, product: null })}></div>
             <div className='z-[4] bg-white overflow-y-scroll rounded w-8/12 p-4 h-[90%] flex flex-col justify-start'>
                 <div className='w-full flex-col-reverse justify-start plg:justify-center plg:px-0 px-4 plg:flex-row flex h-full'>

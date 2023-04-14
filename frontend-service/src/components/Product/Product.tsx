@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { IProduct } from '../../types'
-import { BiCart } from 'react-icons/bi'
+import { BiCart, BiCheck } from 'react-icons/bi'
 import { CommonContext } from '../../context'
-import { setActiveProduct } from '../../redux/slices/productSlice'
+import { addItemToCart, removeItemFromCart, setActiveProduct } from '../../redux/slices/productSlice'
 
 interface Props {
     product: IProduct
@@ -11,15 +11,17 @@ interface Props {
 
 const Product: React.FC<Props> = ({ product }) => {
     const navigate = useNavigate()
-    const { dispatch } = useContext(CommonContext)
+    const { dispatch, cart } = useContext(CommonContext)
+    const addToCart = () => {
+        dispatch(addItemToCart({ ...product }))
+    }
+    const removeFromCart = () => {
+        dispatch(removeItemFromCart(product._id))
+    }
     return (
         <div
             title='Click to view'
-            className='w-96 h-[513px] rounded relative overflow-hidden shadow-lg cursor-pointer'
-            onClick={() => {
-                dispatch(setActiveProduct({ ...product }))
-                navigate(`/product`)
-            }}
+            className='w-80 msm:w-96 h-fit pb-4 msm:pb-0 msm:h-[513px] rounded relative overflow-hidden shadow-lg cursor-pointer'
         >
             {
                 product.quantity === 0 ?
@@ -29,7 +31,10 @@ const Product: React.FC<Props> = ({ product }) => {
                     :
                     null //tags to be added here later
             }
-            <div className='w-full h-64 relative'>
+            <div className='w-full h-64 relative' onClick={() => {
+                dispatch(setActiveProduct({ ...product }))
+                navigate(`/product`)
+            }}>
                 <img
                     className='w-full absolute object-cover h-full hover:scale-105'
                     src={product.image}
@@ -37,7 +42,10 @@ const Product: React.FC<Props> = ({ product }) => {
                 />
             </div>
             <div className='flex min-h-[47%] justify-between w-full flex-col items-center'>
-                <div className='px-6 w-full py-4'>
+                <div className='px-6 w-full py-4' onClick={() => {
+                    dispatch(setActiveProduct({ ...product }))
+                    navigate(`/product`)
+                }}>
                     <div className='font-bold text-xl mb-2'>{product.name}</div>
                     <p className='text-gray-700 text-base w-full'>{product.description.length > 220 ? `${product.description.slice(0, 220)}...` : product.description}</p>
                 </div>
@@ -48,8 +56,14 @@ const Product: React.FC<Props> = ({ product }) => {
                             {product.currency?.toUpperCase()}
                         </span>
                     </button>
-                    <button title='Add to Cart' className='p-3 bg-transparent text-black rounded-full border border-pink-600 hover:bg-pink-600 hover:text-white duration-75'>
-                        <BiCart className='text-pink-600 ' size={25} />
+                    <button onClick={(cart as IProduct[])?.includes(product) ? removeFromCart : addToCart} title='Add to Cart' className='z-[2] p-3 bg-transparent text-pink-600 duration-0 rounded-full border border-pink-600 hover:bg-pink-600 hover:text-white'>
+                        {
+                            (cart as IProduct[])?.includes(product)
+                                ?
+                                <BiCheck className='duration-0 text-inherit ' size={25} />
+                                :
+                                <BiCart className='duration-0 text-inherit ' size={25} />
+                        }
                     </button>
                 </div>
             </div>

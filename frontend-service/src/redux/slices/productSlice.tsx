@@ -47,10 +47,13 @@ const userSlice: Slice = createSlice({
         },
         setActiveProduct: (state, { payload }) => {
             state.activeProduct = { ...payload }
+        },
+        removeItemFromCart: (state, { payload }) => {
+            state.cart = state.cart.filter((product: IProduct) => product._id !== payload)
         }
     }
 });
 
-export const { addItemTocart, addProduct, setActiveProduct, load, setSearchResults, updateProduct, removeProduct } = userSlice.actions;
+export const { addItemToCart, removeItemFromCart, addProduct, setActiveProduct, load, setSearchResults, updateProduct, removeProduct } = userSlice.actions;
 
 export default userSlice.reducer;

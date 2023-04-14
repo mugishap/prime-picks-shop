@@ -12,7 +12,7 @@ interface Props {
 const MobileNavbarComponent: React.FC<Props> = ({ setViewNavbar }) => {
     const { isLoggedIn, } = useContext(CommonContext)
     return (
-        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-md flex items-center justify-center'>
+        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-lg flex items-center justify-center'>
             <div className='absolute z-[3] w-full h-full' onClick={() => setViewNavbar(false)}></div>
             <div className='z-[4] bg-white w-11/12 mmsm:w-8/12 md:w-6/12 p-4 h-3/5 rounded flex flex-col justify-between'>
                 <div className="flex flex-col justify-center h-fit w-full">

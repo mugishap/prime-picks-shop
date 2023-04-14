@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { CommonContext } from '../../context'
-import { IOrderData } from '../../types'
+import { IOrderData, IProduct } from '../../types'
 import { useCreateOrder } from '../../hooks'
-import { BiLoaderAlt } from 'react-icons/bi'
+import { BiCart, BiCheck, BiLoaderAlt } from 'react-icons/bi'
+import { addItemToCart, removeItemFromCart } from '../../redux/slices/productSlice'
 
 const ProductComponent = () => {
-    const { activeProduct, dispatch,loading, setLoading } = useContext(CommonContext)
+    const { activeProduct, dispatch, user, cart, loading, setLoading } = useContext(CommonContext)
     const [orderData, setOrderData] = useState<IOrderData>({
         quantity: 1,
         product: activeProduct._id
@@ -13,7 +14,7 @@ const ProductComponent = () => {
     const createNewOrder = async () => {
         try {
             setLoading(true)
-            useCreateOrder({ dispatch, setLoading, orderData })
+            useCreateOrder({ dispatch, setLoading, orderData, order: { ...orderData, product: activeProduct, user } })
         } catch (error) {
             console.log(error);
         }
@@ -21,6 +22,12 @@ const ProductComponent = () => {
     React.useEffect(() => {
         document.title = `${activeProduct.name} | Prime Picks`;
     }, []);
+    const addToCart = () => {
+        dispatch(addItemToCart({ ...activeProduct }))
+    }
+    const removeFromCart = () => {
+        dispatch(removeItemFromCart(activeProduct._id))
+    }
     return (
         <div className='flex flex-col items-center justify-center'>
             <div className='shadow-lg p-8 rounded mxl:w-6/12 flex sm:flex-row flex-col'>
@@ -43,6 +50,15 @@ const ProductComponent = () => {
                                 className="bg-gray-200 border mx-3  rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-24 pl-3"
                             />
                             <button onClick={createNewOrder} className='mx-3 bg-pink-600 flex items-center justify-center text-white px-3 py-2 cursor-pointer rounded'>{loading ? <BiLoaderAlt className='text-white animate-spin' size={25} /> : "ORDER PRODUCT"}</button>
+                            <button onClick={(cart as IProduct[])?.includes(activeProduct) ? removeFromCart : addToCart} title='Add to Cart' className='p-3 z-[1] bg-transparent text-pink-600 duration-0 rounded-full border border-pink-600 hover:bg-pink-600 hover:text-white'>
+                                {
+                                    (cart as IProduct[])?.includes(activeProduct)
+                                        ?
+                                        <BiCheck className='duration-0 text-inherit ' size={25} />
+                                        :
+                                        <BiCart className='duration-0 text-inherit ' size={25} />
+                                }
+                            </button>
                         </div>
                     </div>
                 </div>

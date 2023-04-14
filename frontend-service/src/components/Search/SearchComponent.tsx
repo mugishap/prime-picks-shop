@@ -14,7 +14,7 @@ const SearchComponent: React.FC<{}> = () => {
         useSearchProduct({ setLoading, query, dispatch })
     }, [query])
     return (
-        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-md'>
+        <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-lg'>
             <div className='absolute z-[3] w-full h-full' onClick={() => setSearch(false)}></div>
             <div className='z-[4] bg-white w-10/12 sm:w-8/12 md:w-6/12 :w-4/12 absolute right-0 top-0 p-4 h-full flex flex-col justify-between'>
                 <div className="flex flex-col justify-start items-start h-[98%]">
@@ -25,6 +25,9 @@ const SearchComponent: React.FC<{}> = () => {
                         {loading && <BiLoaderAlt size={20} className='animate-spin ' />}
                     </div>
                     <div className='w-full overflow-y-scroll h-[90%]'>
+                        {
+                            
+                        }
                     </div>
                 </div>
                 <span className='text-center'>Copyright &copy; {(new Date().getFullYear())}. Prime Picks</span>

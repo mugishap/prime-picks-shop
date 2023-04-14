@@ -40,6 +40,7 @@ export interface IOrder extends TimestampAudit {
     user: IUser,
     product: IProduct,
     quantity: number,
+    status?: "DENIED" | "GRANTED" | "PENDING",
 }
 
 export interface IOrderData extends IOrder {
@@ -87,8 +88,8 @@ export interface IUserData extends IUser {
     mobile?: number,
     location?: string,
     avatarString?: string,
-    password?:string,
-    showPassword?:boolean
+    password?: string,
+    showPassword?: boolean
 }
 
 export interface INewPasswordData {

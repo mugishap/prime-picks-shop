@@ -9,18 +9,20 @@ import MobileNavbarComponent from '../Navbar/MobileNavbarComponent'
 import { updateUser } from '../../redux/slices/userSlice'
 import UpdateAccountComponent from '../Account/UpdateAccountComponent'
 import UpdatePasswordComponent from '../Account/UpdatePasswordComponent'
+import CartComponent from '../Cart/CartComponent'
 
 interface Props {
     children: React.ReactNode
 }
 
 const CommonComponent: React.FC<Props> = ({ children }) => {
-    const { search, auth, updatePassword, viewNavbar, setViewNavbar, updateUser, } = useContext(CommonContext)
+    const { search, viewCart, auth, updatePassword, viewNavbar, setViewNavbar, updateUser, } = useContext(CommonContext)
     return (
         <div className='w-full min-h-screen flex items-center justify-between flex-col relative' >
             {search && (<SearchComponent />)}
-            {auth.display && (<AuthComponent />)}
+            {viewCart && (<CartComponent />)}
             {viewNavbar && (<MobileNavbarComponent setViewNavbar={setViewNavbar} />)}
+            {auth.display && (<AuthComponent />)}
             {updatePassword && (<UpdatePasswordComponent />)}
             {updateUser && (<UpdateAccountComponent />)}
             <Navbar />

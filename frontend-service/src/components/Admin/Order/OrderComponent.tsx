@@ -17,7 +17,7 @@ import { BiLoaderAlt } from 'react-icons/bi';
 
 const OrderComponent: React.FC<{}> = () => {
 
-  const { orders, dispatch, setActiveProduct, refresh, loading, setLoading } = useContext(CommonContext)
+  const { orders, setActiveProduct, refresh, loading } = useContext(CommonContext)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [refreshLoader, setRefreshLoader] = useState(false)
@@ -35,10 +35,6 @@ const OrderComponent: React.FC<{}> = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  React.useEffect(() => {
-    useGetAllOrders({ dispatch, setLoading })
-  }, [])
 
   return (
     <div className='w-full px-8 overflow-y-scroll items-center flex flex-col pt-8'>

@@ -3,11 +3,11 @@ import { Logo } from '../../assets'
 import { Link } from 'react-router-dom'
 import { CommonContext } from '../../context'
 import { INavbarLink } from '../../types'
-import { BiMenu, BiSearch, BiUser } from 'react-icons/bi'
+import { BiCart, BiMenu, BiSearch, BiUser } from 'react-icons/bi'
 import { navbarlinks } from '../../constants'
 
 const Navbar: React.FC<{}> = ({ }) => {
-    const { isLoggedIn, search, setSearch, setAuth, user, setViewNavbar, } = useContext(CommonContext)
+    const { isLoggedIn, search, setSearch, setViewCart, setAuth, user, setViewNavbar, } = useContext(CommonContext)
 
     return (
         <div className='w-full bg-slate-200 h-16 flex items-center justify-around'>
@@ -28,7 +28,7 @@ const Navbar: React.FC<{}> = ({ }) => {
                     })
                 }
             </div>
-            <div className='flex items-center'>
+            <div className='flex items-center justify-center'>
 
                 {!isLoggedIn && (
                     <div className=' flex items-center'>
@@ -38,18 +38,19 @@ const Navbar: React.FC<{}> = ({ }) => {
                 )}
 
                 {isLoggedIn && <div className='flex'>
-                    <Link to={"/account"}>
-                        <BiUser size={25} className='mx-4' />
-                    </Link>
                     {
                         user.role === "ADMIN" &&
                         <Link to={"/admin"}>
                             <button className='mx-3 bg-pink-600 text-white px-3 py-1 cursor-pointer rounded'>Admin</button>
                         </Link>
                     }
+                    <Link to={"/account"}>
+                        <BiUser size={25} className='mx-4 mt-1' />
+                    </Link>
                 </div>}
-                <BiSearch size={25} className='mx-4' onClick={() => setSearch(!search)} />
-                <BiMenu size={25} title='Toggle Navbar' onClick={() => setViewNavbar(true)} className='flex md:hidden cursor-pointer hover:bg-pink-600 hover:text-white rounded' />
+                <BiSearch size={25} className='mx-2' onClick={() => setSearch(!search)} />
+                <BiMenu size={28} title='Toggle Navbar' onClick={() => setViewNavbar(true)} className='flex md:hidden mb-1 mx-2 cursor-pointer rounded' />
+                <BiCart size={25} title='Toggle Cart' onClick={() => setViewCart(true)} className='flex cursor-pointer mb-1 rounded mx-2' />
             </div>
         </div>
     )

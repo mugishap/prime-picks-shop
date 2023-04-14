@@ -1,9 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { CommonContext } from '../../../context'
 import { RiGroupLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
+import { useGetAllOrders, useGetProducts, useGetUsers } from '../../../hooks'
+
 const DashboardComponent: React.FC<{}> = () => {
-  const { user, users, orders, products } = useContext(CommonContext)
+  const { user, users, setLoading, dispatch, orders, products } = useContext(CommonContext)
   const stats = [
     {
       name: "Users",
@@ -15,7 +17,7 @@ const DashboardComponent: React.FC<{}> = () => {
       name: "Products",
       icon: RiGroupLine,
       count: products.length,
-      path: "/admin/messages"
+      path: "/admin/products"
     },
     {
       name: "Orders",
@@ -24,6 +26,13 @@ const DashboardComponent: React.FC<{}> = () => {
       path: "/admin/orders"
     },
   ]
+  useEffect(() => {
+    setLoading(true)
+    useGetUsers({ dispatch, setLoading })
+    useGetProducts({ dispatch, setLoading })
+    useGetAllOrders({ dispatch, setLoading })
+  }, [])
+
   return (
     <div className='h-full pt-8 px-8 flex flex-col w-full'>
       <span className='text-xl font-bold my-4'>Hello there, {user.fullname}</span>

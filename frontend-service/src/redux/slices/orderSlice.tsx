@@ -2,11 +2,11 @@ import { Slice, createSlice } from "@reduxjs/toolkit";
 import { IOrder } from "../../types";
 
 const initialState: {
-    orders: IOrder[],
+    myOrders: IOrder[],
     allOrders: IOrder[],
     productOrders: { productId: string, orders: IOrder[] }[]
 } = {
-    orders: [],
+    myOrders: [],
     allOrders: [],
     productOrders: []
 };
@@ -19,23 +19,21 @@ const orderSlice: Slice = createSlice({
             state.allOrders = payload
         },
         loadMyOrders: (state: any, { payload }) => {
-            state.orders = payload
+            state.myOrders = payload
         },
         addOrder: (state: any, { payload }) => {
-            state.orders.push(payload);
+            state.myOrders.push(payload);
             if (state.allOrders.length) state.allOrders.push(payload);
         },
-        removeOrder: (state: any, { payload }) => {
-            state.orders.slice(payload, 1)
-            if (state.allOrders.length) state.allOrders.slice(payload, 1)
+        removeMyOrder: (state: any, { payload }) => {
+            state.myOrders.slice(payload, 1)
+        },
+        removeOrderByAdmin:(state: any, { payload }) => {
+            state.allOrders.slice(payload, 1)
         },
         updateOrder: (state: any, { payload }) => {
-            state.orders = state.orders.map((order: IOrder) => order._id === payload.order._id ? payload.order : order)
+            state.myOrders = state.myOrders.map((order: IOrder) => order._id === payload.order._id ? payload.order : order)
             if (state.allOrders.length) state.allOrders = state.allOrders.map((order: IOrder) => order._id === payload.order._id ? payload.order : order)
-        },
-        deleteOrder: (state: any, { payload }) => {
-            state.orders.splice(payload, 1)
-            if (state.allOrders.length) state.allOrders.splice(payload, 1)
         },
         loadProductOrders: (state: any, { payload }) => {
             state.productOrders = { productId: payload.id, orders: [...payload.orders] }

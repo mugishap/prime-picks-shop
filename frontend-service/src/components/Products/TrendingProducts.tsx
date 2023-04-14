@@ -21,7 +21,7 @@ const TrendingProducts: React.FC<{}> = () => {
                 <div className='w-full xl:w-[90%] m-auto py-4 flex flex-wrap gap-6 items-center justify-center  transition-all duration-300'>
                     {
                         (!loading) &&
-                        products.slice(0, 5).map((product: IProduct, index: number) => (
+                        products.slice(15, 23).map((product: IProduct, index: number) => (
                             <Product key={index} product={product} />
                         ))
                     }

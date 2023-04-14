@@ -11,16 +11,18 @@ import { format } from 'date-fns';
 import { CommonContext } from '../../../context';
 import { IProduct } from '../../../types';
 import TablePaginationActions from '../Pagination/TablePaginationActions';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useGetProducts } from '../../../hooks';
 import { BiLoaderAlt } from 'react-icons/bi';
+import { setActiveProduct } from '../../../redux/slices/productSlice';
 
 const ProductComponent = () => {
 
-  const { products, setUpdateProduct, deleteData, refresh, dispatch, loading, setLoading } = useContext(CommonContext)
+  const { products, setUpdateProduct, deleteData, refresh, dispatch, loading } = useContext(CommonContext)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [refreshLoader, setRefreshLoader] = React.useState(false)
+  const [deleteLoader, setDeleteLoader] = React.useState(false)
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -35,9 +37,6 @@ const ProductComponent = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  React.useEffect(() => {
-    useGetProducts({ dispatch, setLoading })
-  }, [])
 
   return (
     <div className='w-full px-8 overflow-y-scroll items-center flex flex-col pt-8'>
@@ -86,8 +85,11 @@ const ProductComponent = () => {
                       <TableCell align="right">{product.quantity}</TableCell>
                       <TableCell align="right">{format(parseInt(product.createdAt as string), 'do MMM Y')}</TableCell>
                       <TableCell align="right">
-                        <button onClick={() => setUpdateProduct({ display: true, product })} className='bg-blue-600 mx-1 font-bold px-6 py-2 rounded text-white'>Update</button>
-                        <button onClick={() => { deleteData({ data: "products", id: product._id }) }} className='bg-delete-red mx-1 w-28 font-bold px-2 py-2 rounded text-white'>{loading ? <BiLoaderAlt className='animate-spin text-white' size={25} /> : "Delete"}</button>
+                        <Link className="" to={'/product'}>
+                          <button onClick={() => { dispatch(setActiveProduct(product)); setUpdateProduct({ display: true, product }) }} className='bg-blue-600 mx-1 font-bold px-6 py-2 rounded text-white'>VIEW</button>
+                        </Link>
+                        <button onClick={() => setUpdateProduct({ display: true, product })} className='bg-pink-600 mx-1 font-bold px-6 py-2 rounded text-white'>UPDATE</button>
+                        <button onClick={() => { setDeleteLoader(true); deleteData({ data: "products", id: product._id, setDeleteLoader }) }} disabled={deleteLoader} className={`${deleteLoader ? "bg-slate-600" : "bg-delete-red"} mx-1 w-28 font-bold px-2 py-2 rounded text-white`}>{"Delete"}</button>
                       </TableCell>
                     </TableRow>
                   ))}
