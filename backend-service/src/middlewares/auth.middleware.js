@@ -17,6 +17,7 @@ const isLoggedIn = async (req, res, next) => {
     }
     catch (error) {
         console.log(error)
+        if (error.message === "jwt malformed") return res.status(401).json(new ApiResponse(false, "Invalid token", null))
         return res.status(500).json(new ApiResponse(false, "Internal Server Error", null))
     }
 }

@@ -201,6 +201,49 @@
           ]
         }
       },
+      "/api/v1/user/update-password": {
+        "put": {
+          "tags": [
+            "User"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": false,
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Created",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        }
+      },
       "/api/v1/user/update-status": {
         "put": {
           "tags": [

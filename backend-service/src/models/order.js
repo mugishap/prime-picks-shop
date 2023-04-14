@@ -5,12 +5,12 @@ const OrderSchema = new Schema({
     user: {
         type: mongoose.Types.ObjectId,
         required: true,
-        ref: "User"
+        ref: "user"
     },
     product: {
         type: mongoose.Types.ObjectId,
         required: true,
-        ref: "Product"
+        ref: "product"
     },
     status: {
         type: String,

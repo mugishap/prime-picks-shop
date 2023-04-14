@@ -14,7 +14,7 @@ const registerUser = async (req, res) => {
     try {
         const { error } = CreateUserSchema.validate(req.body, { allowUnknown: true })
         if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
-        const { fullname,location, email, mobile, password } = req.body
+        const { fullname, location, email, mobile, password } = req.body
         const hashedPassword = await bcrypt.hash(password, 8)
         const user = new User({
             fullname,
@@ -39,7 +39,7 @@ const registerAdmin = async (req, res) => {
     try {
         const { error } = CreateUserSchema.validate(req.body, { allowUnknown: true })
         if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
-        const { fullname,location, email, mobile, password } = req.body
+        const { fullname, location, email, role, mobile, password } = req.body
         const hashedPassword = await bcrypt.hash(password, 8)
         const user = new User({
             fullname,
@@ -88,8 +88,8 @@ const updateUser = async (req, res) => {
         if (error) return res.status(400).json(new ApiResponse(false, error.details[0].message, null))
         const user = await User.findById(req.user.id)
         if (!user) return res.status(404).json(new ApiResponse(false, "User not found", null))
-        const { fullname, email, avatarString, coverImage } = req.body
-        if (avatarString) {
+        const { fullname, email, location, mobile, avatarString } = req.body
+        if (avatarString.includes("data:image")) {
             const avatar = await uploadFile(avatarString)
             user.avatar = avatar
         }
