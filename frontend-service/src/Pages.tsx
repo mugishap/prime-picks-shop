@@ -52,10 +52,8 @@ const Pages: React.FC<{}> = () => {
     })
     useEffect(() => {
         useGetProducts({ dispatch, setLoading })
-        console.log(productSlice.products);
     }, [])
     const refresh = async ({ data, setRefreshLoader }: { setRefreshLoader: Function, data: "products" | "orders" | "users" }) => {
-        console.log(data)
         data === "products" && useGetProducts({ dispatch, setLoading: setRefreshLoader })
         data === "orders" && useGetAllOrders({ dispatch, setLoading: setRefreshLoader })
         data === "users" && useGetUsers({ dispatch, setLoading: setRefreshLoader })

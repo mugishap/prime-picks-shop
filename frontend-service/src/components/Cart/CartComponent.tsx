@@ -5,12 +5,11 @@ import { useSearchProduct } from '../../hooks'
 import { IProduct } from '../../types'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
-import { setActiveProduct } from '../../redux/slices/productSlice'
+import { emptyCart, setActiveProduct } from '../../redux/slices/productSlice'
 
 const CartComponent: React.FC<{}> = () => {
 
     const { cart, setViewCart, dispatch } = useContext(CommonContext)
-    console.log(cart);
 
     return (
         <div className='z-10 w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-lg'>
@@ -18,11 +17,15 @@ const CartComponent: React.FC<{}> = () => {
             <div className='z-30 bg-white w-full mmsm:w-11/12 sm:w-8/12 md:w-6/12 xl:w-4/12 absolute right-0 top-0 p-4 h-full flex flex-col justify-between'>
                 <div className="flex flex-col justify-start items-start h-[98%]">
                     <BiX onClick={() => setViewCart(false)} className='' size={25} />
-                    <div className='w-full overflow-y-scroll h-[90%]'>
                         <div className='flex items-center w-full px-4 mt-3 justify-between'>
-                        <span className='font-bold text-xl'>Your Cart</span>
-                        <span className='font-bold'>{cart.length} products</span>
+                            <span className='font-bold text-xl'>Your Cart</span>
+                            <span className='font-bold'>{cart.length} products</span>
                         </div>
+                        <div className='justify-between w-full items-center flex px-4 my-4'>
+                            <span>&nbsp;</span>
+                            <button className='px-4 py-2 rounded bg-pink-600 text-white' onClick={() => dispatch(emptyCart({}))}>EMPTY CART</button>
+                        </div>
+                    <div className='w-full overflow-y-scroll h-[90%]'>
                         <div className='flex flex-col h-full w-full items-center'>
                             {cart?.map((product: IProduct, index: number) => (
                                 <Link to={`/product`} key={index} className='w-full'>

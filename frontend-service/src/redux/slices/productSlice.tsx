@@ -32,8 +32,6 @@ const userSlice: Slice = createSlice({
             state.searchResults = [...payload]
         },
         updateProduct: (state, { payload }) => {
-            console.log(payload);
-
             state.products = state.products.map((product: IProduct) => product._id === payload._id ? payload : product)
         },
         addProduct: (state, { payload }) => {
@@ -42,18 +40,21 @@ const userSlice: Slice = createSlice({
         addItemToCart: (state, { payload }) => {
             state.cart.push(payload)
         },
+        removeItemFromCart: (state, { payload }) => {
+            state.cart = state.cart.filter((product: IProduct) => product._id !== payload)
+        },
+        emptyCart: (state) => {
+            state.cart = []
+        },
         removeProduct: (state, { payload }) => {
             state.products = state.products.filter((product: IProduct) => product._id !== payload)
         },
         setActiveProduct: (state, { payload }) => {
             state.activeProduct = { ...payload }
-        },
-        removeItemFromCart: (state, { payload }) => {
-            state.cart = state.cart.filter((product: IProduct) => product._id !== payload)
         }
     }
 });
 
-export const { addItemToCart, removeItemFromCart, addProduct, setActiveProduct, load, setSearchResults, updateProduct, removeProduct } = userSlice.actions;
+export const { addItemToCart, emptyCart, removeItemFromCart, addProduct, setActiveProduct, load, setSearchResults, updateProduct, removeProduct } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -100,7 +100,6 @@ const AccountComponent: React.FC = () => {
                     (<div className="flex w-full lg:w-6/12 pl-8 flex-col items-start justify-start">
                         {
                             myOrders?.map((order: IOrder, index: number) => {
-                                console.log(order);
                                 return (
                                     <div className="flex flex-col mt-8" key={index}>
                                         <span>{order.product.name}</span>

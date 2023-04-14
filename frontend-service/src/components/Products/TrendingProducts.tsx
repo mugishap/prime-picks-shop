@@ -6,7 +6,6 @@ import { CommonContext } from '../../context'
 const TrendingProducts: React.FC<{}> = () => {
 
     const { products, loading } = useContext(CommonContext)
-    console.log(products);
 
     return (
         <div className='my-4 w-full flex flex-col'>

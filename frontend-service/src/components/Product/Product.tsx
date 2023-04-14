@@ -12,12 +12,7 @@ interface Props {
 const Product: React.FC<Props> = ({ product }) => {
     const navigate = useNavigate()
     const { dispatch, cart } = useContext(CommonContext)
-    const addToCart = () => {
-        dispatch(addItemToCart({ ...product }))
-    }
-    const removeFromCart = () => {
-        dispatch(removeItemFromCart(product._id))
-    }
+    const isInCart = cart.find((item: IProduct) => item._id === product._id)
     return (
         <div
             title='Click to view'
@@ -49,20 +44,25 @@ const Product: React.FC<Props> = ({ product }) => {
                     <div className='font-bold text-xl mb-2'>{product.name}</div>
                     <p className='text-gray-700 text-base w-full'>{product.description.length > 220 ? `${product.description.slice(0, 220)}...` : product.description}</p>
                 </div>
-                <div className='flex justify-between w-full items-end mt-1 px-6'>
-                    <button className='p-2 ml-0 leading-tight text-black bg-white font-bold duration-75 flex gap-1'>
+                <div className='flex justify-between w-full duration-0 items-end mt-1 px-6'>
+                    <span className='p-2 ml-0 leading-tight text-black bg-white font-bold duration-75 flex gap-1'>
                         {new Intl.NumberFormat("es-us").format(Number(product.price))}
                         <span className='font-bold'>
                             {product.currency?.toUpperCase()}
                         </span>
-                    </button>
-                    <button onClick={(cart as IProduct[])?.includes(product) ? removeFromCart : addToCart} title='Add to Cart' className='z-[2] p-3 bg-transparent text-pink-600 duration-0 rounded-full border border-pink-600 hover:bg-pink-600 hover:text-white'>
+                    </span>
+                    <button onClick={() => {
+                        if (isInCart) {
+                            dispatch(removeItemFromCart(product._id))
+                        } else {
+                            dispatch(addItemToCart(product))
+                        }
+                    }} title='Add to Cart' className='z-[2] p-3 bg-transparent cursor-pointer text-pink-600 duration-0 rounded-full border border-pink-600 hover:bg-pink-600 hover:text-white'>
                         {
-                            (cart as IProduct[])?.includes(product)
-                                ?
-                                <BiCheck className='duration-0 text-inherit ' size={25} />
-                                :
+                            !isInCart ?
                                 <BiCart className='duration-0 text-inherit ' size={25} />
+                                :
+                                <BiCheck className='duration-0 text-inherit ' size={25} />
                         }
                     </button>
                 </div>

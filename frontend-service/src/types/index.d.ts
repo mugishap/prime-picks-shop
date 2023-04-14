@@ -85,7 +85,7 @@ export interface IProductData extends IProduct {
 export interface IUserData extends IUser {
     fullname?: string,
     email?: string,
-    mobile?: number,
+    mobile?: number ,
     location?: string,
     avatarString?: string,
     password?: string,

@@ -12,7 +12,7 @@ import { shuffle } from "../utils/arrays";
 export const useSignup = async ({ setAuth, signupData, setLoading, dispatch }: { setAuth: Function, dispatch: Dispatch, signupData: ISignupData, setLoading: Function }) => {
     try {
         delete signupData.showPassword
-        const request = await api().post("/user/register", { ...signupData });
+        const request = await api().post("/user/register", { ...signupData, mobile: signupData.mobile as string });
         const response = request.data
         dispatch(login({ ...response.data }))
         localStorage.setItem("token", response.data.token)
@@ -89,7 +89,6 @@ export const useGetUsers = async ({ dispatch, setLoading }: { dispatch: Dispatch
     try {
         const request = await api().get("/user/all");
         const response = request.data
-        console.log(response.data.users);
         dispatch(setUsers(shuffle([...response.data.users])))
     } catch (error: any) {
         console.log(error);
@@ -130,11 +129,10 @@ export const useLogout = async ({ dispatch, setLoading }: { dispatch: Dispatch, 
 export const useCreateAdmin = async ({ setAdminData, adminData, setLoading, dispatch }: { setAdminData: Function, dispatch: Dispatch, adminData: IUserData, setLoading: Function }) => {
     try {
         delete adminData.showPassword
-        console.log(adminData);
-        const request = await api().post("/user/register-admin", { ...adminData });
+        const request = await api().post("/user/register-admin", { ...adminData, mobile: `"${adminData.mobile}"` });
         const response = request.data
         dispatch(login({ ...response.data }))
-        toast.success(response.data.message)
+        toast.success(response.message)
         setAdminData({
             fullname: "",
             email: "",
@@ -197,7 +195,7 @@ export const useUpdateProduct = async ({ setUpdateProduct, productData, setLoadi
     try {
         const request = await api().put("/product/update/" + productData._id, { ...productData });
         const response = request.data
-        console.log(response)
+        toast.success(response.message)
         dispatch(updateProduct({ ...response.data.product }))
         setUpdateProduct({ display: false, product: null })
     } catch (error: any) {
@@ -228,7 +226,6 @@ export const useGetProducts = async ({ dispatch, setLoading }: { dispatch: Dispa
     try {
         const request = await api().get("/product/all");
         const response = request.data
-        console.log(response.data.products);
         dispatch(load(shuffle([...response.data.products])))
     } catch (error: any) {
         console.log(error);
@@ -341,7 +338,7 @@ export const useGetProductOrders = async ({ dispatch, setLoading, id }: { id: st
 
 export const useDenyOrder = async ({ id, dispatch, setLoading }: { id: string, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api().put("/order/deny/" + id);
+        const request = await api().patch("/order/deny/" + id);
         const response = request.data
         dispatch(updateOrder({ id, order: response.data.order }))
     } catch (error: any) {
@@ -353,9 +350,9 @@ export const useDenyOrder = async ({ id, dispatch, setLoading }: { id: string, d
     }
 }
 
-export const useGrant = async ({ id, dispatch, setLoading }: { id: string, dispatch: Dispatch, setLoading: Function }) => {
+export const useGrantOrder = async ({ id, dispatch, setLoading }: { id: string, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api().put("/order/grant/" + id);
+        const request = await api().patch("/order/grant/" + id);
         const response = request.data
         dispatch(updateOrder({ id, order: response.data.order }))
     } catch (error: any) {

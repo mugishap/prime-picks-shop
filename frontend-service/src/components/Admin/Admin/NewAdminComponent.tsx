@@ -20,7 +20,6 @@ const NewAdminComponent: React.FC<{}> = () => {
         try {
             e.preventDefault();
             setLoading(true)
-            console.log(adminData);
             if (!adminData.fullname || !adminData.location || !adminData.mobile || !adminData.email || !adminData.password) return toast.error("Please fill all the fields");
             useCreateAdmin({ adminData, dispatch, setLoading, setAdminData })
         } catch (error) {
