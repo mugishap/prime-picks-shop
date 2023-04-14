@@ -58,6 +58,7 @@ const OrderComponent: React.FC<{}> = () => {
                     <TableCell align="right">Product Quantity</TableCell>
                     <TableCell align="right">User Full Name</TableCell>
                     <TableCell align="right">Role</TableCell>
+                    <TableCell align="right">Order Status</TableCell>
                     <TableCell align="right">Ordered At</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
@@ -80,11 +81,12 @@ const OrderComponent: React.FC<{}> = () => {
                       <TableCell align="right">{order.product.quantity}</TableCell>
                       <TableCell align="right">{order.user.fullname}</TableCell>
                       <TableCell align="right">{order.user.role}</TableCell>
+                      <TableCell align="right">{order.status}</TableCell>
                       <TableCell align="right">{format(parseInt(order.createdAt as string), 'do MMM Y')}</TableCell>
                       <TableCell align="right">
                         <Link to={"/product"}><button onClick={() => setActiveProduct(order.product)} className='bg-blue-600 font-bold mx-1 px-6 py-2 rounded text-white'>VIEW PRODUCT</button></Link>
-                        <button disabled={accessLoading || order.status === "GRANTED" || order.status === "DENIED"} onClick={() => { setAccessLoading(true); useDenyOrder({ id: order._id as string, dispatch, setLoading: setAccessLoading }) }} className='bg-delete-red font-bold mx-1 px-6 py-2 rounded text-white'>DENY</button>
-                        <button disabled={accessLoading || order.status === "GRANTED" || order.status === "DENIED"} onClick={() => { setAccessLoading(true); useGrantOrder({ id: order._id as string, dispatch, setLoading: setAccessLoading }) }} className='bg-pink-600 font-bold mx-1 px-6 py-2 rounded text-white'>GRANT</button>
+                        <button disabled={accessLoading || order.status === "GRANTED" || order.status === "DENIED"} onClick={() => { setAccessLoading(true); useDenyOrder({ id: order._id as string, dispatch, setLoading: setAccessLoading }) }} className={`${order.status === "PENDING" ? "bg-delete-red" : "bg-slate-400 cursor-not-allowed"} font-bold mx-1 px-6 py-2 rounded text-white`}>{accessLoading ? <BiLoaderAlt size={17} className='w-10 animate-spin text-white' /> : "DENY"}</button>
+                        <button disabled={accessLoading || order.status === "GRANTED" || order.status === "DENIED"} onClick={() => { setAccessLoading(true); useGrantOrder({ id: order._id as string, dispatch, setLoading: setAccessLoading }) }} className={`${order.status === "PENDING" ? "bg-pink-600" : "bg-slate-400 cursor-not-allowed"} font-bold mx-1 px-6 py-2 rounded text-white`}>{accessLoading ? <BiLoaderAlt size={17} className='w-10 animate-spin text-white' /> : "GRANT"}</button>
                       </TableCell>
                     </TableRow>
                   ))}

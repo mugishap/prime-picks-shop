@@ -340,6 +340,7 @@ export const useDenyOrder = async ({ id, dispatch, setLoading }: { id: string, d
     try {
         const request = await api().patch("/order/deny/" + id);
         const response = request.data
+        toast.success(response.message)
         dispatch(updateOrder({ id, order: response.data.order }))
     } catch (error: any) {
         console.log(error);
@@ -354,6 +355,7 @@ export const useGrantOrder = async ({ id, dispatch, setLoading }: { id: string, 
     try {
         const request = await api().patch("/order/grant/" + id);
         const response = request.data
+        toast.success(response.message)
         dispatch(updateOrder({ id, order: response.data.order }))
     } catch (error: any) {
         console.log(error);

@@ -3,10 +3,11 @@ import { CommonContext } from '../../context'
 import { IOrderData, IProduct } from '../../types'
 import { useCreateOrder } from '../../hooks'
 import { BiCart, BiCheck, BiLoaderAlt } from 'react-icons/bi'
-import { addItemToCart, removeItemFromCart } from '../../redux/slices/productSlice'
+import { addItemToCart, removeItemFromCart, setActiveProduct } from '../../redux/slices/productSlice'
+import { useParams } from 'react-router-dom'
 
 const ProductComponent = () => {
-    const { activeProduct, dispatch, user, cart, loading, setLoading } = useContext(CommonContext)
+    const { activeProduct, products, dispatch, user, cart, loading, setLoading } = useContext(CommonContext)
     const [orderData, setOrderData] = useState<IOrderData>({
         quantity: 1,
         product: activeProduct._id
@@ -19,6 +20,14 @@ const ProductComponent = () => {
             console.log(error);
         }
     }
+    const { id } = useParams<{ id: string }>()
+    React.useEffect(() => {
+        if (!id) return
+        const product = products.find((product: IProduct) => product._id === id)
+        console.log(product);
+        if (!product) return
+        dispatch(setActiveProduct({ ...product }))
+    }, [id])
     React.useEffect(() => {
         document.title = `${activeProduct.name} | Prime Picks`;
     }, []);

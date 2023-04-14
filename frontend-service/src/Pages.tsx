@@ -107,6 +107,7 @@ const Pages: React.FC<{}> = () => {
                         <Route path="/products" element={<Products />} />
                         <Route path="/products/all" element={<AllProducts />} />
                         <Route path="/product" element={<Product />} />
+                        <Route path="/product/:id" element={<Product />} />
                         <Route path="*" element={<NotFound />} />
                         {
                             isLoggedIn && user.role === "ADMIN" &&
