@@ -2,6 +2,7 @@ import { ApiResponse } from './../responses/api.response.js'
 import { CreateProductSchema, UpdateProductSchema } from './../validations/app.validation.js'
 import { uploadFile } from './../utils/files.util.js'
 import Product from './../models/product.js'
+import Order from "./../models/order.js"
 
 const createProduct = async (req, res) => {
     try {
@@ -71,7 +72,7 @@ const getProducts = async (req, res) => {
 const searchProducts = async (req, res) => {
     try {
         const { query } = req.params
-        const products = await Product.find({ $or: [{ name: (new RegExp(`${query}`)) }, { description: (new RegExp(`${query}`)) }] })
+        const products = await Product.find({ $or: [{ name: { $regex: query, $options: "i" } }, { description: { $regex: query, $options: "i" } }] })
         return res.status(200).json(new ApiResponse(true, "Products fetched successfully", { products }))
     } catch (error) {
         console.log(error)
@@ -84,6 +85,10 @@ const deleteProduct = async (req, res) => {
         const { id } = req.params
         const product = await Product.findById(id)
         if (!product) return res.status(404).json(new ApiResponse(false, "Product not found", null))
+        const orders = await Order.find({ product: id })
+        for (let order of orders) {
+            await order.remove()
+        }
         await product.remove()
         return res.status(200).json(new ApiResponse(true, "Product deleted successfully", null))
     } catch (error) {

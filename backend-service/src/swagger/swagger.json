@@ -1265,6 +1265,46 @@
           }
         }
       },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011",
+            "required": true
+          },
+          "product": {
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011",
+            "required": true
+          },
+          "status": {
+            "type": "string",
+            "example": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 0
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "string"
+          },
+          "_id": {
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011",
+            "required": true
+          },
+          "__v": {
+            "type": "number",
+            "example": 0
+          }
+        }
+      },
       "Product": {
         "type": "object",
         "properties": {
@@ -1291,46 +1331,6 @@
           "image": {
             "type": "string",
             "example": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "string"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "string"
-          },
-          "_id": {
-            "type": "string",
-            "example": "507f1f77bcf86cd799439011",
-            "required": true
-          },
-          "__v": {
-            "type": "number",
-            "example": 0
-          }
-        }
-      },
-      "Order": {
-        "type": "object",
-        "properties": {
-          "user": {
-            "type": "string",
-            "example": "507f1f77bcf86cd799439011",
-            "required": true
-          },
-          "product": {
-            "type": "string",
-            "example": "507f1f77bcf86cd799439011",
-            "required": true
-          },
-          "status": {
-            "type": "string",
-            "example": "string"
-          },
-          "quantity": {
-            "type": "number",
-            "example": 0
           },
           "createdAt": {
             "type": "string",

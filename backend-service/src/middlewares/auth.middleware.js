@@ -9,7 +9,7 @@ const { JWT_SECRET_KEY } = process.env
 const isLoggedIn = async (req, res, next) => {
     try {
         const token = req.headers.authorization?.split(" ")[1]
-        if (!token) return res.status(401).json(new ApiResponse(false, "No token sent in headers!!!", null))
+        if (!token) return res.status(401).json(new ApiResponse(false, "You aren't logged in!!!", null))
         const response = jwt.verify(token, JWT_SECRET_KEY, {})
         if (!response) return res.status(401).json(new ApiResponse(false, "You are not logged in", null))
         req.user = response
@@ -17,7 +17,7 @@ const isLoggedIn = async (req, res, next) => {
     }
     catch (error) {
         console.log(error)
-        if (error.message === "jwt malformed") return res.status(401).json(new ApiResponse(false, "Invalid token", null))
+        if (error.message === "jwt malformed") return res.status(401).json(new ApiResponse(false, "You aren't logged in!!!", null))
         return res.status(500).json(new ApiResponse(false, "Internal Server Error", null))
     }
 }

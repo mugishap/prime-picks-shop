@@ -6,6 +6,7 @@ import User from "../models/user.js"
 import jwt from "jsonwebtoken"
 import { uploadFile } from "../utils/files.util.js"
 import { UpdatePasswordSchema } from "../validations/app.validation.js"
+import Order from "../models/order.js"
 
 config()
 const { JWT_SECRET_KEY } = process.env
@@ -126,6 +127,10 @@ const deleteUserByAdmin = async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         if (!user) return res.status(404).json(new ApiResponse(false, "User not found", null))
+        const orders = await Order.find({ user: user._id })
+        orders.forEach(async (order) => {
+            await order.delete()
+        })
         await user.delete()
         return res.status(200).json(new ApiResponse(true, "User deleted successfully", null))
     } catch (error) {
