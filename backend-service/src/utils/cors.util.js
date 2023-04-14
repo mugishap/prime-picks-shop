@@ -2,6 +2,7 @@ const whitelist = [
   "https://primepicks.vercel.app",
   "http://localhost:3000",
   "http://localhost:5000",
+  "https://primepicks.up.railway.app"
 ];
 const options = {
   origin: (origin, callback) => {
