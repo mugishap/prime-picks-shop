@@ -1,20 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CommonContext } from '../../context'
 import { BiLoaderAlt, BiSearch, BiX } from 'react-icons/bi'
-import { useSearchProduct } from '../../hooks'
 import { IProduct } from '../../types'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
+import { setSearchResults } from '../../redux/slices/productSlice'
 
 const SearchComponent: React.FC<{}> = () => {
 
-    const { setSearch, dispatch, setActiveProduct, searchResults } = useContext(CommonContext)
+    const { setSearch, dispatch,products, setActiveProduct, searchResults } = useContext(CommonContext)
     const [query, setQuery] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
     useEffect(() => {
         if (!query) return
         setLoading(true)
-        useSearchProduct({ setLoading, query, dispatch })
+        dispatch(setSearchResults(products.filter((product: IProduct) => product.name.toLowerCase().includes(query.toLowerCase()) || product.description.toLowerCase().includes(query.toLowerCase()) )))
+        setLoading(false)
     }, [query])
     return (
         <div className='z-10 w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-lg'>

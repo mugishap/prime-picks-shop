@@ -236,19 +236,6 @@ export const useGetProducts = async ({ dispatch, setLoading }: { dispatch: Dispa
     }
 }
 
-export const useSearchProduct = async ({ query, dispatch, setLoading }: { query: string, dispatch: Dispatch, setLoading: Function }) => {
-    try {
-        const request = await api().get("/product/search/" + query);
-        const response = request.data
-        dispatch(setSearchResults(shuffle([...response.data.products])))
-    } catch (error: any) {
-        console.log(error);
-        if (error.response.data.message) return toast.error(error.response.data.message)
-        toast.error(error.message)
-    } finally {
-        setLoading(false)
-    }
-}
 
 export const useCreateOrder = async ({ dispatch, setLoading, orderData }: { order: IOrder, orderData: IOrderData, dispatch: Dispatch, setLoading: Function }) => {
     try {

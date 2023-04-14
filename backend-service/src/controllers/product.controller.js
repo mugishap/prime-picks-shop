@@ -72,6 +72,7 @@ const searchProducts = async (req, res) => {
     try {
         const { query } = req.params
         const products = await Product.find({ $or: [{ name: { $regex: query, $options: "i" } }, { description: { $regex: query, $options: "i" } }] })
+        if(!products.length)return res.status(200).json(new ApiResponse(true, "No products with the search query", { products }))
         return res.status(200).json(new ApiResponse(true, "Products fetched successfully", { products }))
     } catch (error) {
         console.log(error)
