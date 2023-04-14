@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker:build": "docker build -t primepicks-fe-image .",
+    "docker:run": "docker run -p 3000:3000 -d primepicks-fe-image"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

@@ -6,7 +6,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --ignore '*swagger.json' app.js"
+    "dev": "nodemon --ignore '*swagger.json' app.js",
+    "build": "docker build -t primepicks-be-image .",
+    "docker:run": "docker run -p 5000:5000 -d primepicks-be-image"
   },
   "keywords": [
     "ecommerce"
