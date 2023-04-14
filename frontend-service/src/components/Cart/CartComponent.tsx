@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CommonContext } from '../../context'
 import { BiLoaderAlt, BiSearch, BiX } from 'react-icons/bi'
-import { useSearchProduct } from '../../hooks'
 import { IProduct } from '../../types'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
