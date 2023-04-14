@@ -31,12 +31,10 @@ const Pages: React.FC<{}> = () => {
     const searchResults: IProduct[] = productSlice.searchResults
     const isLoggedIn: boolean = userSlice.isLoggedIn
     const users: IUser[] = userSlice.users
-    const orders: IOrder[] = orderSlice.orders
+    const orders: IOrder[] = orderSlice.allOrders
     const [search, setSearch] = useState<boolean>(false)
     const [auth, setAuth] = useState<{ display: boolean, active: "login" | "signup" | "none" }>({ display: false, active: "none" })
     const [viewNavbar, setViewNavbar] = useState<boolean>(false)
-    const [activeSidebarLink, setActiveSidebarLink] = useState<string>()
-    const [activeNavbarLink, setActiveNavbarLink] = useState<string>()
     const [activeTab, setActiveTab] = useState<string>("user")
     const [updateUser, setUpdateUser] = useState<boolean>(false)
     const [updatePassword, setUpdatePassword] = useState<boolean>(false)
@@ -52,10 +50,11 @@ const Pages: React.FC<{}> = () => {
         useGetProducts({ dispatch, setLoading })
         console.log(productSlice.products);
     }, [])
-    const refresh = async ({ data }: { data: "products" | "orders" | "users" }) => {
-        data === "products" && useGetProducts({ dispatch, setLoading })
-        data === "orders" && useGetAllOrders({ dispatch, setLoading })
-        data === "users" && useGetUsers({ dispatch, setLoading })
+    const refresh = async ({ data, setRefreshLoader }: { setRefreshLoader: Function, data: "products" | "orders" | "users" }) => {
+        console.log(data)
+        data === "products" && useGetProducts({ dispatch, setLoading: setRefreshLoader })
+        data === "orders" && useGetAllOrders({ dispatch, setLoading: setRefreshLoader })
+        data === "users" && useGetUsers({ dispatch, setLoading: setRefreshLoader })
     }
     const deleteData = async ({ data, id }: { id: string, data: "products" | "orders" | "users" }) => {
         data === "products" && useDeleteProduct({ dispatch, setLoading, id })
@@ -81,10 +80,6 @@ const Pages: React.FC<{}> = () => {
                 setAuth,
                 viewNavbar,
                 setViewNavbar,
-                activeSidebarLink,
-                setActiveSidebarLink,
-                activeNavbarLink,
-                setActiveNavbarLink,
                 updateProduct,
                 setUpdateProduct,
                 activeTab,

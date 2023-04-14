@@ -104,7 +104,7 @@ const LoginComponent: React.FC<Props> = ({ setAuth }) => {
         <div className="mt-8">
           <button
             role="button"
-            aria-label="create my account"
+            aria-label="login "
             className="focus:ring-2 flex items-center justify-center focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
             type="submit"
             disabled={loading}

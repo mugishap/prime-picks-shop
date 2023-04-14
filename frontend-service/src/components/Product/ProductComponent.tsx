@@ -5,12 +5,11 @@ import { useCreateOrder } from '../../hooks'
 import { BiLoaderAlt } from 'react-icons/bi'
 
 const ProductComponent = () => {
-    const { activeProduct, dispatch } = useContext(CommonContext)
+    const { activeProduct, dispatch,loading, setLoading } = useContext(CommonContext)
     const [orderData, setOrderData] = useState<IOrderData>({
         quantity: 1,
         product: activeProduct._id
     })
-    const [loading, setLoading] = useState(false)
     const createNewOrder = async () => {
         try {
             setLoading(true)
@@ -25,8 +24,8 @@ const ProductComponent = () => {
     return (
         <div className='flex flex-col items-center justify-center'>
             <div className='shadow-lg p-8 rounded mxl:w-6/12 flex sm:flex-row flex-col'>
-                <div className='flex flex-col items-center w-full sm:w-1/2 justify-center'>
-                    <img src={activeProduct.image} className='rounded object-cover sm:w-fit w-11/12 h-[40vh]' alt="" />
+                <div className='flex flex-col items-center w-full sm:w-1/2 sm:mr-4 justify-center'>
+                    <img src={activeProduct.image} className='rounded object-cover  sm:w-fit w-11/12 h-[40vh]' alt="" />
                 </div>
                 <div className='w-full sm:mt-0 mt-6 sm:w-1/2 flex '>
                     <div className='flex w-full flex-col gap-4'>

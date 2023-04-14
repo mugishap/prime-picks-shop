@@ -32,6 +32,8 @@ const userSlice: Slice = createSlice({
             state.searchResults = [...payload]
         },
         updateProduct: (state, { payload }) => {
+            console.log(payload);
+
             state.products = state.products.map((product: IProduct) => product._id === payload._id ? payload : product)
         },
         addProduct: (state, { payload }) => {

@@ -5,7 +5,7 @@ import { useSearchProduct } from '../../hooks'
 
 const SearchComponent: React.FC<{}> = () => {
 
-    const { search, setSearch, dispatch, searchResults } = useContext(CommonContext)
+    const { setSearch, dispatch, searchResults } = useContext(CommonContext)
     const [query, setQuery] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
     useEffect(() => {

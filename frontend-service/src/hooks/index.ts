@@ -3,7 +3,6 @@ import api from "../api";
 import { ILoginData, INewPasswordData, IOrderData, IProductData, ISignupData, IUserData } from "../types";
 import { toast } from "react-toastify";
 import { login, logout, removeUser, setUsers, updateUser } from "../redux/slices/userSlice";
-import { setCookie } from "../utils/cookies";
 import { addProduct, load, removeProduct, setSearchResults, updateProduct } from "../redux/slices/productSlice";
 import { addOrder, loadMyOrders, loadOrders, loadProductOrders, removeOrder, updateOrder } from "../redux/slices/orderSlice";
 
@@ -12,10 +11,10 @@ import { addOrder, loadMyOrders, loadOrders, loadProductOrders, removeOrder, upd
 export const useSignup = async ({ setAuth, signupData, setLoading, dispatch }: { setAuth: Function, dispatch: Dispatch, signupData: ISignupData, setLoading: Function }) => {
     try {
         delete signupData.showPassword
-        const request = await api.post("/user/register", { ...signupData });
+        const request = await api().post("/user/register", { ...signupData });
         const response = request.data
         dispatch(login({ ...response.data }))
-        setCookie("token", response.data.token, 31)
+        localStorage.setItem("token", response.data.token)
         setAuth({ display: false })
     } catch (error: any) {
         console.log(error);
@@ -30,10 +29,10 @@ export const useLogin = async ({ setAuth, loginData, setLoading, dispatch }: { s
 
     try {
         delete loginData.showPassword
-        const request = await api.post("/auth/login", { ...loginData });
+        const request = await api().post("/auth/login", { ...loginData });
         const response = request.data
         dispatch(login({ ...response.data }))
-        setCookie("token", response.data.token, 31)
+        localStorage.setItem("token", response.data.token)
         setAuth({ display: false })
     } catch (error: any) {
         console.log(error);
@@ -44,11 +43,21 @@ export const useLogin = async ({ setAuth, loginData, setLoading, dispatch }: { s
     }
 }
 
-export const useUpdateUser = async ({ userData, setLoading, dispatch }: { dispatch: Dispatch, userData: IUserData, setLoading: Function }) => {
+export const useUpdateUser = async ({ setUpdateUser, setUserData, userData, setLoading, dispatch }: { setUpdateUser: Function, setUserData: Function, dispatch: Dispatch, userData: IUserData, setLoading: Function }) => {
     try {
-        const request = await api.put("/user/update", { ...userData });
+        const request = await api().put("/user/update", { ...userData });
         const response = request.data
+        toast.success(response.message)
         dispatch(updateUser({ ...response.data.user }))
+        setUserData({
+            fullname: "",
+            email: "",
+            mobile: "",
+            location: "",
+            avatarString: "",
+            password: "",
+        })
+        setUpdateUser(false)
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -59,11 +68,13 @@ export const useUpdateUser = async ({ userData, setLoading, dispatch }: { dispat
 }
 
 
-export const useUpdatePassword = async ({ newPasswordData, setLoading, dispatch }: { dispatch: Dispatch, newPasswordData: INewPasswordData, setLoading: Function }) => {
+export const useUpdatePassword = async ({ setUpdatePassword, newPasswordData, setLoading, dispatch }: { setUpdatePassword: Function, dispatch: Dispatch, newPasswordData: INewPasswordData, setLoading: Function }) => {
     try {
-        const request = await api.put("/user/update-passworrd", { ...newPasswordData });
+        const request = await api().put("/user/update-password", { ...newPasswordData });
         const response = request.data
+        toast.success(response.message)
         dispatch(updateUser({ ...response.data.user }))
+        setUpdatePassword(false)
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -75,7 +86,7 @@ export const useUpdatePassword = async ({ newPasswordData, setLoading, dispatch 
 
 export const useGetUsers = async ({ dispatch, setLoading }: { dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.get("/user/all");
+        const request = await api().get("/user/all");
         const response = request.data
         console.log(response.data.users);
         dispatch(setUsers([...response.data.users]))
@@ -90,7 +101,7 @@ export const useGetUsers = async ({ dispatch, setLoading }: { dispatch: Dispatch
 
 export const useDeleteUser = async ({ password, setLoading, dispatch }: { dispatch: Dispatch, password: string, setLoading: Function }) => {
     try {
-        const request = await api.post("/users/delete", { password });
+        const request = await api().post("/users/delete", { password });
         const response = request.data
         dispatch(logout({}))
     } catch (error: any) {
@@ -115,13 +126,23 @@ export const useLogout = async ({ dispatch, setLoading }: { dispatch: Dispatch, 
     }
 }
 
-export const useCreateAdmin = async ({ adminData, setLoading, dispatch }: { dispatch: Dispatch, adminData: IUserData, setLoading: Function }) => {
+export const useCreateAdmin = async ({ setAdminData, adminData, setLoading, dispatch }: { setAdminData: Function, dispatch: Dispatch, adminData: IUserData, setLoading: Function }) => {
     try {
-        delete adminData.password
-        const request = await api.post("/user/register", { ...adminData });
+        delete adminData.showPassword
+        console.log(adminData);
+        const request = await api().post("/user/register-admin", { ...adminData });
         const response = request.data
         dispatch(login({ ...response.data }))
-        setCookie("token", response.data.token, 31)
+        toast.success(response.data.message)
+        setAdminData({
+            fullname: "",
+            email: "",
+            mobile: "",
+            location: "",
+            password: "",
+            showPassword: false,
+            role: "ADMIN"
+        })
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -133,7 +154,7 @@ export const useCreateAdmin = async ({ adminData, setLoading, dispatch }: { disp
 
 export const useDeleteUserByAdmin = async ({ id, setLoading, dispatch }: { dispatch: Dispatch, id: string, setLoading: Function }) => {
     try {
-        const request = await api.post("/users/delete/" + id);
+        const request = await api().post("/users/delete/" + id);
         const response = request.data
         toast.success(response.message)
         dispatch(removeUser(id))
@@ -148,11 +169,20 @@ export const useDeleteUserByAdmin = async ({ id, setLoading, dispatch }: { dispa
 
 //Product related operations
 
-export const useCreateProduct = async ({ productData, setLoading, dispatch }: { dispatch: Dispatch, productData: IProductData, setLoading: Function }) => {
+export const useCreateProduct = async ({ setProductData, productData, setLoading, dispatch }: { setProductData: Function, dispatch: Dispatch, productData: IProductData, setLoading: Function }) => {
     try {
-        const request = await api.post("/product/create", { ...productData });
+        const request = await api().post("/product/create", { ...productData });
         const response = request.data
+        toast.success(response.message)
         dispatch(addProduct({ ...response.data.product }))
+        setProductData({
+            name: "",
+            quantity: 1,
+            price: 1,
+            description: "",
+            imageString: "",
+            currency: "RWF",
+        })
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -164,7 +194,7 @@ export const useCreateProduct = async ({ productData, setLoading, dispatch }: { 
 
 export const useUpdateProduct = async ({ setUpdateProduct, productData, setLoading, dispatch }: { setUpdateProduct: Function, dispatch: Dispatch, productData: IProductData, setLoading: Function }) => {
     try {
-        const request = await api.put("/product/update/" + productData._id, { ...productData });
+        const request = await api().put("/product/update/" + productData._id, { ...productData });
         const response = request.data
         console.log(response)
         dispatch(updateProduct({ ...response.data.product }))
@@ -180,7 +210,7 @@ export const useUpdateProduct = async ({ setUpdateProduct, productData, setLoadi
 
 export const useDeleteProduct = async ({ id, dispatch, setLoading }: { id: string, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.delete("/product/delete/" + id);
+        const request = await api().delete("/product/delete/" + id);
         const response = request.data
         toast.success(response.data.message)
         dispatch(removeProduct(id))
@@ -195,7 +225,7 @@ export const useDeleteProduct = async ({ id, dispatch, setLoading }: { id: strin
 
 export const useGetProducts = async ({ dispatch, setLoading }: { dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.get("/product/all");
+        const request = await api().get("/product/all");
         const response = request.data
         console.log(response.data.products);
         dispatch(load([...response.data.products]))
@@ -210,9 +240,9 @@ export const useGetProducts = async ({ dispatch, setLoading }: { dispatch: Dispa
 
 export const useSearchProduct = async ({ query, dispatch, setLoading }: { query: string, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.get("/product/search/" + query);
+        const request = await api().get("/product/search/" + query);
         const response = request.data
-        dispatch(setSearchResults({ ...response.data.products }))
+        dispatch(setSearchResults([...response.data.products]))
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -224,8 +254,9 @@ export const useSearchProduct = async ({ query, dispatch, setLoading }: { query:
 
 export const useCreateOrder = async ({ dispatch, setLoading, orderData }: { orderData: IOrderData, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.post("/order/create", { ...orderData });
+        const request = await api().post("/order/create", { ...orderData, productId: orderData.product });
         const response = request.data
+        toast.success(response.message)
         dispatch(addOrder({ ...response.data.order }))
     } catch (error: any) {
         console.log(error);
@@ -239,7 +270,7 @@ export const useCreateOrder = async ({ dispatch, setLoading, orderData }: { orde
 
 export const useUpdateOrder = async ({ dispatch, setLoading, orderData }: { orderData: IOrderData, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.put("/order/update" + orderData._id, { ...orderData });
+        const request = await api().put("/order/update" + orderData._id, { ...orderData });
         const response = request.data
         dispatch(updateOrder({ order: response.data.order }))
     } catch (error: any) {
@@ -253,7 +284,7 @@ export const useUpdateOrder = async ({ dispatch, setLoading, orderData }: { orde
 
 export const useDeleteOrder = async ({ dispatch, setLoading, id }: { id: string, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.delete("/order/delete/" + id);
+        const request = await api().delete("/order/delete/" + id);
         const response = request.data
         dispatch(removeOrder({ id }))
     } catch (error: any) {
@@ -267,9 +298,9 @@ export const useDeleteOrder = async ({ dispatch, setLoading, id }: { id: string,
 
 export const useGetAllOrders = async ({ dispatch, setLoading }: { dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.get("/order/all");
+        const request = await api().get("/order/all");
         const response = request.data
-        dispatch(loadOrders({ ...response.data.orders }))
+        dispatch(loadOrders([...response.data.orders]))
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -281,9 +312,9 @@ export const useGetAllOrders = async ({ dispatch, setLoading }: { dispatch: Disp
 
 export const useGetUserOrders = async ({ dispatch, setLoading }: { dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.delete("/order/mine");
+        const request = await api().get("/order/mine");
         const response = request.data
-        dispatch(loadMyOrders({ ...response.data.orders }))
+        dispatch(loadMyOrders([...response.data.orders]))
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)
@@ -295,7 +326,7 @@ export const useGetUserOrders = async ({ dispatch, setLoading }: { dispatch: Dis
 
 export const useGetProductOrders = async ({ dispatch, setLoading, id }: { id: string, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.delete("/order/product/" + id);
+        const request = await api().delete("/order/product/" + id);
         const response = request.data
         dispatch(loadProductOrders({ id, orders: [...response.data.orders] }))
     } catch (error: any) {
@@ -309,7 +340,21 @@ export const useGetProductOrders = async ({ dispatch, setLoading, id }: { id: st
 
 export const useDenyOrder = async ({ id, dispatch, setLoading }: { id: string, dispatch: Dispatch, setLoading: Function }) => {
     try {
-        const request = await api.put("/order/deny/" + id);
+        const request = await api().put("/order/deny/" + id);
+        const response = request.data
+        dispatch(updateOrder({ id, order: response.data.order }))
+    } catch (error: any) {
+        console.log(error);
+        if (error.response.data.message) return toast.error(error.response.data.message)
+        toast.error(error.message)
+    } finally {
+        setLoading(false)
+    }
+}
+
+export const useGrant = async ({ id, dispatch, setLoading }: { id: string, dispatch: Dispatch, setLoading: Function }) => {
+    try {
+        const request = await api().put("/order/grant/" + id);
         const response = request.data
         dispatch(updateOrder({ id, order: response.data.order }))
     } catch (error: any) {

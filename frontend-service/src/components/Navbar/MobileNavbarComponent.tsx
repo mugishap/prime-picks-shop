@@ -10,7 +10,7 @@ interface Props {
 }
 
 const MobileNavbarComponent: React.FC<Props> = ({ setViewNavbar }) => {
-    const { isLoggedIn, activeNavbarLink, setActiveNavbarLink } = useContext(CommonContext)
+    const { isLoggedIn, } = useContext(CommonContext)
     return (
         <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-md flex items-center justify-center'>
             <div className='absolute z-[3] w-full h-full' onClick={() => setViewNavbar(false)}></div>
@@ -21,7 +21,7 @@ const MobileNavbarComponent: React.FC<Props> = ({ setViewNavbar }) => {
                         (isLoggedIn ? navbarlinks : navbarlinks.filter((link: INavbarLink) => !link.protected)).map((link: INavbarLink, index: number) => {
                             return (
                                 <Link to={link.href} className='w-full' key={index}>
-                                    <div onClick={() => { setViewNavbar(false); setActiveNavbarLink(link.label) }} className={`${link.label === activeNavbarLink && "text-pink-600"}  hover:bg-slate-200 w-7/12 m-auto  my-2 py-2 rounded-3xl px-4 `}>{link.name}</div>
+                                    <div onClick={() => { setViewNavbar(false);  }} className={`${window.location.pathname === link.href && "text-pink-600"}  hover:bg-slate-200 w-7/12 m-auto  my-2 py-2 rounded-3xl px-4 `}>{link.name}</div>
                                 </Link>
                             )
                         })

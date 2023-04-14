@@ -20,6 +20,7 @@ const ProductComponent = () => {
   const { products, setUpdateProduct, deleteData, refresh, dispatch, loading, setLoading } = useContext(CommonContext)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [refreshLoader, setRefreshLoader] = React.useState(false)
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -49,7 +50,7 @@ const ProductComponent = () => {
           <span>Loading...</span>
           :
           <div className='w-full px-4 flex flex-col items-end justify-end'>
-            <button className='bg-pink-600 px-4 py-2 text-white rounded mb-4' onClick={() => refresh("products")}>REFRESH</button>
+            <button className='bg-pink-600 px-4 py-2 text-white rounded mb-4' onClick={() => { setRefreshLoader(true); !refreshLoader && refresh({ data: "products", setRefreshLoader }) }}>{refreshLoader ? <BiLoaderAlt className='animate-spin text-white w-20' size={25} /> : "REFRESH"}</button>
             <TableContainer className='' component={Paper}>
               <Table sx={{ minWidth: 650 }} className="" aria-label="simple table">
                 <TableHead>

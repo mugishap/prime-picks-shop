@@ -3,13 +3,14 @@ import { CommonContext } from '../../../context';
 import { IUserData } from '../../../types';
 import { toast } from 'react-toastify';
 import { useCreateAdmin } from '../../../hooks';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 const NewAdminComponent: React.FC<{}> = () => {
     const { dispatch, loading, setLoading } = useContext(CommonContext);
     const [adminData, setAdminData] = useState<IUserData>({
         fullname: "",
         email: "",
-        mobile: "",
+        mobile: 250,
         location: "",
         password: "",
         showPassword: false,
@@ -18,8 +19,10 @@ const NewAdminComponent: React.FC<{}> = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
-            if (!adminData.email || !adminData.password) return toast.error("Please fill all the fields");
-            useCreateAdmin({ adminData, dispatch, setLoading })
+            setLoading(true)
+            console.log(adminData);
+            if (!adminData.fullname || !adminData.location || !adminData.mobile || !adminData.email || !adminData.password) return toast.error("Please fill all the fields");
+            useCreateAdmin({ adminData, dispatch, setLoading, setAdminData })
         } catch (error) {
             console.log(error);
         }
@@ -68,13 +71,13 @@ const NewAdminComponent: React.FC<{}> = () => {
                             Telephone
                         </label>
                         <input
-                            aria-label="enter telephone adress"
+                            aria-label="enter telephone"
                             role="input"
-                            type={"tel"}
+                            type={"number"}
                             className="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                             placeholder="Telephone"
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setAdminData({ ...adminData, mobile: e.target.value });
+                                setAdminData({ ...adminData, mobile: e.target.valueAsNumber });
                             }}
                             value={adminData.mobile}
                         />
@@ -85,7 +88,7 @@ const NewAdminComponent: React.FC<{}> = () => {
                             Location
                         </label>
                         <input
-                            aria-label="enter location adress"
+                            aria-label="enter location"
                             role="input"
                             type={"text"}
                             className="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
@@ -131,12 +134,12 @@ const NewAdminComponent: React.FC<{}> = () => {
                     <div className="mt-8">
                         <button
                             role="button"
-                            aria-label="create my account"
-                            className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
+                            aria-label="login "
+                            className="focus:ring-2 flex items-center justify-center focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
                             type="submit"
                             disabled={loading}
                         >
-                            REGISTER
+                            {loading ? <BiLoaderAlt className="animate-spin" size={25} /> : "CREATE ADMIN"}
                         </button>
                     </div>
                 </form>

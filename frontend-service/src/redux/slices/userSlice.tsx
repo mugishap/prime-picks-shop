@@ -48,6 +48,7 @@ const userSlice: Slice = createSlice({
             };
             state.token = ""
             state.users = []
+            localStorage.removeItem("token");
             window.location.replace("/auth/login");
         },
         updateUser: (state, { payload }) => {

@@ -118,6 +118,13 @@ export const features = [
 
 export const sidebarLinks: ISidebarLink[] = [
     {
+        href: "/admin",
+        icon: BiUser,
+        name: "Dashboard",
+        protected: true,
+        label: "dashboard"
+    },
+    {
         href: "/admin/users",
         icon: BiUser,
         name: "Users Management",

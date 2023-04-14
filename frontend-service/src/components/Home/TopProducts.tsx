@@ -11,6 +11,7 @@ const TopProducts: React.FC = () => {
             <div className='rounded-full bg-whitish w-44 h-44 cursor-pointer p-2 flex items-center justify-center' >
               <img src={product.image} alt={product.name} className='hover:scale-125' />
             </div>
+            <span className='font-bold'>{product.name}</span>
             <span className='mt-8 text-slate-600'>{product.quantity} Product</span>
           </div>
         ))

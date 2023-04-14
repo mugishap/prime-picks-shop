@@ -97,7 +97,7 @@ const SignupComponent: React.FC<Props> = ({ setAuth }) => {
                     <input
                         aria-label="enter telephone adress"
                         role="input"
-                        type={"tel"}
+                        type={"number"}
                         className="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                         placeholder="Telephone"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

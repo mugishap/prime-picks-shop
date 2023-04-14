@@ -2,11 +2,14 @@ import React, { useContext, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { CommonContext } from "../../context";
 import { logout } from "../../redux/slices/userSlice";
+import { IOrder } from "../../types";
+import { useGetUserOrders } from "../../hooks";
 
 const AccountComponent: React.FC = () => {
-    const { user, activeTab, dispatch, setUpdateUser, setUpdatePassword } = useContext(CommonContext);
+    const { user, activeTab, myOrders, dispatch, setLoading, setUpdateUser, setUpdatePassword } = useContext(CommonContext);
     useEffect(() => {
         document.title = `${user.fullname} | Prime Picks`;
+        useGetUserOrders({ dispatch, setLoading })
     }, []);
     return (
         <div className="w-full flex flex-col">
@@ -54,7 +57,12 @@ const AccountComponent: React.FC = () => {
                     activeTab === "history"
                     &&
                     (<div className="flex w-full lg:w-6/12 pl-8 flex-col items-start justify-start">
-                        You buying history appears here
+                        {
+                            myOrders?.map((order: IOrder, index: number) => {
+                                return (
+                                    <div>{order.product.name}</div>
+                                )
+                            })}
                     </div>)
                 }
             </div>

@@ -2,19 +2,22 @@ import React, { useContext, useState } from 'react'
 import { INewPasswordData, IUser } from '../../types'
 import { toast } from 'react-toastify'
 import { CommonContext } from '../../context'
+import { useUpdatePassword } from '../../hooks'
+import { BiLoaderAlt } from 'react-icons/bi'
 
 const UpdatePasswordComponent: React.FC<{}> = ({ }) => {
-    const { setUpdatePassword } = useContext(CommonContext)
+    const { setUpdatePassword, loading, setLoading, dispatch } = useContext(CommonContext)
     const [newPasswordData, setNewPasswordData] = useState<INewPasswordData>({
         oldPassword: "",
         newPassword: "",
         showPassword: false
     })
-    const [loading, setLoading] = useState<boolean>(false);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault()
+            setLoading(true)
             if (!newPasswordData.oldPassword || !newPasswordData.newPassword) return toast.error("Please fill all the fields");
+            useUpdatePassword({ setUpdatePassword, newPasswordData, setLoading, dispatch })
         } catch (error) {
             console.log(error);
         }
@@ -101,12 +104,12 @@ const UpdatePasswordComponent: React.FC<{}> = ({ }) => {
 
                             <button
                                 role="button"
-                                aria-label="create my account"
-                                className="focus:ring-2 mt-6 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
+                                aria-label="login "
+                                className="focus:ring-2 flex items-center mt-6 justify-center focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-500 border rounded hover:bg-pink-600 duration-1000 hover:animate-ring py-4 w-full disabled:bg-slate-600"
                                 type="submit"
                                 disabled={loading}
                             >
-                                SAVE
+                                {loading ? <BiLoaderAlt className="animate-spin" size={25} /> : "CHANGE"}
                             </button>
                         </div>
                     </form >

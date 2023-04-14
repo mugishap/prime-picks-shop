@@ -145,7 +145,7 @@ const ContactComponent:React.FC<{}> = () => {
                         required
                         id="phone"
                         name="phone"
-                        type="tel"
+                        type="number"
                         className="focus:outline-none focus:border focus:border-indigo-700 font-normal w-64 h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           setTelephone(e.target.value)

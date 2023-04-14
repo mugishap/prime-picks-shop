@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import { BiCart, BiLoaderAlt, BiUpload } from 'react-icons/bi';
 import { CommonContext } from '../../../context';
 import { useCreateProduct } from '../../../hooks';
+import { toast } from 'react-toastify';
 
 const NewProductComponent: React.FC<{}> = () => {
 
@@ -21,7 +22,8 @@ const NewProductComponent: React.FC<{}> = () => {
         try {
             setLoading(true)
             e.preventDefault()
-            useCreateProduct({ productData, setLoading, dispatch })
+            if (!productData.currency || !productData.name || !productData.imageString || !productData.description || !productData.price) return toast.error("Please fill all the fields")
+            useCreateProduct({ productData, setLoading, dispatch, setProductData })
         } catch (error) {
             console.log(error);
         }
@@ -145,7 +147,12 @@ const NewProductComponent: React.FC<{}> = () => {
                         {
                             productData.imageString ? (
                                 <div className='w-full h-full flex flex-col items-center justify-center'>
-                                    <span className='my-6 font-bold text-xl'>Product Preview</span>
+                                    <span className='my-6 font-bold w-96 flex items-center justify-between text-xl'>
+                                        <span>Product Preview</span>
+                                        <button onClick={() => {
+                                            setProductData({ ...productData, imageString: "" })
+                                        }} className='bg-pink-600 rounded py-2 px-4 font-normal text-white cursor-pointer text-base'>CHANGE IMAGE</button>
+                                    </span>
                                     <div
                                         title='Click to view'
                                         className='w-96 h-[513px] rounded relative overflow-hidden shadow-lg cursor-pointer'

@@ -12,12 +12,15 @@ import { CommonContext } from '../../../context';
 import { IOrder } from '../../../types';
 import TablePaginationActions from '../Pagination/TablePaginationActions';
 import { useGetAllOrders } from '../../../hooks';
+import { Link } from 'react-router-dom';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 const OrderComponent: React.FC<{}> = () => {
 
-  const { orders, dispatch, refresh, loading, setLoading } = useContext(CommonContext)
+  const { orders, dispatch, setActiveProduct, refresh, loading, setLoading } = useContext(CommonContext)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [refreshLoader, setRefreshLoader] = useState(false)
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -48,7 +51,7 @@ const OrderComponent: React.FC<{}> = () => {
           <span>Loading...</span>
           :
           <div className='w-full px-4 flex flex-col items-end justify-end'>
-            <button className='bg-pink-600 px-4 py-2 text-white rounded mb-4' onClick={() => refresh("orders")}>REFRESH</button>
+            <button className='bg-pink-600 px-4 py-2 text-white rounded mb-4' onClick={() => { setRefreshLoader(true); !refreshLoader && refresh({ data: "orders", setRefreshLoader }) }}>{refreshLoader ? <BiLoaderAlt className='animate-spin text-white w-20' size={25} /> : "REFRESH"}</button>
             <TableContainer className='' component={Paper}>
               <Table sx={{ minWidth: 650 }} className="" aria-label="simple table">
                 <TableHead>
@@ -79,9 +82,12 @@ const OrderComponent: React.FC<{}> = () => {
                       </TableCell>
                       <TableCell align="right">{order.product.quantity}</TableCell>
                       <TableCell align="right">{order.user.fullname}</TableCell>
+                      <TableCell align="right">{order.user.role}</TableCell>
                       <TableCell align="right">{format(parseInt(order.createdAt as string), 'do MMM Y')}</TableCell>
                       <TableCell align="right">
-                        <button onClick={() => { {/*Implement delete order*/ } }} className='bg-delete-red font-bold px-6 py-2 rounded text-white'>Delete</button>
+                        <Link to={"/product"}><button onClick={() => setActiveProduct(order.product)} className='bg-blue-600 font-bold mx-1 px-6 py-2 rounded text-white'>VIEW PRODUCT</button></Link>
+                        <button onClick={() => { {/*Implement delete order*/ } }} className='bg-delete-red font-bold mx-1 px-6 py-2 rounded text-white'>DENY</button>
+                        <button onClick={() => { {/*Implement delete order*/ } }} className='bg-pink-600 font-bold mx-1 px-6 py-2 rounded text-white'>GRANT</button>
                       </TableCell>
                     </TableRow>
                   ))}

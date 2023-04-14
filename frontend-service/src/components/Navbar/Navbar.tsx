@@ -7,7 +7,7 @@ import { BiMenu, BiSearch, BiUser } from 'react-icons/bi'
 import { navbarlinks } from '../../constants'
 
 const Navbar: React.FC<{}> = ({ }) => {
-    const { isLoggedIn, search, setSearch, setAuth, user, setViewNavbar, setActiveNavbarLink, activeNavbarLink, } = useContext(CommonContext)
+    const { isLoggedIn, search, setSearch, setAuth, user, setViewNavbar, } = useContext(CommonContext)
 
     return (
         <div className='w-full bg-slate-200 h-16 flex items-center justify-around'>
@@ -21,8 +21,8 @@ const Navbar: React.FC<{}> = ({ }) => {
                 {
                     (isLoggedIn ? navbarlinks : navbarlinks.filter((link: INavbarLink) => !link.protected)).map((link: INavbarLink, index: number) => {
                         return (
-                            <Link key={index} className={`${link.label === activeNavbarLink && "text-pink-600"} rounded-3xl cursor-pointer hover:text-pink-600 mx-4`} to={link.href}>
-                                <span onClick={() => setActiveNavbarLink(link.label)}>{link.name}</span>
+                            <Link key={index} className={`${window.location.pathname === link.href && "text-pink-600"} rounded-3xl cursor-pointer hover:text-pink-600 mx-4`} to={link.href}>
+                                <span>{link.name}</span>
                             </Link>
                         )
                     })
