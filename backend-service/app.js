@@ -22,7 +22,6 @@ const { PORT } = process.env
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: "3mb" }));
 app.use(cors(options));
-// app.use(cors());
 app.use(bodyParser.json({ limit: "3mb" }))
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/user", userRouter)

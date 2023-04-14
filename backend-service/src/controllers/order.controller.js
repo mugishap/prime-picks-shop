@@ -23,7 +23,7 @@ const createOrder = async (req, res) => {
         await entity.save()
 
         const order = await Order.findById(entity._id).populate("product").populate("user")
-        await sendOrderReceivedEmail(user.email, user.fullname, product)
+        await sendOrderReceivedEmail({ order })
         return res.status(200).json(new ApiResponse(true, "Product requested successfully", { order, product }))
     } catch (error) {
         console.log(error)
@@ -93,7 +93,7 @@ const grantOrder = async (req, res) => {
         if (order.status === "GRANTED" || order.status === "DENIED") return res.status(400).json(new ApiResponse(false, "Only pending orders can be granted!!", null))
         order.status = "GRANTED"
         order.save()
-        await sendOrderGrantedEmail(order)
+        await sendOrderGrantedEmail({ order })
         return res.status(200).json(new ApiResponse(true, "Order granted successfully", { order }))
     } catch (error) {
         console.log(error)
@@ -110,7 +110,7 @@ const denyOrder = async (req, res) => {
         if (order.status === "GRANTED" || order.status === "DENIED") return res.status(400).json(new ApiResponse(false, "Only pending orders can be denied!!", null))
         order.status = "DENIED"
         order.save()
-        await sendOrderDeclinedEmail(order)
+        await sendOrderDeclinedEmail({ order })
         return res.status(200).json(new ApiResponse(true, "Order denied successfully", { order }))
     } catch (error) {
         console.log(error)

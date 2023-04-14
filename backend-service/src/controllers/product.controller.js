@@ -16,7 +16,6 @@ const createProduct = async (req, res) => {
         await product.save()
         return res.status(201).json(new ApiResponse(true, "Product created successfully", { product }))
     } catch (error) {
-        console.log(error.message)
         const regex = /index:\s+(\w+)_\d+\s+/;
         if (error.message.includes(" duplicate key error collection")) return res.status(500).json(new ApiResponse(false, `${(error.message.match(regex)[1])} already exists`, error))
         return res.status(500).json(new ApiResponse(false, "Internal Server Error", error))

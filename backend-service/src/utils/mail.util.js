@@ -61,7 +61,7 @@ const sendOrderGrantedEmail = ({ order }) => {
     try {
         const info = transporter.sendMail({
             from: MAIL_USER,
-            to: email,
+            to: order.user.email,
             subject: "Hurray! you requested product is on its way!!!",
             html:
                 `
@@ -69,7 +69,7 @@ const sendOrderGrantedEmail = ({ order }) => {
                 <html>
                 <body>
                     <h2>Dear ${order.user.fullname}, </h2>
-                    <h2> You request to purchase the product "${product.name}" has been granted!!!</h2>
+                    <h2> You request to purchase the product "${order.product.name}" has been granted!!!</h2>
                     <span>It is on its way to your location. Call 0782307144 for any inquries.</span>
                     <p>Best regards,<br>Prime Picks</p>
                 </body>
@@ -93,7 +93,7 @@ const sendOrderDeclinedEmail = ({ order }) => {
     try {
         const info = transporter.sendMail({
             from: MAIL_USER,
-            to: email,
+            to: order.user.email,
             subject: "Oops! you product order has been denied!!!",
             html:
                 `
@@ -101,7 +101,7 @@ const sendOrderDeclinedEmail = ({ order }) => {
                 <html>
                 <body>
                     <h2>Dear ${order.user.fullname}, </h2>
-                    <h2> You request to purchase the product "${product.name}" has been denied!!! We are really sorry for this.</h2>
+                    <h2> You request to purchase the product "${order.product.name}" has been denied!!! We are really sorry for this.</h2>
                     <span>Check some other products of you choice here</span>
                     <a href="${CLIENT_URL}/products" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
                     <span>Call 0782307144 for any inquries.</span>
