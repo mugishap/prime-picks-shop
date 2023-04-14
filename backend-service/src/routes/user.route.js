@@ -15,7 +15,7 @@ userRouter.get('/:id', isLoggedIn, userController.getUserById)
 userRouter.delete('/delete/:id', [isLoggedIn, isAdmin], userController.deleteUserByAdmin)
 userRouter.post('/delete', isLoggedIn, userController.deleteUser)
 userRouter.get("/search/:query", isLoggedIn, userController.searchUser)
-userRouter.post("/update-avatar", isLoggedIn, userController.updateAvatar)
+userRouter.patch("/update-avatar", isLoggedIn, userController.updateAvatar)
 
 registerDefinition(userRouter, { tags: 'User', mappedSchema: 'User', basePath: '/api/v1/user' });
 

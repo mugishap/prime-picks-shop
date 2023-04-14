@@ -22,7 +22,7 @@ const createOrder = async (req, res) => {
         })
         await entity.save()
 
-        const order = await Order.findById(entity._id).populate(["product", "user"])
+        const order = await Order.findById(entity._id).populate("product").populate("user")
         await sendOrderReceivedEmail(user.email, user.fullname, product)
         return res.status(200).json(new ApiResponse(true, "Product requested successfully", { order, product }))
     } catch (error) {
@@ -34,7 +34,7 @@ const createOrder = async (req, res) => {
 const getOrdersByProduct = async (req, res) => {
     try {
         const { productId } = req.params
-        const orders = await Order.find({ product: productId })
+        const orders = await Order.find({ product: productId }).populate("product").populate("user")
         return res.status(200).json(new ApiResponse(true, "Orders fetched successfuly", { orders }))
     } catch (error) {
         console.log(error)
@@ -44,7 +44,7 @@ const getOrdersByProduct = async (req, res) => {
 
 const getOrders = async (req, res) => {
     try {
-        const orders = await Order.find().populate(["product", "user"])
+        const orders = await Order.find().populate("product").populate("user")
         return res.status(200).json(new ApiResponse(true, "Orders fetched successfuly", { orders }))
     } catch (error) {
         console.log(error)
@@ -56,7 +56,7 @@ const updateOrder = async (req, res) => {
     try {
         const { orderId } = req.params
         const { quantity } = req.body
-        const order = await Order.findById(orderId).populate(["product", "user"])
+        const order = await Order.findById(orderId).populate("product").populate("user")
         const product = await Product.findById(order.product)
         if (product.quantity < quantity) return res.status(400).json(new ApiResponse(false, "Insuffienced quantity", null))
         const availableQuantity = product.quantity + order.quantity
@@ -88,7 +88,7 @@ const deleteOrder = async (req, res) => {
 const grantOrder = async (req, res) => {
     try {
         const { orderId } = req.params
-        const order = await Order.findById(orderId).populate(["product", "user"])
+        const order = await Order.findById(orderId).populate("product").populate("user")
         if (!order) return res.status(404).json(new ApiResponse(false, "Order not found", null))
         if (order.status === "GRANTED" || order.status === "DENIED") return res.status(400).json(new ApiResponse(false, "Only pending orders can be granted!!", null))
         order.status = "GRANTED"
@@ -105,7 +105,7 @@ const grantOrder = async (req, res) => {
 const denyOrder = async (req, res) => {
     try {
         const { orderId } = req.params
-        const order = await Order.findById(orderId).populate(["product", "user"])
+        const order = await Order.findById(orderId).populate("product").populate("user")
         if (!order) return res.status(404).json(new ApiResponse(false, "Order not found", null))
         if (order.status === "GRANTED" || order.status === "DENIED") return res.status(400).json(new ApiResponse(false, "Only pending orders can be denied!!", null))
         order.status = "DENIED"

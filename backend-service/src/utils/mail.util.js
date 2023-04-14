@@ -24,22 +24,22 @@ transporter.verify(function (error, success) {
     }
 });
 
-const sendOrderReceivedEmail = async ({ email, names, product }) => {
+const sendOrderReceivedEmail = async ({ order }) => {
     try {
         const info = transporter.sendMail({
             from: MAIL_USER,
-            to: email,
+            to: order.user.email,
             subject: "Prime Picks Order Details",
             html:
                 `
             <!DOCTYPE html>
                 <html>
                 <body>
-                    <h2>Dear ${names}, </h2>
-                    <h2> You request to purchase the product "${product.name}" is currently pending.</h2>
+                    <h2>Dear ${order.user.fullname}, </h2>
+                    <h2> You request to purchase the product "${order.product.name}" is currently pending.</h2>
                     <span>Your order is being reviewed you will receive granted/denied email soon from the admin. Good Day!!!</span>
                     <span>Review the product using the link below</span>
-                    <a href="${CLIENT_URL}/product/${product._id}" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
+                    <a href="${CLIENT_URL}/product/${order.product._id}" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
                     <p>Best regards,<br>Prime Picks</p>
                 </body>
             </html>

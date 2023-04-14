@@ -8,7 +8,7 @@ const productRouter = Router();
 productRouter.post("/create", [isLoggedIn, isAdmin], productController.createProduct)
 productRouter.put("/update/:id", [isLoggedIn, isAdmin], productController.updateProduct)
 productRouter.get("/all", productController.getProducts)
-productRouter.get("/:query", productController.searchProducts)
+productRouter.get("/search/:query", productController.searchProducts)
 productRouter.delete("/delete/:id",[isLoggedIn,isAdmin], productController.deleteProduct)
 productRouter.get("/:id", productController.getProductById)
 
