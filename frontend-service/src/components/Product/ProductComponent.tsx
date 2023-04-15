@@ -23,7 +23,7 @@ const ProductComponent = () => {
     const { id } = useParams<{ id: string }>()
     React.useEffect(() => {
         if (!id) return
-        const product = products.find((product: IProduct) => product._id === id)
+        const product = products?.find((product: IProduct) => product._id === id)
         console.log(product);
         if (!product) return
         dispatch(setActiveProduct({ ...product }))

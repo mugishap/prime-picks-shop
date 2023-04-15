@@ -12,7 +12,7 @@ interface Props {
 const Product: React.FC<Props> = ({ product }) => {
     const navigate = useNavigate()
     const { dispatch, cart } = React.useContext(CommonContext)
-    const isInCart = cart.find((item: IProduct) => item._id === product._id)
+    const isInCart = cart?.find((item: IProduct) => item._id === product._id)
     return (
         <div
             title='Click to view'
