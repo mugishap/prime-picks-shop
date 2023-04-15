@@ -5,7 +5,7 @@ import { CommonContext } from '../../../context'
 import { useGetAllOrders, useGetProducts, useGetUsers } from '../../../hooks'
 
 const DashboardComponent: React.FC<{}> = () => {
-  const { user, users, setLoading, dispatch, orders, products } = React.useContext(CommonContext)
+  const { user, users, setLoading, dispatch, allOrders, products } = React.useContext(CommonContext)
   const stats = [
     {
       name: "Users",
@@ -22,7 +22,7 @@ const DashboardComponent: React.FC<{}> = () => {
     {
       name: "Orders",
       icon: RiGroupLine,
-      count: orders.length,
+      count: allOrders.length,
       path: "/admin/orders"
     },
   ]
@@ -46,7 +46,7 @@ const DashboardComponent: React.FC<{}> = () => {
                 <span className='font-medium'>{data.name}</span>
               </span>
               <span className='mt-4 font-bold text-2xl'>
-                {data.count}
+                {data.count ? data.count : "Loading..."}
               </span>
             </Link>
           ))

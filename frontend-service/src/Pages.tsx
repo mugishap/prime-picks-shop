@@ -33,7 +33,7 @@ const Pages: React.FC<{}> = () => {
     const cart: IProduct[] = productSlice.cart
     const isLoggedIn: boolean = userSlice.isLoggedIn
     const users: IUser[] = userSlice.users
-    const orders: IOrder[] = orderSlice.allOrders
+    const allOrders: IOrder[] = orderSlice.allOrders
     const myOrders: IOrder[] = orderSlice.myOrders
     const [search, setSearch] = React.useState<boolean>(false)
     const [viewCart, setViewCart] = React.useState<boolean>(false)
@@ -59,6 +59,7 @@ const Pages: React.FC<{}> = () => {
         data === "users" && useGetUsers({ dispatch, setLoading: setRefreshLoader })
     }
     const deleteData = async ({ data, id, setDeleteLoader }: { setDeleteLoader: Function, id: string, data: "products" | "orders" | "users" }) => {
+        setDeleteLoader(true)
         data === "products" && useDeleteProduct({ dispatch, setLoading: setDeleteLoader, id })
         data === "orders" && useDeleteOrder({ dispatch, setLoading: setDeleteLoader, id })
         data === "users" && useDeleteUserByAdmin({ dispatch, setLoading: setDeleteLoader, id })
@@ -80,7 +81,7 @@ const Pages: React.FC<{}> = () => {
                 myOrders,
                 deleteData,
                 products,
-                orders,
+                allOrders,
                 searchResults,
                 auth,
                 setAuth,

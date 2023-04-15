@@ -1,8 +1,11 @@
+import { format } from "date-fns";
 import React from "react";
 import { RiCamera2Line, RiLoader2Line } from "react-icons/ri";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CommonContext } from "../../context";
 import { useGetUserOrders, useUpdateAvatar } from "../../hooks";
+import { setActiveProduct } from "../../redux/slices/productSlice";
 import { logout } from "../../redux/slices/userSlice";
 import { IOrder } from "../../types";
 import { checkFileType } from "../../utils/file";
@@ -101,17 +104,51 @@ const AccountComponent: React.FC = () => {
                         {
                             myOrders?.map((order: IOrder, index: number) => {
                                 return (
-                                    <div className="flex flex-col mt-8" key={index}>
-                                        <span>{order.product.name}</span>
-                                        <span>{order.product.price}&nbsp;{order.product.currency}</span>
-                                        <span>{order.status}</span>
-                                    </div>
+                                    <Link to={`/product`} key={index} className='w-full'>
+                                        <div onClick={() => { dispatch(setActiveProduct(order.product)); }} className='flex w-11/12 px-4 py-2 items-start justify-between my-2 hover:bg-slate-200 rounded'>
+                                            <div className="flex items-start justify-start">
+                                                <img src={order.product.image} className="mr-4 object-cover w-24 h-24 rounded" alt="" />
+                                                <div className='flex flex-col'>
+                                                    <span className='flex my-1 text-sm '>
+                                                        <span className='font-bold'>
+                                                            Name:
+                                                        </span>
+                                                        <span>
+                                                            {order.product.name}
+                                                        </span>
+                                                    </span>
+                                                    <span className='flex my-1 text-sm '>
+                                                        <span className='font-bold'>
+                                                            Price:
+                                                        </span>
+                                                        <span>
+                                                            {order.product.price} &nbsp; {order.product.currency}
+                                                        </span>
+                                                    </span>
+                                                    <span className='flex my-1 text-sm '>
+                                                        <span className='font-bold'>
+                                                            Date:
+                                                        </span>
+                                                        <span>
+                                                            {format(parseInt(order.product.createdAt as string), 'do MMM Y')}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                {order.status === "PENDING" &&
+                                                    <button className="bg-delete-red px-4 rounded text-white py-1">Delete Order</button>
+                                                }
+                                                <button className={`${order.status === "PENDING" ? "bg-slate-500" : order.status === "GRANTED" ? "bg-green-500" : "bg-delete-red"} px-4 rounded text-white py-1 my-2`}>{order.status}</button>
+                                            </div>
+                                        </div>
+                                    </Link>
                                 )
                             })}
                     </div>)
                 }
             </div>
-        </div>
+        </div >
     );
 };
 

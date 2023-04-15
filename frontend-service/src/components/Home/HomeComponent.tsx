@@ -1,5 +1,5 @@
 import React from 'react'
-import { Autoplay, Pagination } from 'swiper'
+import { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from "swiper/react"
 import { slides } from '../../constants'
 import { ISlide } from '../../types'
@@ -16,10 +16,10 @@ const HomeComponent: React.FC = () => {
             <Swiper
                 className='w-full'
                 autoplay={{
-                    delay: 2000
+                    delay: 2500
                 }}
-                modules={[Pagination, Autoplay]}
-                pagination
+                modules={[Autoplay]}
+
             >
                 {
                     slides.map((slide: ISlide, index: number) => (

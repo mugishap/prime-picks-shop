@@ -1,7 +1,7 @@
 import React from "react";
 import { IconType } from "react-icons";
 import { BiHistory, BiLogOut, BiUser } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { CommonContext } from "../../context";
 import { IUser } from "../../types";
 
@@ -15,7 +15,6 @@ const Sidebar: React.FC = () => {
     const { activeTab, setActiveTab } = React.useContext(CommonContext);
     const userSlice = useSelector((state: any) => state.userSlice);
     const user: IUser = userSlice.user;
-    const dispatch = useDispatch();
     const links: Link[] = [
         {
             id: 1,
@@ -32,7 +31,7 @@ const Sidebar: React.FC = () => {
         },
         {
             id: 3,
-            linkName: "Buying profiles",
+            linkName: "Your orders",
             icon: BiHistory,
             label: "history"
         }

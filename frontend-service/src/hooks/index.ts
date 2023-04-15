@@ -1,10 +1,10 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 import api from "../api";
-import { addOrder, loadMyOrders, loadOrders, loadProductOrders, removeOrder, updateOrder } from "../redux/slices/orderSlice";
-import { addProduct, load, removeProduct, updateProduct } from "../redux/slices/productSlice";
-import { login, logout, removeUser, setUsers, updateUser } from "../redux/slices/userSlice";
 import { ILoginData, INewPasswordData, IOrder, IOrderData, IProductData, ISignupData, IUserData } from "../types";
+import { toast } from "react-toastify";
+import { login, logout, removeUser, setUsers, updateUser } from "../redux/slices/userSlice";
+import { addProduct, load, removeProduct, setSearchResults, updateProduct } from "../redux/slices/productSlice";
+import { addOrder, loadMyOrders, loadOrders, loadProductOrders, removeOrder, updateOrder } from "../redux/slices/orderSlice";
 import { shuffle } from "../utils/arrays";
 
 //User related operations
@@ -153,7 +153,7 @@ export const useCreateAdmin = async ({ setAdminData, adminData, setLoading, disp
 
 export const useDeleteUserByAdmin = async ({ id, setLoading, dispatch }: { dispatch: Dispatch, id: string, setLoading: Function }) => {
     try {
-        const request = await api().post("/users/delete/" + id);
+        const request = await api().delete("/user/delete/" + id);
         const response = request.data
         toast.success(response.message)
         dispatch(removeUser(id))

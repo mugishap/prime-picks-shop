@@ -16,11 +16,12 @@ import TablePaginationActions from '../Pagination/TablePaginationActions';
 
 const UserComponent = () => {
 
-  const { users, user, dispatch, deleteData, refresh, loading } = React.useContext(CommonContext)
+  const { users, user, deleteData, refresh, loading } = React.useContext(CommonContext)
   const me = user
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [refreshLoader, setRefreshLoader] = React.useState(false)
+  const [deleteLoader, setDeleteLoader] = React.useState(false)
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
@@ -79,7 +80,7 @@ const UserComponent = () => {
                       <TableCell align="right">{user.email}</TableCell>
                       <TableCell align="right">{user.role}</TableCell>
                       <TableCell align="right">{format(parseInt(user.createdAt as string), 'do MMM Y')}</TableCell>
-                      <TableCell align="right"><button onClick={() => me._id === user._id ? <Navigate to={"/account"} /> : deleteData({ data: "users", id: user._id })} className='bg-delete-red font-bold px-6 py-2 rounded text-white'>{user._id === me._id ? "Settings" : "Delete"}</button></TableCell>
+                      <TableCell align="right"><button disabled={deleteLoader} onClick={() => me._id === user._id ? <Navigate to={"/account"} /> : deleteData({ data: "users", id: user._id, setDeleteLoader })} className={`${deleteLoader ? "bg-slate-600" : "bg-delete-red"} font-bold px-6 py-2 rounded text-white`}>{user._id === me._id ? "Settings" : "Delete"}</button></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

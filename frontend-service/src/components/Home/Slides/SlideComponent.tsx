@@ -2,6 +2,7 @@ import React from 'react';
 import { FiArrowRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { ISlide } from '../../../types';
+import { Fade } from 'react-awesome-reveal';
 
 interface Props {
     slide: ISlide

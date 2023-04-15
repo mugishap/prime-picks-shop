@@ -1,4 +1,5 @@
 import React from 'react'
+import { Slide } from 'react-awesome-reveal'
 import { CommonContext } from '../../context'
 import { IProduct } from '../../types'
 import Product from '../Product/Product'
@@ -58,21 +59,20 @@ const AllProductsComponent: React.FC = () => {
             </div>
             <div className="flex justify-center my-12">
                 <div className="flex justify-center items-center space-x-2 mt-4">
-                    {page > 1 && (
-                        <button
-                            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
-                            onClick={() => setPage(page - 1)}
-                        >
-                            Previous
-                        </button>
-                    )}
+                    <button
+                        disabled={page <= 1}
+                        className={`${page > 1 ? "bg-pink-500 hover:bg-pink-700 cursor-pointer" : "bg-slate-600 cursor-not-allowed"} text-white font-bold py-2 px-4 rounded`}
+                        onClick={() => setPage(page - 1)}
+                    >
+                        Previous
+                    </button>
                     {getPageNumbers().map((pageNumber, index) => (
                         <span
                             key={index}
                             className={
                                 pageNumber === page
-                                    ? 'bg-pink-500 text-white font-bold py-2 px-4 rounded'
-                                    : 'hover:bg-pink-500 hover:text-white font-bold py-2 px-4 rounded'
+                                    ? 'bg-pink-500 text-white font-bold py-2 px-4 rounded cursor-pointer'
+                                    : 'hover:bg-pink-500 hover:text-white font-bold py-2 px-4 rounded cursor-pointer'
                             }
                             onClick={() => setPage(pageNumber as number)}
                         >
@@ -81,7 +81,7 @@ const AllProductsComponent: React.FC = () => {
                     ))}
                     {page < totalPages && (
                         <button
-                            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
+                            className="bg-pink-500 hover:bg-pink-700 text-white cursor-pointer font-bold py-2 px-4 rounded"
                             onClick={() => setPage(page + 1)}
                         >
                             Next
@@ -90,15 +90,17 @@ const AllProductsComponent: React.FC = () => {
                 </div>
             </div>
             <section className='h- py-8 w-full'>
-                <div className='w-full xl:w-[90%] m-auto py-4 flex flex-wrap gap-6 items-center justify-center  transition-all duration-300'>
-                    {!loading &&
-                        _products.slice(0, 5).map((product: IProduct, index: number) => (
-                            <Product key={index} product={product} />
-                        ))
-                    }
-                    {loading && <span>Loading...</span>}
-                    {!products.length && !loading && <span>Nothing to see here...</span>}
-                </div>
+                <Slide direction='up' cascade triggerOnce>
+                    <div className='w-full xl:w-[90%] m-auto py-4 flex flex-wrap gap-6 items-center justify-center  transition-all duration-300'>
+                        {!loading &&
+                            _products.slice(0, 5).map((product: IProduct, index: number) => (
+                                <Product key={index} product={product} />
+                            ))
+                        }
+                        {loading && <span>Loading...</span>}
+                        {!products.length && !loading && <span>Nothing to see here...</span>}
+                    </div>
+                </Slide>
             </section>
         </div>
     )

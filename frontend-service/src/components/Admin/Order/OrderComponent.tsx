@@ -17,7 +17,7 @@ import TablePaginationActions from '../Pagination/TablePaginationActions';
 
 const OrderComponent: React.FC<{}> = () => {
 
-  const { orders, dispatch, setActiveProduct, refresh, loading } = React.useContext(CommonContext)
+  const { allOrders, dispatch, setActiveProduct, refresh, loading } = React.useContext(CommonContext)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [refreshLoader, setRefreshLoader] = useState(false)
@@ -65,8 +65,8 @@ const OrderComponent: React.FC<{}> = () => {
                 </TableHead>
                 <TableBody className=''>
                   {(rowsPerPage > 0
-                    ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    : orders
+                    ? allOrders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : allOrders
                   ).map((order: IOrder, index: number) => (
                     <TableRow
                       key={order._id}
@@ -96,7 +96,7 @@ const OrderComponent: React.FC<{}> = () => {
                     <TablePagination
                       rowsPerPageOptions={[5, 10, 25]}
                       colSpan={9}
-                      count={orders.length}
+                      count={allOrders.length}
                       rowsPerPage={rowsPerPage}
                       page={page}
                       SelectProps={{
