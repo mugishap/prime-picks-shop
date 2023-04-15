@@ -64,7 +64,7 @@ const ProductComponent = () => {
                 </TableHead>
                 <TableBody className=''>
                   {(rowsPerPage > 0
-                    ? products.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    ? products?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     : products
                   ).map((product: IProduct, index: number) => (
                     <TableRow
@@ -98,7 +98,7 @@ const ProductComponent = () => {
                     <TablePagination
                       rowsPerPageOptions={[5, 10, 25]}
                       colSpan={9}
-                      count={products.length}
+                      count={products?.length}
                       rowsPerPage={rowsPerPage}
                       page={page}
                       SelectProps={{

@@ -42,7 +42,7 @@ const Product: React.FC<Props> = ({ product }) => {
                     navigate(`/product`)
                 }}>
                     <div className='font-bold text-xl mb-2'>{product.name}</div>
-                    <p className='text-gray-700 text-base w-full'>{product.description.length > 220 ? `${product.description.slice(0, 220)}...` : product.description}</p>
+                    <p className='text-gray-700 text-base w-full'>{product.description?.length > 220 ? `${product.description?.slice(0, 220)}...` : product.description}</p>
                 </div>
                 <div className='flex justify-between w-full duration-0 items-end mt-1 px-6'>
                     <span className='p-2 ml-0 leading-tight text-black bg-white font-bold duration-75 flex gap-1'>

@@ -18,7 +18,7 @@ const CartComponent: React.FC<{}> = () => {
                     <BiX onClick={() => setViewCart(false)} className='' size={25} />
                         <div className='flex items-center w-full px-4 mt-3 justify-between'>
                             <span className='font-bold text-xl'>Your Cart</span>
-                            <span className='font-bold'>{cart.length} products</span>
+                            <span className='font-bold'>{cart?.length} products</span>
                         </div>
                         <div className='justify-between w-full items-center flex px-4 my-4'>
                             <span>&nbsp;</span>

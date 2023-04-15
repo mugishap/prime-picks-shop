@@ -1,6 +1,6 @@
 
 export const shuffle = (array: any[]) => {
-    let currentIndex = array.length, randomIndex;
+    let currentIndex = array?.length, randomIndex;
     while (currentIndex != 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;

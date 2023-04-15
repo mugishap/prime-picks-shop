@@ -19,12 +19,12 @@ const NewArrivals: React.FC<{}> = () => {
                 <div className='w-full xl:w-[90%] m-auto py-4 flex flex-wrap gap-6 items-center justify-center  transition-all duration-300'>
                     {
                         (!loading) &&
-                        products.slice(6, 14).map((product: IProduct, index: number) => (
+                        products?.slice(6, 14).map((product: IProduct, index: number) => (
                             <Product key={index} product={product} />
                         ))
                     }
                     {loading && <span>Loading...</span>}
-                    {!products.length && !loading && <span>Nothing to see here...</span>}
+                    {!products?.length && !loading && <span>Nothing to see here...</span>}
                 </div>
             </section>
         </div>

@@ -22,12 +22,12 @@ const HotDeals: React.FC<{}> = () => {
             <section className='h- py-8 w-full'>
                 <div className='w-full xl:w-[90%] m-auto py-4 flex flex-wrap gap-6 items-center justify-center  transition-all duration-300'>
                     {!loading &&
-                        products.slice(0, 5).map((product: IProduct, index: number) => (
+                        products?.slice(0, 5).map((product: IProduct, index: number) => (
                             <Product key={index} product={product} />
                         ))
                     }
                     {loading && <span>Loading...</span>}
-                    {!products.length && !loading && <span>Nothing to see here...</span>}
+                    {!products?.length && !loading && <span>Nothing to see here...</span>}
                 </div>
             </section>
         </div>

@@ -10,19 +10,19 @@ const DashboardComponent: React.FC<{}> = () => {
     {
       name: "Users",
       icon: RiGroupLine,
-      count: users.length,
+      count: users?.length,
       path: "/admin/users"
     },
     {
       name: "Products",
       icon: RiGroupLine,
-      count: products.length,
+      count: products?.length,
       path: "/admin/products"
     },
     {
       name: "Orders",
       icon: RiGroupLine,
-      count: allOrders.length,
+      count: allOrders?.length,
       path: "/admin/orders"
     },
   ]

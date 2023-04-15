@@ -61,7 +61,7 @@ const UserComponent = () => {
                 </TableHead>
                 <TableBody className=''>
                   {(rowsPerPage > 0
-                    ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    ? users?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     : users
                   ).map((user: IUser, index: number) => (
                     <TableRow
@@ -89,7 +89,7 @@ const UserComponent = () => {
                     <TablePagination
                       rowsPerPageOptions={[5, 10, 25]}
                       colSpan={9}
-                      count={users.length}
+                      count={users?.length}
                       rowsPerPage={rowsPerPage}
                       page={page}
                       SelectProps={{

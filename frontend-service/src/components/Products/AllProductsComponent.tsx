@@ -8,7 +8,7 @@ const AllProductsComponent: React.FC = () => {
     const { products, loading } = React.useContext(CommonContext)
     const [_products, set_products] = React.useState<IProduct[]>(products)
     const [page, setPage] = React.useState(1)
-    const [totalPages, setTotalPages] = React.useState<number>(Math.floor((products.length) / 6));
+    const [totalPages, setTotalPages] = React.useState<number>(Math.floor((products?.length) / 6));
 
     const getPageNumbers = () => {
         const pageNumbers = [];
@@ -44,8 +44,8 @@ const AllProductsComponent: React.FC = () => {
     }
 
     React.useEffect(() => {
-        setTotalPages(Math.floor((products.length) / 6))
-        set_products(products.slice((page - 1) * 6, page * 6))
+        setTotalPages(Math.floor((products?.length) / 6))
+        set_products(products?.slice((page - 1) * 6, page * 6))
     }, [page])
 
     return (
@@ -93,12 +93,12 @@ const AllProductsComponent: React.FC = () => {
                 <Slide direction='up' cascade triggerOnce>
                     <div className='w-full xl:w-[90%] m-auto py-4 flex flex-wrap gap-6 items-center justify-center  transition-all duration-300'>
                         {!loading &&
-                            _products.slice(0, 5).map((product: IProduct, index: number) => (
+                            _products?.slice(0, 5).map((product: IProduct, index: number) => (
                                 <Product key={index} product={product} />
                             ))
                         }
                         {loading && <span>Loading...</span>}
-                        {!products.length && !loading && <span>Nothing to see here...</span>}
+                        {!products?.length && !loading && <span>Nothing to see here...</span>}
                     </div>
                 </Slide>
             </section>

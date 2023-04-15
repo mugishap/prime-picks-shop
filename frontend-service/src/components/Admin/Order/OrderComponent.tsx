@@ -65,7 +65,7 @@ const OrderComponent: React.FC<{}> = () => {
                 </TableHead>
                 <TableBody className=''>
                   {(rowsPerPage > 0
-                    ? allOrders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    ? allOrders?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     : allOrders
                   ).map((order: IOrder, index: number) => (
                     <TableRow
@@ -96,7 +96,7 @@ const OrderComponent: React.FC<{}> = () => {
                     <TablePagination
                       rowsPerPageOptions={[5, 10, 25]}
                       colSpan={9}
-                      count={allOrders.length}
+                      count={allOrders?.length}
                       rowsPerPage={rowsPerPage}
                       page={page}
                       SelectProps={{

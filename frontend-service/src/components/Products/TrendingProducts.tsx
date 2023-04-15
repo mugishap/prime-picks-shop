@@ -20,13 +20,13 @@ const TrendingProducts: React.FC<{}> = () => {
                 <div className='w-full xl:w-[90%] m-auto py-4 flex flex-wrap gap-6 items-center justify-center  transition-all duration-300'>
                     {
                         (!loading) &&
-                        products.slice(15, 23).map((product: IProduct, index: number) => (
+                        products?.slice(15, 23).map((product: IProduct, index: number) => (
                             <Product key={index} product={product} />
                         ))
                     }
                 </div>
                 {loading && <span>Loading...</span>}
-                {!products.length && !loading && <span className='w-full text-center m-auto'>Nothing to see here...</span>}
+                {!products?.length && !loading && <span className='w-full text-center m-auto'>Nothing to see here...</span>}
             </section>
         </div>
     )
