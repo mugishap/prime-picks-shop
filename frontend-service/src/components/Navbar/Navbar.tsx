@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
-import { Logo } from '../../assets'
+import React from 'react'
+import { BiCart, BiMenu, BiSearch, BiUser } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+import { Logo } from '../../assets'
+import { navbarlinks } from '../../constants'
 import { CommonContext } from '../../context'
 import { INavbarLink } from '../../types'
-import { BiCart, BiMenu, BiSearch, BiUser } from 'react-icons/bi'
-import { navbarlinks } from '../../constants'
 
 const Navbar: React.FC<{}> = ({ }) => {
-    const { isLoggedIn, search, setSearch, setViewCart, setAuth, user, setViewNavbar, } = useContext(CommonContext)
+    const { isLoggedIn, search, setSearch, setViewCart, setAuth, user, setViewNavbar, } = React.useContext(CommonContext)
 
     return (
         <div className='w-full bg-slate-200 h-16 flex items-center justify-around'>

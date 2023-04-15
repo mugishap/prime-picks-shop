@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { CommonContext } from '../../context'
-import { IOrderData, IProduct } from '../../types'
-import { useCreateOrder } from '../../hooks'
+import React, { useState } from 'react'
 import { BiCart, BiCheck, BiLoaderAlt } from 'react-icons/bi'
-import { addItemToCart, removeItemFromCart, setActiveProduct } from '../../redux/slices/productSlice'
 import { useParams } from 'react-router-dom'
+import { CommonContext } from '../../context'
+import { useCreateOrder } from '../../hooks'
+import { addItemToCart, removeItemFromCart, setActiveProduct } from '../../redux/slices/productSlice'
+import { IOrderData, IProduct } from '../../types'
 
 const ProductComponent = () => {
-    const { activeProduct, products, dispatch, user, cart, loading, setLoading } = useContext(CommonContext)
+    const { activeProduct, products, dispatch, user, cart, loading, setLoading } = React.useContext(CommonContext)
     const [orderData, setOrderData] = useState<IOrderData>({
         quantity: 1,
         product: activeProduct._id

@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { IUser, IUserData } from '../../types'
+import React from 'react'
+import { BiLoaderAlt } from 'react-icons/bi'
 import { toast } from 'react-toastify'
 import { CommonContext } from '../../context'
 import { useUpdateUser } from '../../hooks'
-import { BiLoaderAlt } from 'react-icons/bi'
+import { IUserData } from '../../types'
 
 const UpdateAccountComponent: React.FC<{}> = ({ }) => {
-    const { dispatch, setUpdateUser, loading, setLoading, user } = useContext(CommonContext)
-    const [userData, setUserData] = useState<IUserData>({ ...user, avatarString: user.avatar })
+    const { dispatch, setUpdateUser, loading, setLoading, user } = React.useContext(CommonContext)
+    const [userData, setUserData] = React.useState<IUserData>({ ...user, avatarString: user.avatar })
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault()

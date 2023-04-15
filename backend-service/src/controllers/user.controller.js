@@ -1,12 +1,11 @@
-import { ApiResponse } from "../responses/api.response.js"
-import { CreateUserSchema, UpdateUserSchema } from "../validations/app.validation.js"
 import bcrypt from "bcryptjs"
 import { config } from "dotenv"
-import User from "../models/user.js"
 import jwt from "jsonwebtoken"
-import { uploadFile } from "../utils/files.util.js"
-import { UpdatePasswordSchema } from "../validations/app.validation.js"
 import Order from "../models/order.js"
+import User from "../models/user.js"
+import { ApiResponse } from "../responses/api.response.js"
+import { uploadFile } from "../utils/files.util.js"
+import { CreateUserSchema, UpdatePasswordSchema, UpdateUserSchema } from "../validations/app.validation.js"
 
 config()
 const { JWT_SECRET_KEY } = process.env

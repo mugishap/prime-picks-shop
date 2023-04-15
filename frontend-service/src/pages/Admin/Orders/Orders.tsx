@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import CommonAdminComponent from '../../../components/Common/CommonAdminComponent'
-import OrderComponent from '../../../components/Admin/Order/OrderComponent'
+import React from 'react';
+import OrderComponent from '../../../components/Admin/Order/OrderComponent';
+import CommonAdminComponent from '../../../components/Common/CommonAdminComponent';
 
 const Orders: React.FC<{}> = () => {
-  useEffect(() => {
+  React.useEffect(() => {
     document.title = `Orders | Prime Picks`;
 }, []);
   return (

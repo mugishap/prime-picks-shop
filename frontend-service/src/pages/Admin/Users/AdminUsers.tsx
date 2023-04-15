@@ -1,6 +1,6 @@
-import React from 'react'
-import CommonAdminComponent from '../../../components/Common/CommonAdminComponent'
-import UserComponent from '../../../components/Admin/User/UserComponent'
+import React from 'react';
+import UserComponent from '../../../components/Admin/User/UserComponent';
+import CommonAdminComponent from '../../../components/Common/CommonAdminComponent';
 
 const AdminUsers:React.FC<{}> = () => {
     React.useEffect(() => {

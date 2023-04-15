@@ -1,16 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { BiX } from 'react-icons/bi'
-import { INavbarLink } from '../../types'
+import { Link } from 'react-router-dom'
 import { navbarlinks } from '../../constants'
 import { CommonContext } from '../../context'
-import { Link } from 'react-router-dom'
+import { INavbarLink } from '../../types'
 
 interface Props {
     setViewNavbar: Function
 }
 
 const MobileNavbarComponent: React.FC<Props> = ({ setViewNavbar }) => {
-    const { isLoggedIn, } = useContext(CommonContext)
+    const { isLoggedIn, } = React.useContext(CommonContext)
     return (
         <div className='z-[2] w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-lg flex items-center justify-center'>
             <div className='absolute z-[3] w-full h-full' onClick={() => setViewNavbar(false)}></div>

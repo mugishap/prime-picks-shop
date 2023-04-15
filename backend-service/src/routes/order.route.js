@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import orderController from './../controllers/order.controller.js'
-import { isLoggedIn, isAdmin } from './../middlewares/auth.middleware.js'
 import { registerDefinition } from 'swaggiffy'
+import orderController from './../controllers/order.controller.js'
+import { isAdmin, isLoggedIn } from './../middlewares/auth.middleware.js'
 
 const orderRouter = Router()
 

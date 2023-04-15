@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import CommonComponent from '../../components/Common/CommonComponent'
 
 const NotFound: React.FC<{}> = () => {
-    useEffect(() => {
+    React.useEffect(() => {
         document.title = "404 | Prime Picks"
     }, [])
     return (

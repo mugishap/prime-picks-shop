@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react'
-import { CommonContext } from '../../../context'
+import React from 'react'
 import { RiGroupLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
+import { CommonContext } from '../../../context'
 import { useGetAllOrders, useGetProducts, useGetUsers } from '../../../hooks'
 
 const DashboardComponent: React.FC<{}> = () => {
-  const { user, users, setLoading, dispatch, orders, products } = useContext(CommonContext)
+  const { user, users, setLoading, dispatch, orders, products } = React.useContext(CommonContext)
   const stats = [
     {
       name: "Users",
@@ -26,7 +26,7 @@ const DashboardComponent: React.FC<{}> = () => {
       path: "/admin/orders"
     },
   ]
-  useEffect(() => {
+  React.useEffect(() => {
     setLoading(true)
     useGetUsers({ dispatch, setLoading })
     useGetProducts({ dispatch, setLoading })

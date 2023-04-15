@@ -1,10 +1,10 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import api from "../api";
-import { ILoginData, INewPasswordData, IOrder, IOrderData, IProductData, ISignupData, IUserData } from "../types";
 import { toast } from "react-toastify";
-import { login, logout, removeUser, setUsers, updateUser } from "../redux/slices/userSlice";
-import { addProduct, load, removeProduct, setSearchResults, updateProduct } from "../redux/slices/productSlice";
+import api from "../api";
 import { addOrder, loadMyOrders, loadOrders, loadProductOrders, removeOrder, updateOrder } from "../redux/slices/orderSlice";
+import { addProduct, load, removeProduct, updateProduct } from "../redux/slices/productSlice";
+import { login, logout, removeUser, setUsers, updateUser } from "../redux/slices/userSlice";
+import { ILoginData, INewPasswordData, IOrder, IOrderData, IProductData, ISignupData, IUserData } from "../types";
 import { shuffle } from "../utils/arrays";
 
 //User related operations

@@ -1,15 +1,14 @@
-import React, { Suspense } from 'react'
+import React from 'react'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import SwiperCore, { Autoplay } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/autoplay'
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import "swiper/css/scrollbar"
 import './App.css'
 import Pages from './Pages'
-import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
-import 'swiper/css';
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import 'swiper/css/autoplay';
-import { Autoplay } from 'swiper';
-import SwiperCore from 'swiper'
 import { Logo } from './assets'
 
 const App: React.FC = () => {
@@ -17,7 +16,7 @@ const App: React.FC = () => {
   SwiperCore.use([Autoplay]);
 
   return (
-    <Suspense
+    <React.Suspense
       fallback={
         <div className='w-full bg-slate-200 h-screen flex justify-center items-center'>
           <div className='flex flex-col items-center justify-center'>
@@ -41,7 +40,7 @@ const App: React.FC = () => {
         />
         <Pages />
       </div>
-    </Suspense>
+    </React.Suspense>
   )
 }
 

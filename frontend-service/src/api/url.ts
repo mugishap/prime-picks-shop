@@ -4,4 +4,4 @@ const apiUrl: string = import.meta.env.DEV
 
 export {
     apiUrl
-}
+};

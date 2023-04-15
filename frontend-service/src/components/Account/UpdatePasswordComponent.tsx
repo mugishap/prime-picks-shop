@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { INewPasswordData, IUser } from '../../types'
+import React from 'react'
+import { BiLoaderAlt } from 'react-icons/bi'
 import { toast } from 'react-toastify'
 import { CommonContext } from '../../context'
 import { useUpdatePassword } from '../../hooks'
-import { BiLoaderAlt } from 'react-icons/bi'
+import { INewPasswordData } from '../../types'
 
 const UpdatePasswordComponent: React.FC<{}> = ({ }) => {
-    const { setUpdatePassword, loading, setLoading, dispatch } = useContext(CommonContext)
-    const [newPasswordData, setNewPasswordData] = useState<INewPasswordData>({
+    const { setUpdatePassword, loading, setLoading, dispatch } = React.useContext(CommonContext)
+    const [newPasswordData, setNewPasswordData] = React.useState<INewPasswordData>({
         oldPassword: "",
         newPassword: "",
         showPassword: false

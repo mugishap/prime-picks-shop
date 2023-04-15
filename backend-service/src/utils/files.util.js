@@ -1,5 +1,5 @@
-import { config } from "dotenv"
 import cloudinary from 'cloudinary'
+import { config } from "dotenv"
 config()
 
 const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_UPLOAD_PRESET } = process.env

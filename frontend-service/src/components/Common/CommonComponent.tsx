@@ -1,22 +1,20 @@
-import React, { useContext } from 'react'
-import Navbar from '../Navbar/Navbar'
-import Footer from '../Footer/Footer'
+import React from 'react'
 import { CommonContext } from '../../context'
-import SearchComponent from '../Search/SearchComponent'
-import { Slide } from 'react-awesome-reveal'
-import AuthComponent from '../Auth/AuthComponent'
-import MobileNavbarComponent from '../Navbar/MobileNavbarComponent'
-import { updateUser } from '../../redux/slices/userSlice'
 import UpdateAccountComponent from '../Account/UpdateAccountComponent'
 import UpdatePasswordComponent from '../Account/UpdatePasswordComponent'
+import AuthComponent from '../Auth/AuthComponent'
 import CartComponent from '../Cart/CartComponent'
+import Footer from '../Footer/Footer'
+import MobileNavbarComponent from '../Navbar/MobileNavbarComponent'
+import Navbar from '../Navbar/Navbar'
+import SearchComponent from '../Search/SearchComponent'
 
 interface Props {
     children: React.ReactNode
 }
 
 const CommonComponent: React.FC<Props> = ({ children }) => {
-    const { search, viewCart, auth, updatePassword, viewNavbar, setViewNavbar, updateUser, } = useContext(CommonContext)
+    const { search, viewCart, auth, updatePassword, viewNavbar, setViewNavbar, updateUser, } = React.useContext(CommonContext)
     return (
         <div className='w-full min-h-screen flex items-center justify-between flex-col relative' >
             {search && (<SearchComponent />)}

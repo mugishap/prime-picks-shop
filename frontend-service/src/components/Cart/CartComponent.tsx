@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { CommonContext } from '../../context'
-import { BiLoaderAlt, BiSearch, BiX } from 'react-icons/bi'
-import { IProduct } from '../../types'
-import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
+import React from 'react'
+import { BiX } from 'react-icons/bi'
+import { Link } from 'react-router-dom'
+import { CommonContext } from '../../context'
 import { emptyCart, setActiveProduct } from '../../redux/slices/productSlice'
+import { IProduct } from '../../types'
 
 const CartComponent: React.FC<{}> = () => {
 
-    const { cart, setViewCart, dispatch } = useContext(CommonContext)
+    const { cart, setViewCart, dispatch } = React.useContext(CommonContext)
 
     return (
         <div className='z-10 w-full h-full fixed top-0 left-0 bg-black/20 backdrop-blur-lg'>

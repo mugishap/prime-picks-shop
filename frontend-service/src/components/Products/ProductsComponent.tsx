@@ -1,7 +1,7 @@
 import React from 'react'
-import TrendingProducts from './TrendingProducts'
 import HotDeals from './HotDeals'
 import NewArrivals from './NewArrivals'
+import TrendingProducts from './TrendingProducts'
 
 const ProductsComponent:React.FC<{}> = () => {
     return (

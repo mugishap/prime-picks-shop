@@ -1,7 +1,6 @@
 import React from 'react'
-import CommonComponent from '../../components/Common/CommonComponent'
-import ContactComponent from '../../components/Contact/ContactComponent'
 import AccountComponent from '../../components/Account/AccountComponent'
+import CommonComponent from '../../components/Common/CommonComponent'
 
 const Account :React.FC<{}>= () => {
   return (

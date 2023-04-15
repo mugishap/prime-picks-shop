@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 
 config();
 const { MAIL_SERVICE, MAIL_HOST, MAIL_USER, MAIL_PASSWORD, CLIENT_URL, } = process.env

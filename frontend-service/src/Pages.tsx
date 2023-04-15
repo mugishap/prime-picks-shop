@@ -1,24 +1,24 @@
-import React, { lazy, useEffect, useState } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux"
-import { CommonContext } from './context'
-import { IOrder, IProduct, IUser } from './types'
-import { useDeleteOrder, useDeleteProduct, useDeleteUserByAdmin, useGetAllOrders, useGetProducts, useGetUsers } from './hooks'
 import { Dispatch } from '@reduxjs/toolkit'
-const AllProducts = lazy(() => import('./pages/Products/AllProducts'))
-const NewAdmin = lazy(() => import('./pages/Admin/New/NewAdmin'))
-const Account = lazy(() => import('./pages/Account/Account'))
-const Contact = lazy(() => import('./pages/Contact/Contact'))
-const Product = lazy(() => import('./pages/Products/Product'))
-const Dashboard = lazy(() => import('./pages/Admin/Dashboard/Dashboard'))
-const Orders = lazy(() => import('./pages/Admin/Orders/Orders'))
-const AdminProducts = lazy(() => import('./pages/Admin/Products/AdminProducts'))
-const Products = lazy(() => import('./pages/Products/Products'))
-const NotFound = lazy(() => import('./pages/404/NotFound'))
-const AdminUsers = lazy(() => import('./pages/Admin/Users/AdminUsers'))
-const AddNewProduct = lazy(() => import('./pages/Admin/Products/AddNewProduct'))
-const About = lazy(() => import('./pages/About/About'))
-const Home = lazy(() => import('./pages/Home/Home'))
+import React from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { CommonContext } from './context'
+import { useDeleteOrder, useDeleteProduct, useDeleteUserByAdmin, useGetAllOrders, useGetProducts, useGetUsers } from './hooks'
+import { IOrder, IProduct, IUser } from './types'
+const AllProducts = React.lazy(() => import('./pages/Products/AllProducts'))
+const NewAdmin = React.lazy(() => import('./pages/Admin/New/NewAdmin'))
+const Account = React.lazy(() => import('./pages/Account/Account'))
+const Contact = React.lazy(() => import('./pages/Contact/Contact'))
+const Product = React.lazy(() => import('./pages/Products/Product'))
+const Dashboard = React.lazy(() => import('./pages/Admin/Dashboard/Dashboard'))
+const Orders = React.lazy(() => import('./pages/Admin/Orders/Orders'))
+const AdminProducts = React.lazy(() => import('./pages/Admin/Products/AdminProducts'))
+const Products = React.lazy(() => import('./pages/Products/Products'))
+const NotFound = React.lazy(() => import('./pages/404/NotFound'))
+const AdminUsers = React.lazy(() => import('./pages/Admin/Users/AdminUsers'))
+const AddNewProduct = React.lazy(() => import('./pages/Admin/Products/AddNewProduct'))
+const About = React.lazy(() => import('./pages/About/About'))
+const Home = React.lazy(() => import('./pages/Home/Home'))
 
 const Pages: React.FC<{}> = () => {
 
@@ -35,22 +35,22 @@ const Pages: React.FC<{}> = () => {
     const users: IUser[] = userSlice.users
     const orders: IOrder[] = orderSlice.allOrders
     const myOrders: IOrder[] = orderSlice.myOrders
-    const [search, setSearch] = useState<boolean>(false)
-    const [viewCart, setViewCart] = useState<boolean>(false)
-    const [auth, setAuth] = useState<{ display: boolean, active: "login" | "signup" | "none" }>({ display: false, active: "none" })
-    const [viewNavbar, setViewNavbar] = useState<boolean>(false)
-    const [activeTab, setActiveTab] = useState<string>("user")
-    const [updateUser, setUpdateUser] = useState<boolean>(false)
-    const [updatePassword, setUpdatePassword] = useState<boolean>(false)
-    const [loading, setLoading] = useState<boolean>(false)
-    const [updateProduct, setUpdateProduct] = useState<{
+    const [search, setSearch] = React.useState<boolean>(false)
+    const [viewCart, setViewCart] = React.useState<boolean>(false)
+    const [auth, setAuth] = React.useState<{ display: boolean, active: "login" | "signup" | "none" }>({ display: false, active: "none" })
+    const [viewNavbar, setViewNavbar] = React.useState<boolean>(false)
+    const [activeTab, setActiveTab] = React.useState<string>("user")
+    const [updateUser, setUpdateUser] = React.useState<boolean>(false)
+    const [updatePassword, setUpdatePassword] = React.useState<boolean>(false)
+    const [loading, setLoading] = React.useState<boolean>(false)
+    const [updateProduct, setUpdateProduct] = React.useState<{
         display: boolean,
         product: IProduct
     }>({
         display: false,
         product: null as unknown as IProduct
     })
-    useEffect(() => {
+    React.useEffect(() => {
         useGetProducts({ dispatch, setLoading })
     }, [])
     const refresh = async ({ data, setRefreshLoader }: { setRefreshLoader: Function, data: "products" | "orders" | "users" }) => {

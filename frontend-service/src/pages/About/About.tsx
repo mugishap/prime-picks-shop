@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import CommonComponent from '../../components/Common/CommonComponent'
-import AboutComponent from '../../components/About/AboutComponent'
+import React from 'react';
+import AboutComponent from '../../components/About/AboutComponent';
+import CommonComponent from '../../components/Common/CommonComponent';
 
 const About: React.FC<{}> = () => {
-    useEffect(() => {
+    React.useEffect(() => {
         document.title = `About | Prime Picks`;
     }, []);
     return (

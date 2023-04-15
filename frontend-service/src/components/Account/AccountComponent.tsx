@@ -1,17 +1,17 @@
-import React, { useContext, useEffect } from "react";
-import Sidebar from "./Sidebar";
+import React from "react";
+import { RiCamera2Line, RiLoader2Line } from "react-icons/ri";
+import { toast } from "react-toastify";
 import { CommonContext } from "../../context";
+import { useGetUserOrders, useUpdateAvatar } from "../../hooks";
 import { logout } from "../../redux/slices/userSlice";
 import { IOrder } from "../../types";
-import { useGetUserOrders, useUpdateAvatar } from "../../hooks";
-import { toast } from "react-toastify";
-import { RiCamera2Line, RiLoader2Line } from "react-icons/ri";
 import { checkFileType } from "../../utils/file";
+import Sidebar from "./Sidebar";
 
 const AccountComponent: React.FC = () => {
-    const { user, activeTab, myOrders, dispatch, setLoading, setUpdateUser, setUpdatePassword } = useContext(CommonContext);
+    const { user, activeTab, myOrders, dispatch, setLoading, setUpdateUser, setUpdatePassword } = React.useContext(CommonContext);
     const [updateAvatarLoading, setUpdateAvatarLoading] = React.useState(false)
-    useEffect(() => {
+    React.useEffect(() => {
         document.title = `${user.fullname} | Prime Picks`;
         useGetUserOrders({ dispatch, setLoading })
     }, []);

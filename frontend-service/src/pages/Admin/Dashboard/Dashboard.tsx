@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import CommonAdminComponent from '../../../components/Common/CommonAdminComponent'
-import DashboardComponent from '../../../components/Admin/Dashboard/DashboardComponent'
+import React from 'react';
+import DashboardComponent from '../../../components/Admin/Dashboard/DashboardComponent';
+import CommonAdminComponent from '../../../components/Common/CommonAdminComponent';
 
 const Dashboard: React.FC<{}> = () => {
-  useEffect(() => {
+  React.useEffect(() => {
     document.title = `Admin Dashboard | Prime Picks`;
   }, []);
   return (

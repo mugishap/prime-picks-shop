@@ -1,10 +1,10 @@
-import React, { FormEvent, useContext, useState } from 'react'
-import { CommonContext } from '../../../context'
-import { IProduct } from '../../../types'
+import React, { FormEvent, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { BiCart, BiLoaderAlt, BiUpload } from 'react-icons/bi'
-import { useUpdateProduct } from '../../../hooks'
 import { toast } from 'react-toastify'
+import { CommonContext } from '../../../context'
+import { useUpdateProduct } from '../../../hooks'
+import { IProduct } from '../../../types'
 
 interface Data extends IProduct {
     imageString?: string
@@ -12,7 +12,7 @@ interface Data extends IProduct {
 
 const UpdateProductComponent: React.FC<{}> = () => {
 
-    const { updateProduct, setUpdateProduct, loading, setLoading, dispatch } = useContext(CommonContext)
+    const { updateProduct, setUpdateProduct, loading, setLoading, dispatch } = React.useContext(CommonContext)
     const [productData, setProductData] = useState<Data>({ ...updateProduct.product, imageString: updateProduct.product.image })
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

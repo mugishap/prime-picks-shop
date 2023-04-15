@@ -1,16 +1,16 @@
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import { config } from 'dotenv'
 import express from 'express'
 import http from "http"
-import { config } from 'dotenv'
-import bodyParser from 'body-parser'
-import { connectDB } from './src/utils/db.util.js'
-import cors from 'cors'
-import options from './src/utils/cors.util.js'
-import authRouter from './src/routes/auth.route.js'
-import userRouter from './src/routes/user.route.js'
-import productRouter from './src/routes/product.route.js'
-import orderRouter from './src/routes/order.route.js'
+import { Swaggiffy } from 'swaggiffy'
 import { ApiResponse } from './src/responses/api.response.js'
-import { Swaggiffy } from 'swaggiffy';
+import authRouter from './src/routes/auth.route.js'
+import orderRouter from './src/routes/order.route.js'
+import productRouter from './src/routes/product.route.js'
+import userRouter from './src/routes/user.route.js'
+import options from './src/utils/cors.util.js'
+import { connectDB } from './src/utils/db.util.js'
 
 config()
 connectDB()

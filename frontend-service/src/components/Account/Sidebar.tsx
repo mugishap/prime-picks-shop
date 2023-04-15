@@ -1,11 +1,9 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { IconType } from "react-icons";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { IUser } from "../../types";
 import { BiHistory, BiLogOut, BiUser } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
 import { CommonContext } from "../../context";
+import { IUser } from "../../types";
 
 export interface Link {
     id: number;
@@ -14,7 +12,7 @@ export interface Link {
     label: string
 }
 const Sidebar: React.FC = () => {
-    const { activeTab, setActiveTab } = useContext(CommonContext);
+    const { activeTab, setActiveTab } = React.useContext(CommonContext);
     const userSlice = useSelector((state: any) => state.userSlice);
     const user: IUser = userSlice.user;
     const dispatch = useDispatch();

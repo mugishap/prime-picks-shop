@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { IProduct } from '../../types'
+import React from 'react'
 import { BiCart, BiCheck } from 'react-icons/bi'
+import { useNavigate } from 'react-router-dom'
 import { CommonContext } from '../../context'
 import { addItemToCart, removeItemFromCart, setActiveProduct } from '../../redux/slices/productSlice'
+import { IProduct } from '../../types'
 
 interface Props {
     product: IProduct
@@ -11,7 +11,7 @@ interface Props {
 
 const Product: React.FC<Props> = ({ product }) => {
     const navigate = useNavigate()
-    const { dispatch, cart } = useContext(CommonContext)
+    const { dispatch, cart } = React.useContext(CommonContext)
     const isInCart = cart.find((item: IProduct) => item._id === product._id)
     return (
         <div

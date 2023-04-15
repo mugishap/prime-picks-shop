@@ -1,7 +1,7 @@
-import React from 'react'
-import { ISlide } from '../../../types'
+import React from 'react';
 import { FiArrowRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { ISlide } from '../../../types';
 
 interface Props {
     slide: ISlide

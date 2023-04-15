@@ -1,6 +1,6 @@
 import React from 'react'
-import { IProduct } from '../../types'
 import { CommonContext } from '../../context'
+import { IProduct } from '../../types'
 import Product from '../Product/Product'
 
 const AllProductsComponent: React.FC = () => {

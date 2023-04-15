@@ -1,13 +1,13 @@
 import React from 'react'
-import { Swiper, SwiperSlide } from "swiper/react"
-import SlideComponent from './Slides/SlideComponent'
 import { Autoplay, Pagination } from 'swiper'
-import TopProducts from './TopProducts'
-import Features from './Features'
-import TrendingProducts from '../Products/TrendingProducts'
-import Subscription from '../Common/Subscription'
+import { Swiper, SwiperSlide } from "swiper/react"
 import { slides } from '../../constants'
 import { ISlide } from '../../types'
+import Subscription from '../Common/Subscription'
+import TrendingProducts from '../Products/TrendingProducts'
+import Features from './Features'
+import SlideComponent from './Slides/SlideComponent'
+import TopProducts from './TopProducts'
 
 const HomeComponent: React.FC = () => {
 

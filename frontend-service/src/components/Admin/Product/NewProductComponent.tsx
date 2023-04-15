@@ -1,10 +1,10 @@
-import React, { FormEvent, useContext, useState } from 'react'
-import { IProductData } from '../../../types';
+import React, { FormEvent } from 'react';
 import Dropzone from 'react-dropzone';
 import { BiCart, BiLoaderAlt, BiUpload } from 'react-icons/bi';
+import { toast } from 'react-toastify';
 import { CommonContext } from '../../../context';
 import { useCreateProduct } from '../../../hooks';
-import { toast } from 'react-toastify';
+import { IProductData } from '../../../types';
 
 const NewProductComponent: React.FC<{}> = () => {
 
@@ -16,7 +16,7 @@ const NewProductComponent: React.FC<{}> = () => {
         imageString: "",
         currency: "RWF",
     })
-    const { loading, setLoading, dispatch } = useContext(CommonContext)
+    const { loading, setLoading, dispatch } = React.useContext(CommonContext)
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         try {

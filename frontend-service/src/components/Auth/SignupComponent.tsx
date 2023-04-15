@@ -1,16 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { ISignupData } from "../../types";
 import { CommonContext } from "../../context";
 import { useSignup } from "../../hooks";
-import { BiLoaderAlt } from "react-icons/bi";
+import { ISignupData } from "../../types";
 
 interface Props {
     setAuth: Function
 }
 
 const SignupComponent: React.FC<Props> = ({ setAuth }) => {
-    const { dispatch, loading, setLoading } = useContext(CommonContext);
+    const { dispatch, loading, setLoading } = React.useContext(CommonContext);
     const [signupData, setSignupData] = useState<ISignupData>({
         fullname: "",
         email: "",

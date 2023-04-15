@@ -1,10 +1,8 @@
-import { BiCart, BiHome, BiPackage, BiPhoneCall, BiPlus, BiUser } from "react-icons/bi";
-import { INavbarLink, ISidebarLink } from "../types";
-import { AirPods, HeadPhones, Phone, Pipes, SmartWatch } from '../assets'
-import { IPad, IWatch, Tablet } from '../assets'
-import { ISlide } from '../types'
-import { FiDollarSign, FiHeadphones, FiTruck } from 'react-icons/fi'
-import { TbDiscount2 } from 'react-icons/tb'
+import { BiHome, BiPackage, BiPhoneCall, BiPlus, BiUser } from "react-icons/bi";
+import { FiDollarSign, FiHeadphones, FiTruck } from 'react-icons/fi';
+import { TbDiscount2 } from 'react-icons/tb';
+import { AirPods, HeadPhones, IPad, IWatch, Phone, Pipes, SmartWatch, Tablet } from '../assets';
+import { INavbarLink, ISidebarLink, ISlide } from "../types";
 
 export const  navbarlinks: INavbarLink[] = [
     {

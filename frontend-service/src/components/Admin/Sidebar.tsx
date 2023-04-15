@@ -1,13 +1,12 @@
-import React, { useContext } from 'react'
-import { BiX } from 'react-icons/bi'
-import { sidebarLinks } from '../../constants'
-import { ISidebarLink } from '../../types'
-import { Link } from 'react-router-dom'
-import { CommonContext } from '../../context'
+import React from 'react'
 import { MdManageAccounts } from "react-icons/md"
+import { Link } from 'react-router-dom'
+import { sidebarLinks } from '../../constants'
+import { CommonContext } from '../../context'
+import { ISidebarLink } from '../../types'
 
 const Sidebar: React.FC<{}> = () => {
-  const { activeSidebarLink, setActiveSidebarLink } = useContext(CommonContext)
+  const { activeSidebarLink, setActiveSidebarLink } = React.useContext(CommonContext)
   return (
     <div className='min-h-[calc(100vh-7vh)] pt-16 lg:pt-24 bg-slate-200 w-2/12 sm:w-3/12'>
       <MdManageAccounts className="sm:hidden flex m-auto" size={35} />

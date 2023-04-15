@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema } from "mongoose";
 import { registerSchema } from "swaggiffy";
 
 const AuthSchema = new Schema({

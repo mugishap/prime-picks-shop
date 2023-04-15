@@ -1,6 +1,6 @@
-import { Router } from 'express'
-import authController from '../controllers/auth.controller.js'
+import { Router } from 'express';
 import { registerDefinition } from 'swaggiffy';
+import authController from '../controllers/auth.controller.js';
 
 const authRouter = Router()
 

@@ -1,9 +1,9 @@
-import { config } from "dotenv"
-import User from "../models/user.js"
 import bcrypt from 'bcryptjs'
-import { LoginUserSchema } from "../validations/app.validation.js"
+import { config } from "dotenv"
 import jwt from 'jsonwebtoken'
+import User from "../models/user.js"
 import { ApiResponse } from "../responses/api.response.js"
+import { LoginUserSchema } from "../validations/app.validation.js"
 
 config()
 const { JWT_SECRET_KEY, JWT_EXPIRES_IN } = process.env

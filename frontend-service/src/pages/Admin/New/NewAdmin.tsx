@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import CommonAdminComponent from '../../../components/Common/CommonAdminComponent'
-import NewAdminComponent from '../../../components/Admin/Admin/NewAdminComponent'
+import React from 'react';
+import NewAdminComponent from '../../../components/Admin/Admin/NewAdminComponent';
+import CommonAdminComponent from '../../../components/Common/CommonAdminComponent';
 
 const NewAdmin: React.FC<{}> = () => {
-    useEffect(() => {
+    React.useEffect(() => {
         document.title = `Register New Admin | Prime Picks`;
     }, []);
     return (

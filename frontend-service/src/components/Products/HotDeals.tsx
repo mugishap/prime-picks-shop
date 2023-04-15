@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { CommonContext } from '../../context'
 import { IProduct } from '../../types'
 import Product from '../Product/Product'
-import { CommonContext } from '../../context'
-import { Link } from 'react-router-dom'
 
 const HotDeals: React.FC<{}> = () => {
 
-    const { products, loading } = useContext(CommonContext)
+    const { products, loading } = React.useContext(CommonContext)
     return (
         <div className='my-4 w-full flex flex-col'>
             <div className='flex w-full items-center justify-between'>

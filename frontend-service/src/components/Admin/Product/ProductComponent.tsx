@@ -1,24 +1,23 @@
-import React, { useContext, useState } from 'react'
+import { TableFooter, TablePagination } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { TableFooter, TablePagination } from '@mui/material';
 import { format } from 'date-fns';
+import React from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 import { CommonContext } from '../../../context';
+import { setActiveProduct } from '../../../redux/slices/productSlice';
 import { IProduct } from '../../../types';
 import TablePaginationActions from '../Pagination/TablePaginationActions';
-import { Link, Navigate } from 'react-router-dom';
-import { useGetProducts } from '../../../hooks';
-import { BiLoaderAlt } from 'react-icons/bi';
-import { setActiveProduct } from '../../../redux/slices/productSlice';
 
 const ProductComponent = () => {
 
-  const { products, setUpdateProduct, deleteData, refresh, dispatch, loading } = useContext(CommonContext)
+  const { products, setUpdateProduct, deleteData, refresh, dispatch, loading } = React.useContext(CommonContext)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [refreshLoader, setRefreshLoader] = React.useState(false)

@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { CommonContext } from '../../../context';
-import { IUserData } from '../../../types';
-import { toast } from 'react-toastify';
-import { useCreateAdmin } from '../../../hooks';
+import React from 'react';
 import { BiLoaderAlt } from 'react-icons/bi';
+import { toast } from 'react-toastify';
+import { CommonContext } from '../../../context';
+import { useCreateAdmin } from '../../../hooks';
+import { IUserData } from '../../../types';
 
 const NewAdminComponent: React.FC<{}> = () => {
-    const { dispatch, loading, setLoading } = useContext(CommonContext);
-    const [adminData, setAdminData] = useState<IUserData>({
+    const { dispatch, loading, setLoading } = React.useContext(CommonContext);
+    const [adminData, setAdminData] = React.useState<IUserData>({
         fullname: "",
         email: "",
         mobile: 250,

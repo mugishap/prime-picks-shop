@@ -1,8 +1,8 @@
-import { ApiResponse } from './../responses/api.response.js'
-import { CreateProductSchema, UpdateProductSchema } from './../validations/app.validation.js'
-import { uploadFile } from './../utils/files.util.js'
-import Product from './../models/product.js'
 import Order from "./../models/order.js"
+import Product from './../models/product.js'
+import { ApiResponse } from './../responses/api.response.js'
+import { uploadFile } from './../utils/files.util.js'
+import { CreateProductSchema, UpdateProductSchema } from './../validations/app.validation.js'
 
 const createProduct = async (req, res) => {
     try {

@@ -1,6 +1,5 @@
 import React from 'react'
 import CommonComponent from '../../components/Common/CommonComponent'
-import TrendingProducts from '../../components/Products/TrendingProducts'
 import ProductsComponent from '../../components/Products/ProductsComponent'
 
 interface Props {
