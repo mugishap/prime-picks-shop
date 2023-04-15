@@ -121,7 +121,7 @@ const denyOrder = async (req, res) => {
 export const getOrdersByUser = async (req, res) => {
     try {
         const { id } = req.user
-        const orders = await Order.find({ user: id })
+        const orders = await Order.find({ user: id }).populate("user").populate("product")
         return res.status(200).json(new ApiResponse(true, "Orders fetched successfuly", { orders }))
     } catch (error) {
         console.log(error)
