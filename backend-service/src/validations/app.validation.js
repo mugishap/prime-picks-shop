@@ -53,4 +53,10 @@ const UpdateProductSchema = Joi.object({
 
 })
 
-export { CreateUserSchema, UpdateUserSchema, LoginUserSchema, UpdatePasswordSchema, DeleteUserSchema, CreateProductSchema, UpdateProductSchema }
+const CreateContactSchema = Joi.object({
+    fullname: Joi.string().required().min(3),
+    mobile: Joi.string().required().min(10).max(15),
+    email: Joi.string().required().min(4).max(40)
+})
+
+export { CreateUserSchema, UpdateUserSchema, LoginUserSchema, UpdatePasswordSchema, DeleteUserSchema, CreateProductSchema, UpdateProductSchema, CreateContactSchema }

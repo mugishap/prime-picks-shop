@@ -1208,6 +1208,49 @@
             }
           ]
         }
+      },
+      "/api/v1/contact/contact-us": {
+        "post": {
+          "tags": [
+            "Contact"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Contact"
+              }
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Created",
+              "schema": {
+                "$ref": "#/definitions/Contact"
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        }
       }
     },
     "definitions": {
@@ -1337,6 +1380,36 @@
             "example": "string"
           },
           "updatedAt": {
+            "type": "string",
+            "example": "string"
+          },
+          "_id": {
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011",
+            "required": true
+          },
+          "__v": {
+            "type": "number",
+            "example": 0
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "fullname": {
+            "type": "string",
+            "example": "string"
+          },
+          "mobile": {
+            "type": "string",
+            "example": "string"
+          },
+          "email": {
+            "type": "string",
+            "example": "string"
+          },
+          "message": {
             "type": "string",
             "example": "string"
           },

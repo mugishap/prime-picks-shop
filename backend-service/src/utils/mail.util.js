@@ -123,4 +123,73 @@ const sendOrderDeclinedEmail = ({ order }) => {
     }
 }
 
-export { sendOrderReceivedEmail, sendOrderGrantedEmail, sendOrderDeclinedEmail };
+const sendThanksForSigningUpEmail = ({ user }) => {
+    try {
+        const info = transporter.sendMail({
+            from: MAIL_USER,
+            to: user.email,
+            subject: "Welcome onboard. Thanks for signing up for Prime Picks",
+            html:
+                `
+            <!DOCTYPE html>
+                <html>
+                <body>
+                    <h2>Dear ${user.fullname}, </h2>
+                    <h2> Hope you are doing well. We are very delighted to welcome you onboard.</h2>
+                    <span>Check the trending products  here</span>
+                    <a href="${CLIENT_URL}/products" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
+                    <span>Call 0782307144 for any inquries.</span>
+                    <span>And Thanks again for signing up.</span>
+                    <p>Best regards,<br>Prime Picks</p>
+                </body>
+            </html>
+            `
+
+        });
+
+        return {
+            message: "Email sent successfully",
+            emailId: info.messageId,
+            status: true
+        };
+    } catch (error) {
+        console.log(error);
+        return { message: "Unable to send email", status: false };
+    }
+}
+
+const sendContactReceivedEmail = ({ contact }) => {
+    try {
+        const info = transporter.sendMail({
+            from: MAIL_USER,
+            to: contact.email,
+            subject: "Your message to prime picks has been recevied",
+            html:
+                `
+            <!DOCTYPE html>
+                <html>
+                <body>
+                    <h2>Dear ${contact.fullname}, </h2>
+                    <h2> We have received your message. And we are trying hard to process it. You'll receive a response soon. (:</h2>
+                    <span>Don't hesitate to check our products here</span>
+                    <a href="${CLIENT_URL}/products" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
+                    <span>Call 0782307144 for any inquries.</span>
+                    <p>Best regards,<br>Prime Picks</p>
+                </body>
+            </html>
+            `
+
+        });
+
+        return {
+            message: "Email sent successfully",
+            emailId: info.messageId,
+            status: true
+        };
+    } catch (error) {
+        console.log(error);
+        return { message: "Unable to send email", status: false };
+    }
+}
+
+export { sendOrderReceivedEmail, sendOrderGrantedEmail, sendOrderDeclinedEmail, sendThanksForSigningUpEmail, sendContactReceivedEmail };
