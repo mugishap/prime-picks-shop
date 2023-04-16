@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import React, { useState } from 'react'
+import React from 'react'
 import { BiLoaderAlt, BiSearch, BiX } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { CommonContext } from '../../context'
@@ -8,13 +8,13 @@ import { IProduct } from '../../types'
 
 const SearchComponent: React.FC<{}> = () => {
 
-    const { setSearch, dispatch,products, setActiveProduct, searchResults } = React.useContext(CommonContext)
-    const [query, setQuery] = useState<string>('')
-    const [loading, setLoading] = useState<boolean>(false)
+    const { setSearch, dispatch, products, setActiveProduct, searchResults } = React.useContext(CommonContext)
+    const [query, setQuery] = React.useState<string>('')
+    const [loading, setLoading] = React.useState<boolean>>(false)
     React.useEffect(() => {
         if (!query) return
         setLoading(true)
-        dispatch(setSearchResults(products.filter((product: IProduct) => product.name.toLowerCase().includes(query.toLowerCase()) || product.description.toLowerCase().includes(query.toLowerCase()) )))
+        dispatch(setSearchResults(products.filter((product: IProduct) => product.name.toLowerCase().includes(query.toLowerCase()) || product.description.toLowerCase().includes(query.toLowerCase()))))
         setLoading(false)
     }, [query])
     return (

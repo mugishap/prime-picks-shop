@@ -7,7 +7,7 @@ import Product from '../Product/Product'
 const AllProductsComponent: React.FC = () => {
     const { products, loading } = React.useContext(CommonContext)
     const [_products, set_products] = React.useState<IProduct[]>(products)
-    const [page, setPage] = React.useState(1)
+    const [page, setPage] = React.useState<number>(1)
     const [totalPages, setTotalPages] = React.useState<number>(Math.floor((products?.length) / 6));
 
     const getPageNumbers = () => {

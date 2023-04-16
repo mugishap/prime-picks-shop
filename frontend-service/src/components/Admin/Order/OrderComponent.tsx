@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React from 'react';
 import { BiLoaderAlt } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { CommonContext } from '../../../context';
@@ -18,10 +18,10 @@ import TablePaginationActions from '../Pagination/TablePaginationActions';
 const OrderComponent: React.FC<{}> = () => {
 
   const { allOrders, dispatch, setActiveProduct, refresh, loading } = React.useContext(CommonContext)
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [refreshLoader, setRefreshLoader] = useState(false)
-  const [accessLoading, setAccessLoading] = useState(false)
+  const [page, setPage] = React.useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [refreshLoader, setRefreshLoader] = React.useState<boolean>(false)
+  const [accessLoading, setAccessLoading] = React.useState<boolean>(false)
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,

@@ -18,10 +18,10 @@ import TablePaginationActions from '../Pagination/TablePaginationActions';
 const ProductComponent = () => {
 
   const { products, setUpdateProduct, deleteData, refresh, dispatch, loading } = React.useContext(CommonContext)
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [refreshLoader, setRefreshLoader] = React.useState(false)
-  const [deleteLoader, setDeleteLoader] = React.useState(false)
+  const [page, setPage] = React.useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [refreshLoader, setRefreshLoader] = React.useState<boolean>(false)
+  const [deleteLoader, setDeleteLoader] = React.useState<boolean>(false)
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,

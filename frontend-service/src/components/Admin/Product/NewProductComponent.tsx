@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import Dropzone from 'react-dropzone';
 import { BiCart, BiLoaderAlt, BiUpload } from 'react-icons/bi';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ const NewProductComponent: React.FC<{}> = () => {
     })
     const { loading, setLoading, dispatch } = React.useContext(CommonContext)
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             setLoading(true)
             e.preventDefault()

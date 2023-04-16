@@ -1,11 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Slide } from "react-awesome-reveal";
+import { IContactData } from "../../types";
+import { useCreateContact } from "../../hooks";
+import { BiLoaderAlt } from "react-icons/bi";
+import { CommonContext } from "../../context";
 
-const ContactComponent:React.FC<{}> = () => {
-  const [fullname, setFullname] = useState<string>("");
-  const [telephone, setTelephone] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+const ContactComponent: React.FC<{}> = () => {
+
+  const { isLoggedIn, user } = useContext(CommonContext)
+  const [contactData, setContactData] = React.useState<IContactData>({
+    fullname: isLoggedIn ? user.fullname : "",
+    email: isLoggedIn ? user.email : "",
+    mobile: isLoggedIn ? (user.mobile) : 250,
+    message: ""
+  })
+  const [contactLoading, setContactLoading] = React.useState<boolean>(false)
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault()
+      useCreateContact({ setLoading: setContactLoading, contactData, setContactData })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <Slide direction="up" cascade triggerOnce>
       <section
@@ -81,9 +100,7 @@ const ContactComponent:React.FC<{}> = () => {
               <form
                 id="contact"
                 className="bg-white py-4 px-8 rounded-tr rounded-br"
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                  e.preventDefault();
-                }}
+                onSubmit={handleSubmit}
               >
                 <h1 className="text-4xl text-gray-800 font-extrabold mb-6">
                   Enter Details
@@ -103,9 +120,10 @@ const ContactComponent:React.FC<{}> = () => {
                         name="full_name"
                         type="text"
                         className="focus:outline-none focus:border focus:border-indigo-700 font-normal w-64 h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-                        value={fullname}
+                        disabled={isLoggedIn}
+                        value={contactData.fullname}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setFullname(e.target.value)
+                          setContactData({ ...contactData, fullname: e.target.value })
                         }
                       />
                     </div>
@@ -125,9 +143,10 @@ const ContactComponent:React.FC<{}> = () => {
                         type="email"
                         className="focus:outline-none focus:border focus:border-indigo-700 font-normal w-64 h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setEmail(e.target.value)
+                          setContactData({ ...contactData, email: e.target.value })
                         }
-                        value={email}
+                        disabled={isLoggedIn}
+                        value={contactData.email}
                       />
                     </div>
                   </div>
@@ -148,9 +167,10 @@ const ContactComponent:React.FC<{}> = () => {
                         type="number"
                         className="focus:outline-none focus:border focus:border-indigo-700 font-normal w-64 h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setTelephone(e.target.value)
+                          setContactData({ ...contactData, mobile: e.target.valueAsNumber })
                         }
-                        value={telephone}
+                        disabled={isLoggedIn}
+                        value={contactData.mobile}
                       />
                     </div>
                   </div>
@@ -169,16 +189,20 @@ const ContactComponent:React.FC<{}> = () => {
                       rows={8}
                       id="message"
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                        setMessage(e.target.value)
+                        setContactData({ ...contactData, message: e.target.value })
                       }
-                      value={message}
+                      value={contactData.message}
                     />
                   </div>
                   <button
+                    disabled={contactLoading}
                     type="submit"
-                    className="focus:outline-none bg-pink-600 transition duration-150 ease-in-out hover:bg-red-600 rounded text-white px-8 py-3 text-sm leading-6"
+                    className={`focus:outline-none ${contactLoading ? "bg-slate-500 cursor-not-allowed" : "bg-pink-600 hover:bg-red-600"} transition duration-150 ease-in-out  rounded text-white px-8 py-3 text-sm leading-6`}
                   >
-                    Submit
+                    {contactLoading ?
+                      <BiLoaderAlt className="animate-spin w-10 text-white" size={25} />
+                      :
+                      "Submit"}
                   </button>
                 </div>
               </form>

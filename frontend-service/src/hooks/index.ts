@@ -1,6 +1,6 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import api from "../api";
-import { ILoginData, INewPasswordData, IOrder, IOrderData, IProductData, ISignupData, IUserData } from "../types";
+import { IContactData, ILoginData, INewPasswordData, IOrder, IOrderData, IProductData, ISignupData, IUserData } from "../types";
 import { toast } from "react-toastify";
 import { login, logout, removeUser, setUsers, updateUser } from "../redux/slices/userSlice";
 import { addProduct, load, removeProduct, setSearchResults, updateProduct } from "../redux/slices/productSlice";
@@ -358,6 +358,27 @@ export const useUpdateAvatar = async ({ avatarString, dispatch, setLoading }: { 
         const request = await api().patch("/user/update-avatar", { avatarString });
         const response = request.data
         dispatch(updateUser({ ...response.data.user }))
+    } catch (error: any) {
+        console.log(error);
+        if (error.response.data.message) return toast.error(error.response.data.message)
+        toast.error(error.message)
+    } finally {
+        setLoading(false)
+    }
+}
+
+
+export const useCreateContact = async ({ setLoading, setContactData, contactData }: { setLoading: Function, setContactData: Function, contactData: IContactData }) => {
+    try {
+        const request = await api().post("/contact/contact-us", { ...contactData })
+        const response = request.data
+        toast.success(response.message)
+        setContactData({
+            fullname: "",
+            email: "",
+            mobile: "",
+            message: ""
+        })
     } catch (error: any) {
         console.log(error);
         if (error.response.data.message) return toast.error(error.response.data.message)

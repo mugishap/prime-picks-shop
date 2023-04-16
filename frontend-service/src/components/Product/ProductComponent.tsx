@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BiCart, BiCheck, BiLoaderAlt } from 'react-icons/bi'
 import { useParams } from 'react-router-dom'
 import { CommonContext } from '../../context'
@@ -8,7 +8,7 @@ import { IOrderData, IProduct } from '../../types'
 
 const ProductComponent = () => {
     const { activeProduct, products, dispatch, user, cart, loading, setLoading } = React.useContext(CommonContext)
-    const [orderData, setOrderData] = useState<IOrderData>({
+    const [orderData, setOrderData] = React.useState<IOrderData>({
         quantity: 1,
         product: activeProduct._id
     })

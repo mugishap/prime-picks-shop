@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React from 'react'
 import Dropzone from 'react-dropzone'
 import { BiCart, BiLoaderAlt, BiUpload } from 'react-icons/bi'
 import { toast } from 'react-toastify'
@@ -13,9 +13,9 @@ interface Data extends IProduct {
 const UpdateProductComponent: React.FC<{}> = () => {
 
     const { updateProduct, setUpdateProduct, loading, setLoading, dispatch } = React.useContext(CommonContext)
-    const [productData, setProductData] = useState<Data>({ ...updateProduct.product, imageString: updateProduct.product.image })
+    const [productData, setProductData] = React.useState<Data>({ ...updateProduct.product, imageString: updateProduct.product.image })
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault()
             setLoading(true)

@@ -13,7 +13,7 @@ import Sidebar from "./Sidebar";
 
 const AccountComponent: React.FC = () => {
     const { user, activeTab, myOrders, dispatch, setLoading, setUpdateUser, setUpdatePassword } = React.useContext(CommonContext);
-    const [updateAvatarLoading, setUpdateAvatarLoading] = React.useState(false)
+    const [updateAvatarLoading, setUpdateAvatarLoading] = React.useState<boolean>(false)
     React.useEffect(() => {
         document.title = `${user.fullname} | Prime Picks`;
         useGetUserOrders({ dispatch, setLoading })

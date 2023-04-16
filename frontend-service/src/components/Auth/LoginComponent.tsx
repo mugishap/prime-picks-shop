@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { CommonContext } from "../../context";
@@ -11,7 +11,7 @@ interface Props {
 
 const LoginComponent: React.FC<Props> = ({ setAuth }) => {
   const { dispatch, loading, setLoading } = React.useContext(CommonContext);
-  const [loginData, setLoginData] = useState<ILoginData>({
+  const [loginData, setLoginData] = React.useState<ILoginData>({
     email: "",
     password: "",
     showPassword: false,
