@@ -18,6 +18,7 @@ const ContactComponent: React.FC<{}> = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
+      setContactLoading(true)
       e.preventDefault()
       useCreateContact({ setLoading: setContactLoading, contactData, setContactData })
     } catch (error) {
@@ -184,6 +185,8 @@ const ContactComponent: React.FC<{}> = () => {
                       Message
                     </label>
                     <textarea
+                      required
+                      
                       name="message"
                       className="border-gray-300 border mb-4 rounded py-2 text-sm outline-none resize-none px-3 focus:border focus:border-indigo-700"
                       rows={8}

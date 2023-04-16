@@ -10,7 +10,7 @@ const SearchComponent: React.FC<{}> = () => {
 
     const { setSearch, dispatch, products, setActiveProduct, searchResults } = React.useContext(CommonContext)
     const [query, setQuery] = React.useState<string>('')
-    const [loading, setLoading] = React.useState<boolean>>(false)
+    const [loading, setLoading] = React.useState<boolean>(false)
     React.useEffect(() => {
         if (!query) return
         setLoading(true)

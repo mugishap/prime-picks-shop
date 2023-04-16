@@ -370,7 +370,7 @@ export const useUpdateAvatar = async ({ avatarString, dispatch, setLoading }: { 
 
 export const useCreateContact = async ({ setLoading, setContactData, contactData }: { setLoading: Function, setContactData: Function, contactData: IContactData }) => {
     try {
-        const request = await api().post("/contact/contact-us", { ...contactData })
+        const request = await api().post("/contact/contact-us", { ...contactData, mobile: `${contactData.mobile}` })
         const response = request.data
         toast.success(response.message)
         setContactData({
