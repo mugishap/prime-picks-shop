@@ -9,10 +9,10 @@ import THEME from './theme';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ThemeProvider theme={THEME}>
-  <PersistGate persistor={persistor} loading={null}>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </PersistGate>
+    <PersistGate persistor={persistor} loading={null}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </PersistGate>
   </ThemeProvider>
 )

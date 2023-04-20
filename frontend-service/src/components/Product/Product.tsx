@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { CommonContext } from '../../context'
 import { addItemToCart, removeItemFromCart, setActiveProduct } from '../../redux/slices/productSlice'
 import { IProduct } from '../../types'
-
+import { motion } from 'framer-motion'
 interface Props {
     product: IProduct
 }
@@ -14,7 +14,10 @@ const Product: React.FC<Props> = ({ product }) => {
     const { dispatch, cart } = React.useContext(CommonContext)
     const isInCart = cart?.find((item: IProduct) => item._id === product._id)
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false }}
             title='Click to view'
             className='w-80 msm:w-96 h-fit pb-4 msm:pb-0 msm:h-[513px] rounded relative overflow-hidden shadow-lg cursor-pointer'
         >
@@ -67,7 +70,7 @@ const Product: React.FC<Props> = ({ product }) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

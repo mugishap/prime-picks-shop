@@ -10,6 +10,7 @@ import "swiper/css/scrollbar"
 import './App.css'
 import Pages from './Pages'
 import { Logo } from './assets'
+import { motion } from 'framer-motion'
 
 const App: React.FC = () => {
 
@@ -32,14 +33,16 @@ const App: React.FC = () => {
         </div>
       }
     >
-      <div className="">
+      <motion.div initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }} className="">
         <ToastContainer
           theme='colored'
           position='top-right'
           hideProgressBar={true}
         />
         <Pages />
-      </div>
+      </motion.div>
     </React.Suspense>
   )
 }
